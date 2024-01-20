@@ -41,11 +41,11 @@ export const Variants: Story = {
 
   render: (args) => (
     <div style={{ display: 'flex', gap: '10px' }}>
-      {variantOptions.map((variant) => {
+      {variantOptions.map((opt) => {
         const { size } = args;
 
         return (
-          <Button key={variant} variant={variant} size={size}>
+          <Button key={opt} variant={opt} size={size}>
             Button
           </Button>
         );
@@ -65,11 +65,11 @@ export const Sizes: Story = {
 
   render: (args) => (
     <div style={{ display: 'flex', gap: '10px' }}>
-      {sizeOptions.map((size) => {
+      {sizeOptions.map((opt) => {
         const { variant } = args;
 
         return (
-          <Button key={size} variant={variant} size={size}>
+          <Button key={opt} variant={variant} size={opt}>
             Button
           </Button>
         );
