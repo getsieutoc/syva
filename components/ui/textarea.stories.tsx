@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Textarea, TextareaProps } from './textarea';
+import { Textarea } from './textarea';
 
 //👇 This default export determines where your story goes in the story list
 const meta: Meta<typeof Textarea> = {
@@ -18,9 +18,15 @@ export const Placeholder: Story = {
   args: {
     placeholder: 'Type your message here.',
   },
-
+  argTypes: {
+    rows: {
+      description: 'input size row',
+      type: 'number',
+      defaultValue: 3,
+    },
+  },
   render: (args) => {
-    return <Textarea placeholder={args.placeholder} />;
+    return <Textarea placeholder={args.placeholder} rows={args.rows} />;
   },
 };
 export const Rows: Story = {
