@@ -1,22 +1,24 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import { Terminal, AlertCircle } from 'lucide-react';
-import { Alert, AlertDescription, AlertTitle } from './alert';
+import { Alert, AlertDescription, AlertTitle, AlertVariants } from './alert';
 
+const variantOptions: AlertVariants[] = ['default', 'destructive'];
 const meta: Meta<typeof Alert> = {
   title: 'Alert',
   component: Alert,
   parameters: {
     layout: 'centered',
   },
+  argTypes: {
+    variant: {
+      options: variantOptions,
+    },
+  },
 };
 export default meta;
 type Story = StoryObj<typeof Alert>;
 
 export const Default: Story = {
-  parameters: {
-    variant: { include: ['default', 'destructive'] },
-  },
-
   args: {
     variant: 'default',
   },
