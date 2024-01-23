@@ -5,6 +5,7 @@ const sizeOptions: AvatarProps['size'][] = ['xs', 'sm', 'md', 'lg', 'xl'];
 const meta = {
   title: 'Avatar',
   component: Avatar,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },

@@ -11,6 +11,7 @@ import { AccordionImplProps } from '@radix-ui/react-accordion';
 const meta: Meta<typeof Accordion> = {
   title: 'Accordion',
   component: Accordion,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },

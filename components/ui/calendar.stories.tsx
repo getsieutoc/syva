@@ -4,6 +4,7 @@ import { Calendar } from './calendar';
 const meta = {
   title: 'Calendar',
   component: Calendar,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },

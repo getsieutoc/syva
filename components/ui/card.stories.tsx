@@ -12,6 +12,7 @@ import { Button, Input, Label } from '.';
 const meta = {
   title: 'Card',
   component: Card,
+  tags: ['autodocs'],
   parameters: {
     layout: 'centered',
   },
@@ -21,7 +22,25 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const SimpleCard: Story = {
+  render: (args) => (
+    <div className="w-[300px]">
+      <Card>
+        <CardHeader>
+          <CardTitle>Card Title</CardTitle>
+          <CardDescription>Card Description</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p>Card Content</p>
+        </CardContent>
+        <CardFooter>
+          <p>Card Footer</p>
+        </CardFooter>
+      </Card>
+    </div>
+  ),
+};
+export const Example: Story = {
   render: (args) => {
     return (
       <Card className="w-[350px]">
