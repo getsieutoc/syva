@@ -35,6 +35,7 @@
     "clsx": "2.1.0",
     "date-fns": "3.3.1",
     "deepmerge": "4.3.1",
+    "embla-carousel-react": "8.0.0-rc20",
     "jotai": "2.6.2",
     "lucide-react": "0.314.0",
     "next": "14.1.0",
