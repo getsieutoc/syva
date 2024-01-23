@@ -8,3 +8,4 @@ export * from './badge';
 export * from './button';
 export * from './popover';
 export * from './textarea';
+export * from './input';
