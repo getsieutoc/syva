@@ -9,6 +9,7 @@ const meta: Meta<typeof Alert> = {
   parameters: {
     layout: 'centered',
   },
+  tags: ['autodocs'],
   argTypes: {
     variant: {
       options: variantOptions,
