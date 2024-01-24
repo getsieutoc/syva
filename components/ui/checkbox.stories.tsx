@@ -40,13 +40,13 @@ export const Sizes: Story = {
   render: (args) => (
     <>
       {checkboxSizes.map((size, idx) => (
-        <div key={idx} className="items-top flex space-x-2">
+        <div key={idx} className="items-top my-5 flex space-x-2">
           <Checkbox id="terms1" size={size} />
           <div className="grid gap-1.5 leading-none">
             <Label htmlFor="terms1">Accept terms and conditions</Label>
-            <p className="text-sm text-muted-foreground">
+            <div className="text-sm text-muted-foreground">
               You agree to our Terms of Service and Privacy Policy.
-            </p>
+            </div>
           </div>
         </div>
       ))}
