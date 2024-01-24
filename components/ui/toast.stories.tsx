@@ -20,6 +20,9 @@ export const Default: Story = {
     return (
       <>
         <Toaster />
+        <div>
+          <code>{`<Toaster /> must import RootLayout component (exp: app/layout.tsx)`}</code>
+        </div>
         <Button
           variant="outline"
           onClick={() =>
