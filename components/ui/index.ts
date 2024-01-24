@@ -13,3 +13,4 @@ export * from './input';
 export * from './card';
 export * from './carousel';
 export * from './table';
+export * from './checkbox';
