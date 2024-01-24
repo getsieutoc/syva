@@ -16,15 +16,15 @@ const Table = React.forwardRef<
 ));
 Table.displayName = 'Table';
 
-const TableHeader = React.forwardRef<
+const Thead = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
   <thead ref={ref} className={cn('[&_tr]:border-b', className)} {...props} />
 ));
-TableHeader.displayName = 'TableHeader';
+Thead.displayName = 'Thead';
 
-const TableBody = React.forwardRef<
+const Tbody = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
@@ -34,9 +34,9 @@ const TableBody = React.forwardRef<
     {...props}
   />
 ));
-TableBody.displayName = 'TableBody';
+Tbody.displayName = 'Tbody';
 
-const TableFooter = React.forwardRef<
+const Tfoot = React.forwardRef<
   HTMLTableSectionElement,
   React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
@@ -49,9 +49,9 @@ const TableFooter = React.forwardRef<
     {...props}
   />
 ));
-TableFooter.displayName = 'TableFooter';
+Tfoot.displayName = 'Tfoot';
 
-const TableRow = React.forwardRef<
+const Tr = React.forwardRef<
   HTMLTableRowElement,
   React.HTMLAttributes<HTMLTableRowElement>
 >(({ className, ...props }, ref) => (
@@ -64,9 +64,9 @@ const TableRow = React.forwardRef<
     {...props}
   />
 ));
-TableRow.displayName = 'TableRow';
+Tr.displayName = 'Tr';
 
-const TableHead = React.forwardRef<
+const Th = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
@@ -79,9 +79,9 @@ const TableHead = React.forwardRef<
     {...props}
   />
 ));
-TableHead.displayName = 'TableHead';
+Th.displayName = 'Th';
 
-const TableCell = React.forwardRef<
+const Td = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement>
 >(({ className, ...props }, ref) => (
@@ -91,7 +91,7 @@ const TableCell = React.forwardRef<
     {...props}
   />
 ));
-TableCell.displayName = 'TableCell';
+Td.displayName = 'Td';
 
 const TableCaption = React.forwardRef<
   HTMLTableCaptionElement,
@@ -105,13 +105,4 @@ const TableCaption = React.forwardRef<
 ));
 TableCaption.displayName = 'TableCaption';
 
-export {
-  Table,
-  TableHeader as Thead,
-  TableBody as Tbody,
-  TableFooter as Tfoot,
-  TableHead as Th,
-  TableRow as Tr,
-  TableCell as Td,
-  TableCaption,
-};
+export { Table, Thead, Tbody, Tfoot, Th, Tr, Td, TableCaption };
