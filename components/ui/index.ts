@@ -16,3 +16,4 @@ export * from './table';
 export * from './checkbox';
 export * from './switch';
 export * from './select';
+export * from './tooltip';
