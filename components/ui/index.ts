@@ -11,3 +11,4 @@ export * from './textarea';
 export * from './label';
 export * from './input';
 export * from './card';
+export * from './carousel';
