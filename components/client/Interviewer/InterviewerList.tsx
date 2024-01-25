@@ -1,15 +1,7 @@
-import {
-  Avatar,
-  AvatarImage,
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui';
+import { InterviewItem } from './InterviewItem';
 
-type InterviewerType = {
+export type InterviewerType = {
+  id: string;
   name: string;
   age: string;
   avatar: string;
@@ -19,6 +11,7 @@ type InterviewerType = {
 };
 const dataTemp: InterviewerType[] = [
   {
+    id: 'i-1',
     name: 'Michel Ann',
     avatar: 'https://github.com/shadcn.png',
     age: '25',
@@ -34,6 +27,7 @@ const dataTemp: InterviewerType[] = [
     BS degree in Computer Science or relevant experiences`,
   },
   {
+    id: 'i-2',
     name: 'Adam Chin',
     avatar: 'https://i.pravatar.cc/150?img=68',
     age: '30',
@@ -43,6 +37,7 @@ const dataTemp: InterviewerType[] = [
     5+ of experience in Embedded Software Development ...`,
   },
   {
+    id: 'i-3',
     name: 'Linda',
     avatar: 'https://i.pravatar.cc/150?img=29',
     age: '32',
@@ -51,6 +46,7 @@ const dataTemp: InterviewerType[] = [
     jobTitle: `At least 4 years' experience as a Full Stack/Backend Developer.`,
   },
   {
+    id: 'i-4',
     name: 'Carrot',
     avatar: 'https://i.pravatar.cc/150?img=33',
     age: '39',
@@ -67,42 +63,10 @@ export const InterviewerList = () => {
         Interviewers
       </h1>
       {dataTemp.map((item, idx) => (
-        <div key={idx} className="py-3">
+        <div key={idx + item.id} className="py-3">
           <InterviewItem item={item} />
         </div>
       ))}
     </div>
-  );
-};
-
-type InterviewItemTypes = {
-  item: InterviewerType;
-};
-const InterviewItem = (props: InterviewItemTypes) => {
-  const { item } = props;
-
-  return (
-    <Card className="cursor-pointer hover:bg-gray-100">
-      <CardHeader>
-        <CardTitle>
-          <div className="flex">
-            <Avatar size="md">
-              <AvatarImage alt={item.name} src={item.avatar} />
-            </Avatar>
-            <div className="p-3">
-              {item.name}
-              <CardDescription>{item.age} year old</CardDescription>
-              <CardDescription>{item.jobDescription}</CardDescription>
-            </div>
-          </div>
-        </CardTitle>
-      </CardHeader>
-      <CardContent>{item.jobTitle}</CardContent>
-      <CardFooter>
-        <div className="text-sm text-muted-foreground">
-          Apply at {item.dateAplly}
-        </div>
-      </CardFooter>
-    </Card>
   );
 };
