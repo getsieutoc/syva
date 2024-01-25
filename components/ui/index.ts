@@ -15,5 +15,6 @@ export * from './carousel';
 export * from './table';
 export * from './checkbox';
 export * from './switch';
+export * from './toast';
 export * from './select';
 export * from './tooltip';
