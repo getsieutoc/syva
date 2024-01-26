@@ -1,5 +1,5 @@
-import { LoadingInterviewerItem } from '@/components/client';
+import { LoadingCandidateItem } from '@/components/client';
 
 export default function Loading() {
-  return <LoadingInterviewerItem />;
+  return <LoadingCandidateItem />;
 }

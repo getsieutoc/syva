@@ -1,6 +1,6 @@
 import { Skeleton } from '@/components/ui';
 
-export const LoadingInterviewerItem = () => {
+export const LoadingCandidateItem = () => {
   return (
     <div>
       <div className="grid grid-cols-2 place-content-center gap-1">

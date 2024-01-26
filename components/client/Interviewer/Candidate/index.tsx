@@ -1,12 +1,12 @@
-import { LoadingInterviewerItem } from '..';
+import { LoadingCandidateItem } from '..';
 
-type InterviewerUserTypes = {
+type CandidateUserByIDTypes = {
   id: string;
 };
-export const CandidateUserByID = ({ id }: InterviewerUserTypes) => {
+export const CandidateUserByID = ({ id }: CandidateUserByIDTypes) => {
   return (
     <div>
-      <LoadingInterviewerItem />
+      <LoadingCandidateItem />
     </div>
   );
 };
