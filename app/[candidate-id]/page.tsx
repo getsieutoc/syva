@@ -5,7 +5,7 @@ type CandidateUserTypes = {
     'candidate-id': string;
   };
 };
-export default function InterviewUser(props: CandidateUserTypes) {
+export default function CandidateUser(props: CandidateUserTypes) {
   const { params } = props;
   return (
     <main className="px-10">
