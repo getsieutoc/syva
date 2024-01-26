@@ -1,6 +1,6 @@
-import { InterviewItem } from './InterviewItem';
+import { CandidateItem } from './InterviewItem';
 
-export type InterviewerType = {
+export type CandidateType = {
   id: string;
   name: string;
   age: string;
@@ -9,7 +9,7 @@ export type InterviewerType = {
   jobDescription: string;
   dateAplly: string;
 };
-const dataTemp: InterviewerType[] = [
+const dataTemp: CandidateType[] = [
   {
     id: 'i-1',
     name: 'Michel Ann',
@@ -56,15 +56,15 @@ const dataTemp: InterviewerType[] = [
   },
 ];
 
-export const InterviewerList = () => {
+export const CandidateList = () => {
   return (
     <div>
       <h1 className="font-mono text-6xl font-bold text-orange-400 drop-shadow-lg">
-        Interviewers
+        Candidates
       </h1>
       {dataTemp.map((item, idx) => (
         <div key={idx + item.id} className="py-3">
-          <InterviewItem item={item} />
+          <CandidateItem item={item} />
         </div>
       ))}
     </div>

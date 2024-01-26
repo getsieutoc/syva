@@ -11,12 +11,12 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui';
-import { InterviewerType } from '.';
+import { CandidateType } from '.';
 
-type InterviewItemTypes = {
-  item: InterviewerType;
+type CandidateItemTypes = {
+  item: CandidateType;
 };
-export const InterviewItem = (props: InterviewItemTypes) => {
+export const CandidateItem = (props: CandidateItemTypes) => {
   const { item } = props;
   const router = useRouter();
 

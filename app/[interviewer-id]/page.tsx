@@ -1,4 +1,4 @@
-import { InterviewUserByID, Navbar } from '@/components/client';
+import { CandidateUserByID, Navbar } from '@/components/client';
 
 type InterviewerUserTypes = {
   params: {
@@ -11,7 +11,7 @@ export default function InterviewUser(props: InterviewerUserTypes) {
     <main className="px-10">
       <Navbar />
       <div className="my-10" />
-      <InterviewUserByID id={params['interviewer-id']} />
+      <CandidateUserByID id={params['interviewer-id']} />
     </main>
   );
 }

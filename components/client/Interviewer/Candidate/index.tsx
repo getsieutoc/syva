@@ -3,7 +3,7 @@ import { LoadingInterviewerItem } from '..';
 type InterviewerUserTypes = {
   id: string;
 };
-export const InterviewUserByID = ({ id }: InterviewerUserTypes) => {
+export const CandidateUserByID = ({ id }: InterviewerUserTypes) => {
   return (
     <div>
       <LoadingInterviewerItem />
