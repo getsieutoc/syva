@@ -20,4 +20,5 @@ export { useChat, useCompletion } from 'ai/react';
 export { default as useSWR } from 'swr';
 export { useTheme } from 'next-themes';
 
+export * from './use-disclosure';
 export * from './use-auth';
