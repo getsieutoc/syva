@@ -6,4 +6,4 @@
     <img src="https://i.imgflip.com/8cdo87.jpg" />
 </p>
 
-Understand your candidate deeply
+Know your candidates

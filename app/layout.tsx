@@ -8,8 +8,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'SyvaHire',
-  description: 'Understand your candidate deeply',
+  title: 'SyväHire',
+  description: 'Know your candidates',
 };
 
 export default function RootLayout({
