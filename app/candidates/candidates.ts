@@ -1,23 +1,12 @@
-import { CandidateItem } from './InterviewItem';
-
-export type CandidateType = {
-  id: string;
-  name: string;
-  age: string;
-  avatar: string;
-  jobTitle: string;
-  jobDescription: string;
-  dateAplly: string;
-};
-const dataTemp: CandidateType[] = [
+const data = [
   {
-    id: 'i-1',
+    id: 'clrvzuyiw000008i82tmoe9rp',
     name: 'Michel Ann',
     avatar: 'https://github.com/shadcn.png',
     age: '25',
 
     dateAplly: '19:30 20-01-2024',
-    jobDescription: 'Backend develop | Javascript | PHP',
+    jobDescription: 'Backend develop | Python | PHP',
     jobTitle: `Solution architect: 1+ years of enterprise AWS experiences related to pre-sales, technical consulting in B2B environments
     1+ years Hands-on experience in developing and operating AWS cloud infra
     Ability to understand and present complex technical topics to both technical and business leaders
@@ -27,9 +16,9 @@ const dataTemp: CandidateType[] = [
     BS degree in Computer Science or relevant experiences`,
   },
   {
-    id: 'i-2',
+    id: 'clrvzwn4g000108l6hgxchtbh',
     name: 'Adam Chin',
-    avatar: 'https://i.pravatar.cc/150?img=68',
+    avatar: 'https://i.pravatar.cc 150?img=68',
     age: '30',
     dateAplly: '09:10 10-03-2024',
     jobDescription: 'Fontend develop | ReactJS | React Native | AngularJS',
@@ -37,7 +26,7 @@ const dataTemp: CandidateType[] = [
     5+ of experience in Embedded Software Development ...`,
   },
   {
-    id: 'i-3',
+    id: 'clrvzwtww000208l61nqv4w7d',
     name: 'Linda',
     avatar: 'https://i.pravatar.cc/150?img=29',
     age: '32',
@@ -46,7 +35,7 @@ const dataTemp: CandidateType[] = [
     jobTitle: `At least 4 years' experience as a Full Stack/Backend Developer.`,
   },
   {
-    id: 'i-4',
+    id: 'clrvzx3jf000308l6b4an3dvc',
     name: 'Carrot',
     avatar: 'https://i.pravatar.cc/150?img=33',
     age: '39',
@@ -56,17 +45,4 @@ const dataTemp: CandidateType[] = [
   },
 ];
 
-export const CandidateList = () => {
-  return (
-    <div>
-      <h1 className="font-mono text-6xl font-bold text-orange-400 drop-shadow-lg">
-        Candidates
-      </h1>
-      {dataTemp.map((item, idx) => (
-        <div key={idx + item.id} className="py-3">
-          <CandidateItem item={item} />
-        </div>
-      ))}
-    </div>
-  );
-};
+export default data;

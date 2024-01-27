@@ -4,6 +4,7 @@ import {
   AvatarImage,
   AvatarProps,
 } from '@/components/ui';
+import Link from 'next/link';
 
 type LogoTypes = {
   src?: string;
@@ -18,9 +19,11 @@ export const Logo = ({
   className = '',
 }: LogoTypes) => {
   return (
-    <Avatar size={size} className={className}>
-      <AvatarImage alt={alt} src={src} />
-      <AvatarFallback>Logo</AvatarFallback>
-    </Avatar>
+    <Link href="/">
+      <Avatar size={size} className={className}>
+        <AvatarImage alt={alt} src={src} />
+        <AvatarFallback>Logo</AvatarFallback>
+      </Avatar>
+    </Link>
   );
 };

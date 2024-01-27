@@ -1,12 +1,10 @@
-import { CandidateList, Navbar } from '@/components/client';
+import { Navbar } from '@/components/client';
 
 export default function Home() {
   return (
     <main className="px-10">
       <Navbar />
-      <div className="my-10" />
-
-      <CandidateList />
+      Homepage
     </main>
   );
 }

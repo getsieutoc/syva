@@ -10,7 +10,7 @@ export default function SingleViewLayout({
     <div className="flex h-dvh flex-col gap-6 px-6">
       <Navbar />
 
-      <div className="grow">{children}</div>
+      <div className="h-full shrink">{children}</div>
     </div>
   );
 }
