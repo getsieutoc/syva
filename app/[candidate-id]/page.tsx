@@ -1,12 +1,15 @@
-import { CandidateUserByID } from '@/components/client';
+import { Chatbox } from '@/components/client';
+import { Skeleton } from '@/components/ui';
+import { useChat } from '@/hooks';
 
-type CandidateUserTypes = {
-  params: {
-    'candidate-id': string;
-  };
-};
-export default function CandidateUser(props: CandidateUserTypes) {
-  const { params } = props;
+export default function SingleCandidatePage() {
+  const bindChat = useChat();
 
-  return <CandidateUserByID id={params['candidate-id']} />;
+  return (
+    <div className="grid h-full grid-cols-2 gap-6">
+      <Chatbox {...bindChat} />
+
+      <Skeleton className="h-[300px] flex-initial" />
+    </div>
+  );
 }

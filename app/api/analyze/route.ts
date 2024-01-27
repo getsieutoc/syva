@@ -1,22 +1,20 @@
 // https://js.langchain.com/docs/integrations/document_loaders/web_loaders/assemblyai_audio_transcription#usage
 import {
-  AudioTranscriptLoader,
-  // AudioTranscriptParagraphsLoader,
+  // AudioTranscriptLoader,
+  AudioTranscriptParagraphsLoader,
   // AudioTranscriptSentencesLoader
 } from 'langchain/document_loaders/web/assemblyai';
 
 // You can also use a local file path and the loader will upload it to AssemblyAI for you.
-const audioUrl = 'https://storage.googleapis.com/aai-docs-samples/espn.m4a';
+const audioUrl =
+  'https://syvahiredemo.s3.eu-central-1.amazonaws.com/yt1s.com+-+Software+Engineering+Job+Interview+Full+Mock+Interview.mp3';
 
-// Use `AudioTranscriptParagraphsLoader` or `AudioTranscriptSentencesLoader` for splitting the transcript into paragraphs or sentences
-const loader = new AudioTranscriptLoader(
-  {
+export async function POST() {
+  const loader = new AudioTranscriptParagraphsLoader({
     audio: audioUrl,
-    // any other parameters as documented here: https://www.assemblyai.com/docs/api-reference/transcript#create-a-transcript
-  },
-  {
-    apiKey: '<ASSEMBLYAI_API_KEY>', // or set the `ASSEMBLYAI_API_KEY` env variable
-  }
-);
-const docs = await loader.load();
-console.dir(docs, { depth: Infinity });
+    audio_end_at: 10000,
+  });
+
+  const docs = await loader.load();
+  console.log('### docs: ', { docs });
+}
