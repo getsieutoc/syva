@@ -5,6 +5,7 @@ export default function Home() {
     <main className="px-10">
       <Navbar />
       <div className="my-10" />
+
       <CandidateList />
     </main>
   );

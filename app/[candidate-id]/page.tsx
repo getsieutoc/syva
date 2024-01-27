@@ -1,4 +1,4 @@
-import { CandidateUserByID, Navbar } from '@/components/client';
+import { CandidateUserByID } from '@/components/client';
 
 type CandidateUserTypes = {
   params: {
@@ -7,11 +7,6 @@ type CandidateUserTypes = {
 };
 export default function CandidateUser(props: CandidateUserTypes) {
   const { params } = props;
-  return (
-    <main className="px-10">
-      <Navbar />
-      <div className="my-10" />
-      <CandidateUserByID id={params['candidate-id']} />
-    </main>
-  );
+
+  return <CandidateUserByID id={params['candidate-id']} />;
 }

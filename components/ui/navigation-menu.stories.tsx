@@ -10,7 +10,7 @@ import {
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from './navigation-menu';
-import React from 'react';
+import { forwardRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 
@@ -129,7 +129,7 @@ export const Default: Story = {
     );
   },
 };
-const ListItem = React.forwardRef<
+const ListItem = forwardRef<
   React.ElementRef<'a'>,
   React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, children, ...props }, ref) => {

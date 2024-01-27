@@ -11,6 +11,7 @@ type PromptRequest = {
 export async function POST(req: NextRequest) {
   try {
     const { messages }: PromptRequest = await req.json();
+    console.log('### messages: ', { messages });
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ status: 204 });

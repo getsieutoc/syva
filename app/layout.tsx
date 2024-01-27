@@ -1,5 +1,5 @@
+import { ReactNode, Metadata } from '@/types';
 import { Inter } from 'next/font/google';
-import type { Metadata } from 'next';
 
 import { GeneralProviders, ThemeProvider } from './components';
 
@@ -12,11 +12,7 @@ export const metadata: Metadata = {
   description: 'Know your candidates',
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <body className={inter.className}>
