@@ -1,20 +1,40 @@
-// https://js.langchain.com/docs/integrations/document_loaders/web_loaders/assemblyai_audio_transcription#usage
-import {
-  // AudioTranscriptLoader,
-  AudioTranscriptParagraphsLoader,
-  // AudioTranscriptSentencesLoader
-} from 'langchain/document_loaders/web/assemblyai';
+import { AudioTranscriptSentencesLoader } from 'langchain/document_loaders/web/assemblyai';
+import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
+import { NextRequest, NextResponse } from 'next/server';
+import { OpenAIEmbeddings } from '@langchain/openai';
+import { config } from '@/lib/pgvector';
 
-// You can also use a local file path and the loader will upload it to AssemblyAI for you.
-const audioUrl =
-  'https://syvahiredemo.s3.eu-central-1.amazonaws.com/yt1s.com+-+Software+Engineering+Job+Interview+Full+Mock+Interview.mp3';
+type AnalyzeRequest = {
+  audioUrl: string;
+  audioStartFrom?: number;
+  audioEndAt?: number;
+};
 
-export async function POST() {
-  const loader = new AudioTranscriptParagraphsLoader({
+export async function POST(req: NextRequest) {
+  const {
+    audioUrl,
+    audioStartFrom = 0,
+    audioEndAt = 5,
+  }: AnalyzeRequest = await req.json();
+
+  const loader = new AudioTranscriptSentencesLoader({
     audio: audioUrl,
-    audio_end_at: 10000,
+    audio_start_from: audioStartFrom * 1000,
+    audio_end_at: audioEndAt * 1000,
   });
 
   const docs = await loader.load();
-  console.log('### docs: ', { docs });
+
+  const embeddings = new OpenAIEmbeddings({
+    openAIApiKey: process.env.OPENAI_API_KEY,
+    modelName: 'text-embedding-3-large',
+    batchSize: 1024, // Default value if omitted is 512. Max is 2048
+    // dimensions: 1024,
+  });
+
+  const pgvectorStore = await PGVectorStore.initialize(embeddings, config);
+
+  await pgvectorStore.addDocuments(docs);
+
+  return NextResponse.json({ docs });
 }

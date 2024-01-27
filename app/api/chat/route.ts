@@ -1,8 +1,11 @@
-// import { RetrievalQAChain, loadQAStuffChain } from 'langchain/chains';
+import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
+import { RetrievalQAChain, loadQAStuffChain } from 'langchain/chains';
 import { StreamingTextResponse, LangChainStream, Message } from 'ai';
-import { ChatOpenAI } from 'langchain/chat_models/openai';
+import { PromptTemplate } from '@langchain/core/prompts';
 import { NextRequest, NextResponse } from 'next/server';
-import { PromptTemplate } from 'langchain/prompts';
+import { ChatOpenAI } from '@langchain/openai';
+import { getEmbeddings } from '@/lib/openai';
+import { config } from '@/lib/pgvector';
 
 type PromptRequest = {
   messages: Message[];
@@ -11,7 +14,6 @@ type PromptRequest = {
 export async function POST(req: NextRequest) {
   try {
     const { messages }: PromptRequest = await req.json();
-    console.log('### messages: ', { messages });
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ status: 204 });
@@ -19,15 +21,29 @@ export async function POST(req: NextRequest) {
 
     const { stream, handlers } = LangChainStream();
 
-    const template = `You are a lawyer assistant. Use the following pieces of context to answer the question at the end.
-      If you don't know the answer, just say that you don't know, don't try to make up an answer.
-      Use three sentences maximum and keep the answer as concise as possible.
-      Always answer in Finnish. Never use English unless it is a name.
+    const vectorStore = await PGVectorStore.initialize(getEmbeddings(), config);
+
+    const retriever = vectorStore.asRetriever({
+      searchType: 'mmr', // Use max marginal relevance search
+      searchKwargs: { fetchK: 5 },
+    });
+
+    // CONVERSATION LOG: {conversationHistory}
+    const template = `Given the following user prompt and conversation log, formulate a question that would be the most relevant to provide the user with an answer from a knowledge base.
+      You should follow the following rules when generating and answer:
+      - Always prioritize the user prompt over the conversation log.
+      - Ignore any conversation log that is not directly related to the user prompt.
+      - Only attempt to answer if a question was posed.
+      - The question should be a single sentence.
+      - You should remove any punctuation from the question.
+      - You should remove any words that are not relevant to the question.
+      - If you are unable to formulate a question, respond with the same USER PROMPT you got.
+
       {context}
       Question: {question}
-      Helpful Answer:`;
+      Answer:`;
 
-    const QA_CHAIN_PROMPT = new PromptTemplate({
+    const CHAIN_PROMPT = new PromptTemplate({
       inputVariables: ['context', 'question'],
       template,
     });
@@ -38,24 +54,18 @@ export async function POST(req: NextRequest) {
       streaming: true,
     });
 
-    // const chain = new RetrievalQAChain({
-    //   combineDocumentsChain: loadQAStuffChain(llm, { prompt: QA_CHAIN_PROMPT }),
-    //   returnSourceDocuments: true,
-    //   inputKey: 'question',
-    // });
+    const chain = new RetrievalQAChain({
+      combineDocumentsChain: loadQAStuffChain(llm, { prompt: CHAIN_PROMPT }),
+      retriever,
+      returnSourceDocuments: true,
+      inputKey: 'question',
+    });
 
-    // chain
-    //   .call(
-    //     {
-    //       question: messages[messages.length - 1].content,
-    //     },
-    //     [handlers]
-    //   )
-    //   .catch(console.error);
+    chain.call({ question: messages[messages.length - 1].content }, [handlers]);
 
     return new StreamingTextResponse(stream);
   } catch (error) {
-    console.error(error);
+    console.log('### error: ', { error });
     return NextResponse.json({ message: 'Error while POST chat' });
   }
 }

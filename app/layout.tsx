@@ -1,11 +1,15 @@
 import { ReactNode, Metadata } from '@/types';
 import { Inter } from 'next/font/google';
+import { cn } from '@/lib/utils';
 
 import { GeneralProviders, ThemeProvider } from './components';
 
 import './globals.css';
 
-const inter = Inter({ subsets: ['latin'] });
+const fontSans = Inter({
+  subsets: ['latin'],
+  variable: '--font-sans',
+});
 
 export const metadata: Metadata = {
   title: 'SyväHire',
@@ -14,8 +18,12 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
+    <html
+      className={cn(fontSans.variable, 'dark')}
+      suppressHydrationWarning
+      lang="en"
+    >
+      <body>
         <GeneralProviders>
           <ThemeProvider
             disableTransitionOnChange

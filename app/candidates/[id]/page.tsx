@@ -12,6 +12,10 @@ export default function SingleCandidatePage({
 }: SingleCandidatePageProps) {
   const foundCandidate = candidates.find((c) => c.id === params.id);
 
+  if (!foundCandidate) {
+    return null;
+  }
+
   return (
     <div className="h-full shrink">
       <InterviewDetails candidate={foundCandidate} />

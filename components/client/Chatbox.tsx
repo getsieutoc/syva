@@ -40,8 +40,8 @@ export const Chatbox = ({
   }, [messages]);
 
   return (
-    <div className="flex h-full w-full flex-col bg-red-200 p-4 text-xs">
-      <div className="flex shrink flex-col gap-1">
+    <div className="flex h-full w-full flex-col p-4 text-xs">
+      <div className="flex h-full shrink flex-col gap-1">
         {messages.map((m) => (
           <div
             className={`flex flex-row-${getDirection(m.role)} w-full`}

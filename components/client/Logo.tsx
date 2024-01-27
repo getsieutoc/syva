@@ -15,14 +15,14 @@ type LogoTypes = {
 export const Logo = ({
   src = '/images/logo.png',
   size = 'md',
-  alt = 'logo',
+  alt = 'syvahire logo',
   className = '',
 }: LogoTypes) => {
   return (
     <Link href="/">
       <Avatar size={size} className={className}>
         <AvatarImage alt={alt} src={src} />
-        <AvatarFallback>Logo</AvatarFallback>
+        <AvatarFallback>SyvaHire</AvatarFallback>
       </Avatar>
     </Link>
   );
