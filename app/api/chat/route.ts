@@ -54,7 +54,6 @@ export async function POST(req: NextRequest) {
 
     return new StreamingTextResponse(stream);
   } catch (error) {
-    console.log('### error: ', { error });
     return NextResponse.json({ message: 'Error while POST chat' });
   }
 }

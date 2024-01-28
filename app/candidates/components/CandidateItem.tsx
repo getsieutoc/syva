@@ -21,7 +21,7 @@ export const CandidateItem = ({ candidate }: CandidateItemProps) => {
 
   return (
     <Card
-      className="cursor-pointer hover:bg-gray-100"
+      className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-400"
       onClick={() => router.push(`/candidates/${candidate.id}`)}
     >
       <CardHeader>
