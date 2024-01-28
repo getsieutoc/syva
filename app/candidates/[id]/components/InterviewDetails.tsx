@@ -56,7 +56,7 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
       <ResizablePanel defaultSize={50}>
         <ResizablePanelGroup direction="vertical">
           <ResizablePanel defaultSize={15}>
-            <div className="flex h-full items-center justify-center p-2">
+            <div className="flex h-full items-center justify-center">
               <Avatar size="md">
                 <AvatarImage alt={candidate?.name} src={candidate?.avatar} />
               </Avatar>
@@ -67,9 +67,7 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
           <ResizableHandle />
 
           <ResizablePanel defaultSize={85}>
-            <div className="flex h-full items-center justify-center p-2">
-              <Chatbox {...bindChat} />
-            </div>
+            <Chatbox {...bindChat} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </ResizablePanel>

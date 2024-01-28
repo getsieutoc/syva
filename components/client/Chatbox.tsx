@@ -36,8 +36,8 @@ export const Chatbox = ({
   }, [messages]);
 
   return (
-    <div className="flex h-full w-full flex-col p-4 text-xs">
-      <div className="flex h-full shrink flex-col gap-1">
+    <div className="flex h-full w-full flex-col gap-4 p-4 text-xs">
+      <div className="flex h-full flex-auto flex-col gap-1 overflow-auto">
         {messages.map((m) => (
           <div
             className={cn(
@@ -58,10 +58,7 @@ export const Chatbox = ({
         ))}
       </div>
 
-      <form
-        className="relative flex w-full grow-0 flex-col gap-2"
-        onSubmit={handleSubmit}
-      >
+      <form className="relative flex w-full grow-0" onSubmit={handleSubmit}>
         <Input
           onChange={handleInputChange}
           placeholder="Type here..."
