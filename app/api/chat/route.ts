@@ -1,14 +1,62 @@
+import {
+  StringOutputParser,
+  BytesOutputParser,
+} from '@langchain/core/output_parsers';
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
-import { RetrievalQAChain, loadQAStuffChain } from 'langchain/chains';
-import { StreamingTextResponse, LangChainStream, Message } from 'ai';
+import { StreamingTextResponse, Message as VercelChatMessage } from 'ai';
+import { RunnableSequence } from '@langchain/core/runnables';
 import { PromptTemplate } from '@langchain/core/prompts';
 import { NextRequest, NextResponse } from 'next/server';
+import { Document } from '@langchain/core/documents';
 import { ChatOpenAI } from '@langchain/openai';
 import { getEmbeddings } from '@/lib/openai';
+import { getMemory } from '@/lib/memory';
 import { config } from '@/lib/pgvector';
 
+const combineDocumentsFn = (docs: Document[]) => {
+  const serializedDocs = docs.map((doc) => doc.pageContent);
+  return serializedDocs.join('\n\n');
+};
+
+const formatVercelMessages = (chatHistory: VercelChatMessage[]) => {
+  const formattedDialogueTurns = chatHistory.map((message) => {
+    if (message.role === 'user') {
+      return `Human: ${message.content}`;
+    } else if (message.role === 'assistant') {
+      return `Assistant: ${message.content}`;
+    } else {
+      return `${message.role}: ${message.content}`;
+    }
+  });
+  return formattedDialogueTurns.join('\n');
+};
+
+const questionTemplate = `Given the following conversation and a follow up question, rephrase the follow up question to be a standalone question, in simple and consice English.
+
+  <chat_history>
+    {chat_history}
+  </chat_history>
+
+  Follow Up Input: {question}
+  Standalone question:`;
+
+const answerTemplate = `You are a seasoned recruiter and experienced interviewer, you can address all aspects of the interview process and answer inquiries from both the company's perspective and the candidate's side.
+  Answer the question based only on the following context and chat history:
+  <context>
+    {context}
+  </context>
+
+  <chat_history>
+    {chat_history}
+  </chat_history>
+
+  Question: {question}`;
+
+const questionPrompt = PromptTemplate.fromTemplate(questionTemplate);
+const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
+
 type PromptRequest = {
-  messages: Message[];
+  messages: VercelChatMessage[];
 };
 
 export async function POST(req: NextRequest) {
@@ -19,40 +67,86 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: 204 });
     }
 
-    const { stream, handlers } = LangChainStream();
+    const { question, previousMessages } = getMemory(messages);
 
     const vectorStore = await PGVectorStore.initialize(getEmbeddings(), config);
-
-    const retriever = vectorStore.asRetriever({});
-
-    const template = `You are an excellent HR assistant. Use the following pieces of context to answer the question at the end.
-      If you don't know the answer, just say that you don't know, don't try to make up an answer.
-      Use three sentences maximum and keep the answer as concise as possible.
-      {context}
-      Question: {question}
-      Answer:`;
-
-    const CHAIN_PROMPT = new PromptTemplate({
-      inputVariables: ['context', 'question'],
-      template,
-    });
 
     const llm = new ChatOpenAI({
       modelName: 'gpt-3.5-turbo',
       temperature: 0.2,
       streaming: true,
+      // callbacks: [handlers],
+      // verbose: true,
     });
 
-    const chain = new RetrievalQAChain({
-      combineDocumentsChain: loadQAStuffChain(llm, { prompt: CHAIN_PROMPT }),
-      retriever,
-      returnSourceDocuments: true,
-      inputKey: 'question',
+    const standaloneQuestionChain = RunnableSequence.from([
+      questionPrompt,
+      llm,
+      new StringOutputParser(),
+    ]);
+
+    let resolveWithDocuments: (value: Document[]) => void;
+    const documentPromise = new Promise<Document[]>((resolve) => {
+      resolveWithDocuments = resolve;
     });
 
-    chain.call({ question: messages[messages.length - 1].content }, [handlers]);
+    const retriever = vectorStore.asRetriever({
+      callbacks: [
+        {
+          handleRetrieverEnd(documents) {
+            resolveWithDocuments(documents);
+          },
+        },
+      ],
+    });
 
-    return new StreamingTextResponse(stream);
+    const retrievalChain = retriever.pipe(combineDocumentsFn);
+
+    const answerChain = RunnableSequence.from([
+      {
+        context: RunnableSequence.from([
+          (input) => input.question,
+          retrievalChain,
+        ]),
+        chat_history: (input) => input.chat_history,
+        question: (input) => input.question,
+      },
+      answerPrompt,
+      llm,
+    ]);
+
+    const conversationalRetrievalQAChain = RunnableSequence.from([
+      {
+        question: standaloneQuestionChain,
+        chat_history: (input) => input.chat_history,
+      },
+      answerChain,
+      new BytesOutputParser(),
+    ]);
+
+    const stream = await conversationalRetrievalQAChain.stream({
+      question,
+      chat_history: formatVercelMessages(previousMessages),
+    });
+
+    const documents = await documentPromise;
+    const serializedSources = Buffer.from(
+      JSON.stringify(
+        documents.map((doc) => {
+          return {
+            pageContent: doc.pageContent.slice(0, 50) + '...',
+            metadata: doc.metadata,
+          };
+        })
+      )
+    ).toString('base64');
+
+    return new StreamingTextResponse(stream, {
+      headers: {
+        'x-message-index': (previousMessages.length + 1).toString(),
+        'x-sources': serializedSources,
+      },
+    });
   } catch (error) {
     return NextResponse.json({ message: 'Error while POST chat' });
   }

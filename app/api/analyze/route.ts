@@ -1,4 +1,4 @@
-import { AudioTranscriptLoader } from 'langchain/document_loaders/web/assemblyai';
+import { AudioTranscriptSentencesLoader } from 'langchain/document_loaders/web/assemblyai';
 import { PGVectorStore } from '@langchain/community/vectorstores/pgvector';
 import { TokenTextSplitter } from 'langchain/text_splitter';
 import { NextRequest, NextResponse } from 'next/server';
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     audioEndAt = 5,
   }: AnalyzeRequest = await req.json();
 
-  const loader = new AudioTranscriptLoader({
+  const loader = new AudioTranscriptSentencesLoader({
     audio: audioUrl,
     audio_start_from: audioStartFrom * 1000,
     audio_end_at: audioEndAt * 1000,
@@ -32,8 +32,8 @@ export async function POST(req: NextRequest) {
 
   const splitter = new TokenTextSplitter({
     encodingName: 'cl100k_base',
-    chunkSize: 200,
-    chunkOverlap: 10,
+    chunkSize: 100,
+    chunkOverlap: 5,
   });
 
   const pgvectorStore = await PGVectorStore.initialize(embeddings, config);
