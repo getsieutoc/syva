@@ -1,6 +1,5 @@
 'use client';
 
-export * from './providers';
-export * from './header';
+export * from './Chatbox';
+export * from './HeaderDemo';
 export * from './Navbar';
-export * from './Interviewer';

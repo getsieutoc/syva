@@ -18,9 +18,11 @@ const meta = {
   // More on argTypes: https://storybook.js.org/docs/api/argtypes
   argTypes: {
     variant: {
+      control: 'radio',
       options: variantOptions,
     },
     size: {
+      control: 'radio',
       options: sizeOptions,
     },
   },
@@ -32,20 +34,19 @@ type Story = StoryObj<typeof meta>;
 
 export const Variants: Story = {
   parameters: {
-    controls: { exclude: ['variant'] },
+    controls: { exclude: ['variant', 'asChild'] },
   },
 
   args: {
     size: 'md',
+    isLoading: false,
   },
 
   render: (args) => (
     <div style={{ display: 'flex', gap: '10px' }}>
       {variantOptions.map((opt) => {
-        const { size } = args;
-
         return (
-          <Button key={opt} variant={opt} size={size}>
+          <Button key={opt} variant={opt} {...args}>
             Button
           </Button>
         );
@@ -56,11 +57,12 @@ export const Variants: Story = {
 
 export const Sizes: Story = {
   parameters: {
-    controls: { exclude: ['size'] },
+    controls: { exclude: ['size', 'asChild'] },
   },
 
   args: {
     variant: 'solid',
+    isLoading: false,
   },
 
   render: (args) => (
@@ -75,5 +77,23 @@ export const Sizes: Story = {
         );
       })}
     </div>
+  ),
+};
+
+export const Loading: Story = {
+  parameters: {
+    controls: { exclude: ['asChild'] },
+  },
+
+  args: {
+    size: 'md',
+    variant: 'solid',
+    isLoading: false,
+  },
+
+  render: (args) => (
+    <Button isLoading {...args}>
+      Button
+    </Button>
   ),
 };

@@ -11,38 +11,37 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui';
-import { CandidateType } from '.';
+import { Candidate } from '@/types';
 
-type CandidateItemTypes = {
-  item: CandidateType;
+type CandidateItemProps = {
+  candidate: Candidate;
 };
-export const CandidateItem = (props: CandidateItemTypes) => {
-  const { item } = props;
+export const CandidateItem = ({ candidate }: CandidateItemProps) => {
   const router = useRouter();
 
   return (
     <Card
-      onClick={() => router.push(item.id)}
       className="cursor-pointer hover:bg-gray-100"
+      onClick={() => router.push(`/candidates/${candidate.id}`)}
     >
       <CardHeader>
         <CardTitle>
           <div className="flex">
             <Avatar size="md">
-              <AvatarImage alt={item.name} src={item.avatar} />
+              <AvatarImage alt={candidate.name} src={candidate.avatar} />
             </Avatar>
             <div className="p-3">
-              {item.name}
-              <CardDescription>{item.age} year old</CardDescription>
-              <CardDescription>{item.jobDescription}</CardDescription>
+              {candidate.name}
+              <CardDescription>{candidate.age} year old</CardDescription>
+              <CardDescription>{candidate.jobDescription}</CardDescription>
             </div>
           </div>
         </CardTitle>
       </CardHeader>
-      <CardContent>{item.jobTitle}</CardContent>
+      <CardContent>{candidate.jobTitle}</CardContent>
       <CardFooter>
         <div className="text-sm text-muted-foreground">
-          Apply at {item.dateAplly}
+          Apply at {candidate.dateAplly}
         </div>
       </CardFooter>
     </Card>

@@ -1,24 +1,26 @@
-import deepmerge from 'deepmerge';
 import { HttpMethod } from '@/types';
+import deepmerge from 'deepmerge';
 
-const defaultOptions = {
-  method: HttpMethod.GET,
-  // TODO: Response to preflight request doesn't pass access control check:
-  // The value of the 'Access-Control-Allow-Origin' header in the response must not be the wildcard '*'
-  // when the request's credentials mode is 'include'.
-  // credentials: 'include',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-};
+type FetchParams = Parameters<typeof fetch>;
 
-export async function fetcher<JSON = unknown>(
-  input: RequestInfo,
-  options?: RequestInit
-): Promise<JSON> {
-  const finalOptions = deepmerge(defaultOptions, options ?? {});
-  const response = await fetch(input, finalOptions);
+export async function fetcher<R = unknown>(
+  input: FetchParams[0],
+  init?: FetchParams[1]
+): Promise<R> {
+  const options = deepmerge(
+    {
+      method: HttpMethod.GET,
+      headers: { 'Content-Type': 'application/json' },
+    },
+    init ?? {}
+  );
 
-  const resolved = response.json();
-  return resolved;
+  const response = await fetch(input, options);
+
+  // Sometime the body can be empty, and the json() will fail
+  if (response.status === 204 || response.statusText === 'No Content') {
+    return JSON.parse('{}');
+  }
+
+  return await response.json();
 }
