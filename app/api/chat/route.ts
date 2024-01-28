@@ -12,6 +12,7 @@ import { ChatOpenAI } from '@langchain/openai';
 import { getEmbeddings } from '@/lib/openai';
 import { getMemory } from '@/lib/memory';
 import { config } from '@/lib/pgvector';
+import { prisma } from '@/lib/prisma';
 
 const combineDocumentsFn = (docs: Document[]) => {
   const serializedDocs = docs.map((doc) => doc.pageContent);
@@ -56,12 +57,13 @@ const questionPrompt = PromptTemplate.fromTemplate(questionTemplate);
 const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
 
 type PromptRequest = {
+  audioUrl: string;
   messages: VercelChatMessage[];
 };
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages }: PromptRequest = await req.json();
+    const { messages, audioUrl }: PromptRequest = await req.json();
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ status: 204 });
@@ -69,14 +71,23 @@ export async function POST(req: NextRequest) {
 
     const { question, previousMessages } = getMemory(messages);
 
-    const vectorStore = await PGVectorStore.initialize(getEmbeddings(), config);
+    const link = await prisma.link.findFirst({
+      where: { url: audioUrl },
+    });
+
+    if (!link) {
+      throw new Error('Link not found in our systems');
+    }
+
+    const vectorStore = await PGVectorStore.initialize(getEmbeddings(), {
+      ...config,
+      tableName: link.id,
+    });
 
     const llm = new ChatOpenAI({
       modelName: 'gpt-3.5-turbo',
       temperature: 0.2,
       streaming: true,
-      // callbacks: [handlers],
-      // verbose: true,
     });
 
     const standaloneQuestionChain = RunnableSequence.from([

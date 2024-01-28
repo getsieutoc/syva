@@ -4,6 +4,7 @@ import { TokenTextSplitter } from 'langchain/text_splitter';
 import { NextRequest, NextResponse } from 'next/server';
 import { OpenAIEmbeddings } from '@langchain/openai';
 import { config } from '@/lib/pgvector';
+import { prisma } from '@/lib/prisma';
 
 type AnalyzeRequest = {
   audioUrl: string;
@@ -36,7 +37,17 @@ export async function POST(req: NextRequest) {
     chunkOverlap: 5,
   });
 
-  const pgvectorStore = await PGVectorStore.initialize(embeddings, config);
+  const link = await prisma.link.create({
+    data: {
+      url: audioUrl,
+      user: { connect: { id: 'hc2d0re130ohhokbf7elgiil' } },
+    },
+  });
+
+  const pgvectorStore = await PGVectorStore.initialize(embeddings, {
+    ...config,
+    tableName: link.id,
+  });
 
   const docs = await loader.load();
 

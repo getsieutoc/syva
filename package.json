@@ -9,7 +9,7 @@
     "postinstall": "prisma generate",
     "clean": "rimraf node_modules .next dist && pnpm store prune && pnpm i",
     "dev": "trap 'docker-compose down; exit 0' SIGINT; docker-compose up -d && pnpm run watch",
-    "watch": "concurrently \"next dev\" \"pnpm run storybook\"",
+    "watch": "concurrently \"prisma generate\" \"next dev\" \"pnpm run storybook\"",
     "lint": "eslint ./ --ext .ts,.tsx",
     "build": "next build",
     "start": "next start",
