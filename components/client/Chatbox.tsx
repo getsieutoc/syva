@@ -2,10 +2,6 @@ import { Button, Input } from '@/components/ui';
 import { useEffect, useRef } from '@/hooks';
 import { UseChatHelpers } from '@/types';
 import { cn } from '@/lib/utils';
-import { Message } from 'ai';
-
-const getDirection = (role: Message['role']) =>
-  role !== 'user' ? '-reverse' : '';
 
 export type ChatboxProps = UseChatHelpers;
 
@@ -38,8 +34,6 @@ export const Chatbox = ({
   useEffect(() => {
     handleScroll();
   }, [messages]);
-
-  console.log('### messages: ', { messages });
 
   return (
     <div className="flex h-full w-full flex-col p-4 text-xs">
