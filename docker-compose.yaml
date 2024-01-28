@@ -22,6 +22,18 @@ services:
       timeout: 5s
       retries: 3
 
+  pgvector:
+    container_name: syva-pgvector
+    image: ankane/pgvector
+    ports:
+      - 5433:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=postgres
+
   redis:
     container_name: syva-redis
     image: redis:7-alpine
@@ -38,3 +50,4 @@ services:
 
 volumes:
   data:
+  pgdata:
