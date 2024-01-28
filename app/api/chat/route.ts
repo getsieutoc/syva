@@ -23,22 +23,11 @@ export async function POST(req: NextRequest) {
 
     const vectorStore = await PGVectorStore.initialize(getEmbeddings(), config);
 
-    const retriever = vectorStore.asRetriever({
-      searchType: 'mmr', // Use max marginal relevance search
-      searchKwargs: { fetchK: 5 },
-    });
+    const retriever = vectorStore.asRetriever({});
 
-    // CONVERSATION LOG: {conversationHistory}
-    const template = `Given the following user prompt and conversation log, formulate a question that would be the most relevant to provide the user with an answer from a knowledge base.
-      You should follow the following rules when generating and answer:
-      - Always prioritize the user prompt over the conversation log.
-      - Ignore any conversation log that is not directly related to the user prompt.
-      - Only attempt to answer if a question was posed.
-      - The question should be a single sentence.
-      - You should remove any punctuation from the question.
-      - You should remove any words that are not relevant to the question.
-      - If you are unable to formulate a question, respond with the same USER PROMPT you got.
-
+    const template = `You are an excellent HR assistant. Use the following pieces of context to answer the question at the end.
+      If you don't know the answer, just say that you don't know, don't try to make up an answer.
+      Use three sentences maximum and keep the answer as concise as possible.
       {context}
       Question: {question}
       Answer:`;

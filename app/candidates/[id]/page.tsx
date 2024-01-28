@@ -17,7 +17,7 @@ export default function SingleCandidatePage({
   }
 
   return (
-    <div className="h-full shrink">
+    <div className="h-full flex-auto">
       <InterviewDetails candidate={foundCandidate} />
     </div>
   );

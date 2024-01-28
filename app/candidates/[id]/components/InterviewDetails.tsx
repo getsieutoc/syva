@@ -102,8 +102,8 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
         </div>
 
         {response && (
-          <div className="flex max-h-full overflow-auto rounded-md border p-2 text-xs">
-            {JSON.stringify(response)}
+          <div className="flex-auto overflow-auto rounded-md border p-2 text-xs">
+            <p>{JSON.stringify(response)}</p>
           </div>
         )}
       </ResizablePanel>

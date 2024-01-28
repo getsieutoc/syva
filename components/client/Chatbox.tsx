@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 import { Message } from 'ai';
 
 const getDirection = (role: Message['role']) =>
-  role !== 'user' ? 'reverse' : '';
+  role !== 'user' ? '-reverse' : '';
 
 export type ChatboxProps = UseChatHelpers;
 
@@ -39,18 +39,23 @@ export const Chatbox = ({
     handleScroll();
   }, [messages]);
 
+  console.log('### messages: ', { messages });
+
   return (
     <div className="flex h-full w-full flex-col p-4 text-xs">
       <div className="flex h-full shrink flex-col gap-1">
         {messages.map((m) => (
           <div
-            className={`flex flex-row-${getDirection(m.role)} w-full`}
+            className={cn(
+              'flex w-full flex-row',
+              `justify-${m.role !== 'user' ? 'end' : 'start'}`
+            )}
             key={m.id}
           >
             <p
               className={cn(
-                'flex-none rounded-lg px-4 py-2',
-                `bg-${m.role !== 'user' ? 'blue' : 'slate'}-100`
+                'max-w-[80%] flex-none text-wrap rounded-lg px-4 py-2',
+                m.role !== 'user' ? 'bg-blue-100' : 'bg-slate-100'
               )}
             >
               {m.content}
