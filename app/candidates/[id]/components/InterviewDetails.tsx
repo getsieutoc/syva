@@ -53,10 +53,10 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
       direction="horizontal"
       className="max-w-full rounded-lg border"
     >
-      <ResizablePanel defaultSize={50}>
+      <ResizablePanel defaultSize={30}>
         <ResizablePanelGroup direction="vertical">
           <ResizablePanel defaultSize={15}>
-            <div className="flex h-full items-center justify-center p-2">
+            <div className="flex h-full items-center justify-center">
               <Avatar size="md">
                 <AvatarImage alt={candidate?.name} src={candidate?.avatar} />
               </Avatar>
@@ -67,16 +67,14 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
           <ResizableHandle />
 
           <ResizablePanel defaultSize={85}>
-            <div className="flex h-full items-center justify-center p-2">
-              <Chatbox {...bindChat} />
-            </div>
+            <Chatbox {...bindChat} />
           </ResizablePanel>
         </ResizablePanelGroup>
       </ResizablePanel>
 
       <ResizableHandle />
 
-      <ResizablePanel defaultSize={50} className="flex flex-col gap-2 p-6">
+      <ResizablePanel defaultSize={70} className="flex flex-col gap-2 p-6">
         <div className="flex items-center justify-center gap-2">
           <Input
             onChange={(e) => setAudioUrl(e.target.value)}

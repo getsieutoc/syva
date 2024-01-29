@@ -36,20 +36,25 @@ export const Chatbox = ({
   }, [messages]);
 
   return (
-    <div className="flex h-full w-full flex-col p-4 text-xs">
-      <div className="flex h-full shrink flex-col gap-1">
+    <div className="flex h-full w-full flex-col gap-4 px-0 py-4 text-sm">
+      <div
+        ref={messagesRef}
+        className="flex h-full flex-auto flex-col gap-2 overflow-auto px-4"
+      >
         {messages.map((m) => (
           <div
             className={cn(
               'flex w-full flex-row',
-              `justify-${m.role !== 'user' ? 'end' : 'start'}`
+              m.role !== 'user' ? 'justify-end' : 'justify-start'
             )}
             key={m.id}
           >
             <p
               className={cn(
-                'max-w-[80%] flex-none text-wrap rounded-lg px-4 py-2',
-                m.role !== 'user' ? 'bg-blue-100' : 'bg-slate-100'
+                'max-w-[80%] flex-none text-wrap rounded-lg px-4 py-3',
+                m.role !== 'user'
+                  ? 'bg-blue-100 dark:bg-blue-800'
+                  : 'bg-slate-100 dark:bg-slate-800'
               )}
             >
               {m.content}
@@ -59,7 +64,7 @@ export const Chatbox = ({
       </div>
 
       <form
-        className="relative flex w-full grow-0 flex-col gap-2"
+        className="relative flex grow-0 items-center justify-center px-4"
         onSubmit={handleSubmit}
       >
         <Input
@@ -71,7 +76,7 @@ export const Chatbox = ({
         />
 
         <Button
-          className="absolute bottom-1 right-1 self-end"
+          className="absolute bottom-1 right-5 self-end"
           aria-label="Send message"
           isLoading={isLoading}
           ref={buttonRef}
