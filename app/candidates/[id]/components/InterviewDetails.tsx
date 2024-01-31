@@ -19,8 +19,6 @@ export type SingleCandidatePageProps = {
 };
 
 export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
-  const bindChat = useChat();
-
   const { isLoading, startLoading, stopLoading } = useLoading();
 
   const [audioUrl, setAudioUrl] = useLocalStorage(candidate.id, '');
@@ -30,6 +28,8 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
   const [audioEndAt, setEndAt] = useLocalStorage('audio-end-at', 5);
 
   const [response, setResponse] = useState<object | null>(null);
+
+  const bindChat = useChat({ body: { audioUrl } });
 
   const handleAnalyzeAudio = async () => {
     startLoading();
