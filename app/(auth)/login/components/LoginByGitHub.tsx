@@ -15,7 +15,7 @@ export const LoginByGitHub = ({ org }: LoginByGitHubProps) => {
   const searchParams = useSearchParams();
   const error = searchParams?.get('error');
 
-  const callbackUrl = searchParams.get('callbackUrl') ?? '/projects';
+  const callbackUrl = searchParams.get('callbackUrl') ?? '/candidates';
 
   useEffect(() => {
     const errorMessage = Array.isArray(error) ? error.pop() : error;
@@ -23,17 +23,11 @@ export const LoginByGitHub = ({ org }: LoginByGitHubProps) => {
   }, [error]);
 
   const handleLogin = async () => {
-    const params = new URLSearchParams(searchParams);
-
-    params.delete('callbackUrl');
-
-    params.append('signedIn', 'true');
-
     setLoading(true);
 
     await signIn('github', {
       redirect: true,
-      callbackUrl: `${callbackUrl}?${params}`,
+      callbackUrl,
     });
 
     setLoading(false);

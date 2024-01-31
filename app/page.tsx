@@ -1,10 +1,12 @@
-import { Navbar } from '@/components/client';
+import { redirect } from 'next/navigation';
+import { getSession } from '@/lib/auth';
 
-export default function Home() {
-  return (
-    <main className="px-10">
-      <Navbar />
-      Homepage
-    </main>
-  );
+export default async function Home() {
+  const { session } = await getSession();
+
+  if (!session) {
+    redirect('/login');
+  }
+
+  redirect('/candidates');
 }

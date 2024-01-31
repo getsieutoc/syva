@@ -1,6 +1,7 @@
 'use client';
 
-import * as React from 'react';
+import { signOut } from 'next-auth/react';
+import { forwardRef } from 'react';
 import Link from 'next/link';
 import { cn } from '@/lib/utils';
 import {
@@ -116,17 +117,15 @@ export function Navbar() {
             </NavigationMenuLink>
           </Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <NavigationMenuLink className={navigationMenuTriggerStyle()}>
-            Documentation
-          </NavigationMenuLink>
+        <NavigationMenuItem onClick={() => signOut()}>
+          logout
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
   );
 }
 
-const ListItem = React.forwardRef<
+const ListItem = forwardRef<
   React.ElementRef<'a'>,
   React.ComponentPropsWithoutRef<'a'>
 >(({ className, title, href, children, ...props }, ref) => {
