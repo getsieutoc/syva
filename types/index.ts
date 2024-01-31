@@ -7,6 +7,7 @@ export type {
 } from 'react';
 export type { Message, UseChatHelpers } from 'ai/react';
 export type { Metadata } from 'next';
+export * from '@prisma/client';
 
 export * from './common';
 
