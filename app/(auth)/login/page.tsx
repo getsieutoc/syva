@@ -2,7 +2,6 @@ import { newURLWithSearchParams } from '@/lib/utils';
 import { redirect } from 'next/navigation';
 import { Logo } from '@/components/client';
 import { getSession } from '@/lib/auth';
-import { cookies } from 'next/headers';
 
 import { LoginByGitHub } from './components';
 
@@ -17,15 +16,11 @@ export default async function LoginPage({
   const { session } = await getSession();
 
   if (session) {
-    redirect(newURLWithSearchParams('/projects', searchParams));
+    redirect(newURLWithSearchParams('/candidates', searchParams));
   }
 
-  const cookieStore = cookies();
-  const requestCookie = cookieStore.get('verificationRequest');
-  const isRequested = !!requestCookie && requestCookie.value === 'true';
-
   return (
-    <div className="mx-auto flex h-[70%] flex-col items-center justify-evenly">
+    <div className="mx-auto flex h-[70%] max-w-md flex-col items-center justify-evenly">
       <div className="flex w-full flex-col items-center border-b-gray-200">
         <Logo />
 

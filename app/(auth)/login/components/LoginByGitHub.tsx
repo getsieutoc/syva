@@ -40,7 +40,7 @@ export const LoginByGitHub = ({ org }: LoginByGitHubProps) => {
   };
 
   return (
-    <div className="flex w-full gap-1 text-center">
+    <div className="flex w-full justify-center gap-1 text-center">
       <Button isLoading={isLoading} onClick={handleLogin} size="lg">
         Login with GitHub
       </Button>

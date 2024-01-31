@@ -11,4 +11,8 @@ declare module 'next-auth' {
   interface Session {
     user: DefaultSession['user'] & Pick<PrismaUser, 'id' | 'username' | 'role'>;
   }
+
+  interface Profile {
+    organizations_url?: string;
+  }
 }
