@@ -41,8 +41,9 @@ const questionTemplate = `Given the following conversation and a follow up quest
   Follow Up Input: {question}
   Standalone question:`;
 
-const answerTemplate = `You are a seasoned recruiter and experienced interviewer, you can address all aspects of the interview process and answer inquiries from both the company's perspective and the candidate's side.
+const answerTemplate = `You are an experienced interviewer, you can address all aspects of the interview process and answer inquiries from both the company's perspective and the candidate's side.
   Answer the question based only on the following context and chat history:
+
   <context>
     {context}
   </context>
@@ -54,6 +55,7 @@ const answerTemplate = `You are a seasoned recruiter and experienced interviewer
   Question: {question}`;
 
 const questionPrompt = PromptTemplate.fromTemplate(questionTemplate);
+
 const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
 
 type PromptRequest = {
@@ -63,7 +65,7 @@ type PromptRequest = {
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, audioUrl }: PromptRequest = await req.json();
+    const { audioUrl, messages }: PromptRequest = await req.json();
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ status: 204 });

@@ -9,3 +9,8 @@ export enum HttpMethod {
   PUT = 'PUT',
   TRACE = 'TRACE',
 }
+
+export type GitHubOrganization = {
+  login: string;
+  id: number;
+};

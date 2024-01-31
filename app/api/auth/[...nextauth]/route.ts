@@ -1,9 +1,5 @@
+import { authOptions } from '@/lib/auth';
 import NextAuth from 'next-auth';
-import { authOptions } from '@/auth';
-
-if (!process.env.NEXTAUTH_SECRET) {
-  throw new Error('NEXTAUTH_SECRET variable is not defined');
-}
 
 const handler = NextAuth(authOptions);
 
