@@ -8,8 +8,11 @@ import { Sidebar } from './components';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <ResizablePanelGroup direction="horizontal" className="h-dvh max-w-full">
-      <ResizablePanel defaultSize={20}>
+    <ResizablePanelGroup
+      direction="horizontal"
+      className="max-h-dvh max-w-full"
+    >
+      <ResizablePanel defaultSize={20} className="min-w-20 max-w-sm">
         <Sidebar />
       </ResizablePanel>
 

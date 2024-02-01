@@ -26,6 +26,7 @@ export const authOptions: NextAuthOptions = {
           name: profile.name ?? profile.login,
           email: profile.email,
           image: profile.avatar_url,
+          role: Role.MEMBER,
         };
       },
     }),
@@ -41,18 +42,13 @@ export const authOptions: NextAuthOptions = {
 
   callbacks: {
     signIn: async ({ profile, account }) => {
-      if (
-        account &&
-        account.provider === 'github' &&
-        profile &&
-        profile.organizations_url
-      ) {
+      if (account?.provider === 'github' && profile?.organizations_url) {
         const orgs = await fetcher<GitHubOrganization[]>(
           profile.organizations_url
         );
 
+        // Allow only people inside the organization
         if (process.env.GITHUB_ORG) {
-          // Allow only people inside the organization
           return orgs.some((org) => org.login === process.env.GITHUB_ORG);
         }
 

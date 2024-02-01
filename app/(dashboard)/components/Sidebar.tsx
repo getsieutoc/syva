@@ -7,8 +7,8 @@ import {
   useMemo,
 } from '@/hooks';
 import { Logo, NextLink } from '@/components/client';
-import { Button } from '@/components/ui';
 import { Role } from '@/types';
+import { cn } from '@/lib/utils';
 
 export const Sidebar = () => {
   const segments = useSelectedLayoutSegments();
@@ -56,8 +56,8 @@ export const Sidebar = () => {
     return [
       {
         name: 'Candidates',
-        href: '/cadidates',
-        isActive: segments[0] === 'projects',
+        href: '/candidates',
+        isActive: segments[0] === 'candidates',
         visible: {
           [Role.ADMIN]: true,
           [Role.MEMBER]: true,
@@ -65,12 +65,12 @@ export const Sidebar = () => {
         },
       },
       {
-        name: 'Users',
-        href: '/users',
-        isActive: segments[0] === 'users',
+        name: 'Jobs',
+        href: '/jobs',
+        isActive: segments[0] === 'jobs',
         visible: {
           [Role.ADMIN]: true,
-          [Role.MEMBER]: false,
+          [Role.MEMBER]: true,
           [Role.CANDIDATE]: false,
         },
       },
@@ -78,26 +78,28 @@ export const Sidebar = () => {
   }, [segments, id]);
 
   return (
-    <div className="flex h-full flex-col justify-between gap-6 p-6">
-      <div className="flex flex-col gap-6">
-        <Logo size="xs" />
+    <div className="flex h-full flex-col justify-between gap-6 text-sm">
+      <div className="flex w-full flex-col gap-6 pt-6">
+        <Logo size="xs" className="ml-6" />
 
-        {session && (
-          <div className="flex gap-1">
-            {tabs
-              .filter(({ visible }) => visible[session.user.role as Role])
-              .map(({ name, href, isActive }) => (
-                <Button
-                  asChild
-                  key={name}
-                  variant={isActive ? 'outline' : 'ghost'}
-                  className="w-full"
-                >
-                  <NextLink href={href}>{name}</NextLink>
-                </Button>
-              ))}
-          </div>
-        )}
+        <div className="flex flex-col gap-1">
+          {session &&
+            tabs.map(({ name, href, isActive }) => (
+              <NextLink
+                key={name}
+                href={href}
+                className={cn(
+                  'w-full border-l-2 py-3 pl-6',
+                  isActive ? 'font-bold' : 'font-normal',
+                  isActive
+                    ? 'border-sky-500 bg-sky-100 dark:bg-sky-900/90'
+                    : 'border-inherit'
+                )}
+              >
+                {name}
+              </NextLink>
+            ))}
+        </div>
       </div>
     </div>
   );

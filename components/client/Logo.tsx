@@ -14,9 +14,9 @@ type LogoTypes = {
 };
 export const Logo = ({
   src = '/images/logo.png',
-  size = 'md',
   alt = 'syvahire logo',
   className = '',
+  size = 'md',
 }: LogoTypes) => {
   return (
     <Link href="/">
