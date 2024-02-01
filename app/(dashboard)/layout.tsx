@@ -1,24 +1,12 @@
-import {
-  ResizableHandle,
-  ResizablePanel,
-  ResizablePanelGroup,
-} from '@/components/ui';
 import { ReactNode } from '@/types';
 import { Sidebar } from './components';
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      className="max-h-dvh max-w-full"
-    >
-      <ResizablePanel defaultSize={20} className="min-w-20 max-w-sm">
-        <Sidebar />
-      </ResizablePanel>
+    <div className="flex h-dvh w-full">
+      <Sidebar />
 
-      <ResizableHandle />
-
-      <ResizablePanel defaultSize={80}>{children}</ResizablePanel>
-    </ResizablePanelGroup>
+      <div className="flex overflow-auto">{children}</div>
+    </div>
   );
 }

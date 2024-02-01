@@ -78,8 +78,8 @@ export const Sidebar = () => {
   }, [segments, id]);
 
   return (
-    <div className="flex h-full flex-col justify-between gap-6 text-sm">
-      <div className="flex w-full flex-col gap-6 pt-6">
+    <div className="flex h-full min-w-[240px] flex-col justify-between gap-6 border-r text-sm">
+      <div className="flex h-full w-full grow flex-col gap-6 pt-6">
         <Logo size="xs" className="ml-6" />
 
         <div className="flex flex-col gap-1">
