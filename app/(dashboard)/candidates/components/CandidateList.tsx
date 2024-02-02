@@ -2,7 +2,7 @@
 
 import { Candidate } from '@/types';
 
-import { CandidateItem } from './CandidateItem';
+import { Table, Tbody, Td, Tfoot, Th, Thead, Tr } from '@/components/ui';
 
 export type CandidateListProps = {
   data: Candidate[];
@@ -10,15 +10,31 @@ export type CandidateListProps = {
 
 export const CandidateList = ({ data }: CandidateListProps) => {
   return (
-    <div>
-      <h1 className="font-mono text-6xl font-bold text-orange-400 drop-shadow-lg">
-        Candidates
-      </h1>
-      {data.map((item, idx) => (
-        <div key={idx + item.id} className="py-3">
-          <CandidateItem candidate={item} />
-        </div>
-      ))}
+    <div className="max-w-4xl rounded-md border">
+      <Table>
+        <Thead>
+          <Tr>
+            <Th>Name</Th>
+            <Th>Job</Th>
+            <Th>Date apply</Th>
+          </Tr>
+        </Thead>
+        <Tbody>
+          {data.map((candidate) => (
+            <Tr key={candidate.id}>
+              <Td className="font-medium">{candidate.name}</Td>
+              <Td>{candidate.jobTitle}</Td>
+              <Td>{candidate.dateAplly}</Td>
+            </Tr>
+          ))}
+        </Tbody>
+        <Tfoot>
+          <Tr>
+            <Td colSpan={2}>Lorem ipsum</Td>
+            <Td className="text-right">dono</Td>
+          </Tr>
+        </Tfoot>
+      </Table>
     </div>
   );
 };

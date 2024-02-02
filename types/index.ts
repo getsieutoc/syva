@@ -14,7 +14,6 @@ export * from './common';
 export type Candidate = {
   id: string;
   name: string;
-  age: string;
   avatar: string;
   jobTitle: string;
   jobDescription: string;

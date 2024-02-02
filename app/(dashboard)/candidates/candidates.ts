@@ -3,7 +3,6 @@ const data = [
     id: 'clrvzuyiw000008i82tmoe9rp',
     name: 'Michel Ann',
     avatar: 'https://github.com/shadcn.png',
-    age: '25',
 
     dateAplly: '19:30 20-01-2024',
     jobDescription: 'Backend develop | Python | PHP',
@@ -19,7 +18,6 @@ const data = [
     id: 'clrvzwn4g000108l6hgxchtbh',
     name: 'Adam Chin',
     avatar: 'https://i.pravatar.cc 150?img=68',
-    age: '30',
     dateAplly: '09:10 10-03-2024',
     jobDescription: 'Fontend develop | ReactJS | React Native | AngularJS',
     jobTitle: `Software engineer: B.S in Mechatronic Engineering, Automotive Engineering, Computing Engineering, Information Technology or related major
@@ -38,7 +36,6 @@ const data = [
     id: 'clrvzx3jf000308l6b4an3dvc',
     name: 'Carrot',
     avatar: 'https://i.pravatar.cc/150?img=33',
-    age: '39',
     dateAplly: '13:30 10-03-2024',
     jobDescription: 'React Native, Flutter',
     jobTitle: 'Mobile App Developer (Flutter)',

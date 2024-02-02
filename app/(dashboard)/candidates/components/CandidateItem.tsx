@@ -2,8 +2,6 @@
 
 import { useRouter } from 'next/navigation';
 import {
-  Avatar,
-  AvatarImage,
   Card,
   CardContent,
   CardDescription,
@@ -21,28 +19,16 @@ export const CandidateItem = ({ candidate }: CandidateItemProps) => {
 
   return (
     <Card
-      className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-400"
+      className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900"
       onClick={() => router.push(`/candidates/${candidate.id}`)}
     >
       <CardHeader>
-        <CardTitle>
-          <div className="flex">
-            <Avatar size="md">
-              <AvatarImage alt={candidate.name} src={candidate.avatar} />
-            </Avatar>
-            <div className="p-3">
-              {candidate.name}
-              <CardDescription>{candidate.age} year old</CardDescription>
-              <CardDescription>{candidate.jobDescription}</CardDescription>
-            </div>
-          </div>
-        </CardTitle>
+        <CardTitle>{candidate.name}</CardTitle>
+        <CardDescription>{candidate.jobDescription}</CardDescription>
       </CardHeader>
       <CardContent>{candidate.jobTitle}</CardContent>
-      <CardFooter>
-        <div className="text-sm text-muted-foreground">
-          Apply at {candidate.dateAplly}
-        </div>
+      <CardFooter className="text-sm text-muted-foreground">
+        Apply at {candidate.dateAplly}
       </CardFooter>
     </Card>
   );

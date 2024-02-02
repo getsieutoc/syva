@@ -63,7 +63,7 @@ export const Default: Story = {
     controls: { exclude: ['placeholder'] },
   },
 
-  render: (args) => {
+  render: (_args) => {
     return (
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
