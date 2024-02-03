@@ -11,7 +11,7 @@ import {
 export const AddNewButton = () => {
   return (
     <Dialog>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <Button size="lg">Open</Button>
       </DialogTrigger>
       <DialogContent>

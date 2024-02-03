@@ -1,3 +1,5 @@
+export type UnknownData = Record<string, unknown>;
+
 export enum HttpMethod {
   CONNECT = 'CONNECT',
   DELETE = 'DELETE',

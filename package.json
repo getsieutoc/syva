@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "prisma": "prisma",
-    "ui:add": "pnpm dlx -- -E shadcn-ui@latest add",
+    "ui:add": "pnpm dlx shadcn-ui@latest add",
     "ui:diff": "pnpm dlx shadcn-ui@latest diff",
     "postinstall": "prisma generate",
     "clean": "rimraf node_modules .next dist && pnpm store prune && pnpm i",

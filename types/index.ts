@@ -5,6 +5,13 @@ export type {
   ReactNode,
   ElementRef,
 } from 'react';
+export type {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  CellContext,
+  RowData,
+} from '@tanstack/react-table';
 export type { Message, UseChatHelpers } from 'ai/react';
 export type { Metadata } from 'next';
 export * from '@prisma/client';
