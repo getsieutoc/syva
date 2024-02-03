@@ -28,6 +28,7 @@ export const columns: ColumnDef<Candidate>[] = [
         }
         onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
         aria-label="Select all"
+        size="sm"
       />
     ),
     cell: ({ row }) => (
@@ -35,6 +36,7 @@ export const columns: ColumnDef<Candidate>[] = [
         checked={row.getIsSelected()}
         onCheckedChange={(value) => row.toggleSelected(!!value)}
         aria-label="Select row"
+        size="sm"
       />
     ),
     enableSorting: false,
@@ -46,13 +48,16 @@ export const columns: ColumnDef<Candidate>[] = [
       const isSorted = column.getIsSorted();
 
       return (
-        <Button
-          onClick={() => column.toggleSorting(isSorted === 'asc')}
-          variant="ghost"
-          size="sm"
-        >
-          Name <SortIcon isSorted={isSorted} />
-        </Button>
+        <div className="flex items-center justify-start gap-1">
+          <span>Name</span>
+          <Button
+            onClick={() => column.toggleSorting(isSorted === 'asc')}
+            variant="ghost"
+            size="icon"
+          >
+            <SortIcon isSorted={isSorted} />
+          </Button>
+        </div>
       );
     },
     cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
@@ -63,13 +68,16 @@ export const columns: ColumnDef<Candidate>[] = [
       const isSorted = column.getIsSorted();
 
       return (
-        <Button
-          onClick={() => column.toggleSorting(isSorted === 'asc')}
-          variant="ghost"
-          size="sm"
-        >
-          Email <SortIcon isSorted={isSorted} />
-        </Button>
+        <div className="flex items-center justify-start gap-1">
+          <span>Email</span>
+          <Button
+            onClick={() => column.toggleSorting(isSorted === 'asc')}
+            variant="ghost"
+            size="icon"
+          >
+            <SortIcon isSorted={isSorted} />
+          </Button>
+        </div>
       );
     },
     cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
@@ -80,13 +88,14 @@ export const columns: ColumnDef<Candidate>[] = [
       const isSorted = column.getIsSorted();
 
       return (
-        <div className="justify-end">
+        <div className="flex items-center justify-end gap-1">
+          <span>Joined At</span>
           <Button
             onClick={() => column.toggleSorting(isSorted === 'asc')}
             variant="ghost"
-            size="sm"
+            size="icon"
           >
-            Joined At <SortIcon isSorted={isSorted} />
+            <SortIcon isSorted={isSorted} />
           </Button>
         </div>
       );
@@ -135,7 +144,7 @@ export type CandidateListProps = {
 export const CandidateList = ({ data }: CandidateListProps) => {
   return (
     <div className="mx-auto w-[80%] min-w-max max-w-4xl">
-      <DataTable data={data} columns={columns} filterKey="email" />
+      <DataTable data={data} columns={columns} filterKey="name" />
     </div>
   );
 };

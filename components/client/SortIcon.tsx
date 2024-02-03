@@ -11,12 +11,12 @@ export type SortIconProps = {
 
 export const SortIcon = ({ isSorted }: SortIconProps) => {
   if (typeof isSorted === 'boolean') {
-    return <ArrowDownUp className="ml-2 h-4 w-4" />;
+    return <ArrowDownUp className="h-4 w-4" />;
   }
 
   return isSorted === 'asc' ? (
-    <ArrowUpWideNarrow className="ml-2 h-4 w-4" />
+    <ArrowUpWideNarrow className="h-4 w-4" />
   ) : (
-    <ArrowDownNarrowWide className="ml-2 h-4 w-4" />
+    <ArrowDownNarrowWide className="h-4 w-4" />
   );
 };

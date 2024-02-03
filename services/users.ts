@@ -30,6 +30,7 @@ export async function getCandidates(args: Prisma.UserFindManyArgs = {}) {
   const finalArgs: Prisma.UserFindManyArgs = deepmerge(
     {
       where: { role: Role.CANDIDATE },
+      orderBy: [{ createdAt: 'desc' }],
     },
     args
   );
