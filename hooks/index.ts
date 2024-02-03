@@ -21,6 +21,7 @@ export {
 } from 'react-use';
 export { default as useSWRInfinite } from 'swr/infinite';
 export { useChat, useCompletion } from 'ai/react';
+export { useForm } from 'react-hook-form';
 export { default as useSWR } from 'swr';
 export { useTheme } from 'next-themes';
 

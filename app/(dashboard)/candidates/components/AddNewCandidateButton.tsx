@@ -5,10 +5,14 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogFooter,
+  Input,
+  Label,
 } from '@/components/ui';
-import { FormInput, ScrollText } from '@/components/icons';
-import { ComponentProps } from '@/types';
-import { useState } from '@/hooks';
+import { FormInput, ScrollText, ChevronLeft } from '@/components/icons';
+import { ComponentProps, Role, SubmitHandler, UseFormRegister } from '@/types';
+import { useDisclosure, useForm, useState } from '@/hooks';
+import { createUser } from '@/services/users';
 
 const newOptions = [
   {
@@ -45,8 +49,38 @@ const NewCandidateOption = ({
   );
 };
 
-const ManualMethod = () => {
-  return <div>this is manual</div>;
+type ManualInputs = {
+  name: string;
+  email: string;
+  jobIds: string[];
+};
+
+const ManualMethod = ({
+  register,
+}: {
+  register: UseFormRegister<ManualInputs>;
+}) => {
+  return (
+    <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="name">Name</Label>
+        <Input
+          id="name"
+          placeholder="Name"
+          {...register('name', { required: true })}
+        />
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="email">Email</Label>
+        <Input
+          id="email"
+          placeholder="email@example.com"
+          {...register('email', { required: true })}
+        />
+      </div>
+    </div>
+  );
 };
 
 const UploadResumeMethod = () => {
@@ -54,26 +88,64 @@ const UploadResumeMethod = () => {
 };
 
 export const AddNewCandidateButton = () => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
+
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, isDirty },
+  } = useForm<ManualInputs>({
+    defaultValues: {
+      name: '',
+      email: '',
+    },
+  });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen === false) {
       setSelectedMethod(null);
+      onClose();
+    } else {
+      onOpen();
+    }
+  };
+
+  const isDisabled = isSubmitting || !isDirty;
+
+  const onSubmit: SubmitHandler<ManualInputs> = async (data) => {
+    if (isDisabled) return;
+
+    const result = await createUser({
+      ...data,
+      role: Role.CANDIDATE,
+    });
+
+    if (result) {
+      handleOpenChange(false);
     }
   };
 
   return (
-    <Dialog onOpenChange={handleOpenChange}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button>Add New Candidate</Button>
+        <Button onClick={onOpen}>Add New Candidate</Button>
       </DialogTrigger>
 
-      <DialogContent>
+      <DialogContent
+        onPointerDownOutside={(e) => {
+          if (isSubmitting || isDirty || selectedMethod !== null) {
+            e.preventDefault();
+            return;
+          }
+        }}
+      >
         <DialogHeader>
-          <DialogTitle>Create Candidate Record</DialogTitle>
+          <DialogTitle>Create New Candidate</DialogTitle>
         </DialogHeader>
 
-        {selectedMethod === null && (
+        {selectedMethod === null ? (
           <div className="grid grid-cols-2 gap-4">
             {newOptions.map(({ icon, label, value }) => (
               <NewCandidateOption
@@ -85,6 +157,32 @@ export const AddNewCandidateButton = () => {
               />
             ))}
           </div>
+        ) : (
+          <form onSubmit={handleSubmit(onSubmit)}>
+            {selectedMethod === 'manual' && (
+              <ManualMethod register={register} />
+            )}
+
+            <DialogFooter className="mt-6 w-full justify-between">
+              <Button
+                onClick={() => setSelectedMethod(null)}
+                className="max-w-fit"
+                variant="ghost"
+              >
+                <ChevronLeft />
+                Back
+              </Button>
+
+              <Button
+                isLoading={isSubmitting}
+                disabled={isDisabled}
+                className="max-w-fit"
+                type="submit"
+              >
+                Submit
+              </Button>
+            </DialogFooter>
+          </form>
         )}
       </DialogContent>
     </Dialog>

@@ -16,6 +16,7 @@ export type {
   RowData,
 } from '@tanstack/react-table';
 export type { Message, UseChatHelpers } from 'ai/react';
+export type { SubmitHandler, UseFormRegister } from 'react-hook-form';
 export type { Metadata } from 'next';
 export * from '@prisma/client';
 

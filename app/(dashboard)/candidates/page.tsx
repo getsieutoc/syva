@@ -1,8 +1,10 @@
+import { getCandidates } from '@/services/users';
 import { AddNewCandidateButton, CandidateList } from './components';
 
-import candidates from './candidates';
+export default async function CandidatesPage() {
+  const candidates = await getCandidates();
+  console.log('### candidates: ', { candidates });
 
-export default function CandidatesPage() {
   return (
     <div className="flex w-full flex-col">
       <div className="flex justify-between px-6 py-4">

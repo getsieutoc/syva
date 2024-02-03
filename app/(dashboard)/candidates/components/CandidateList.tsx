@@ -15,6 +15,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui';
 import { MoreHorizontal } from '@/components/icons';
+import { formatRelative } from '@/lib/utils';
 
 export const columns: ColumnDef<Candidate>[] = [
   {
@@ -40,11 +41,21 @@ export const columns: ColumnDef<Candidate>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'status',
-    header: 'Status',
-    cell: ({ row }) => (
-      <div className="capitalize">{row.getValue('status')}</div>
-    ),
+    accessorKey: 'name',
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
+      return (
+        <Button
+          onClick={() => column.toggleSorting(isSorted === 'asc')}
+          variant="ghost"
+          size="sm"
+        >
+          Name <SortIcon isSorted={isSorted} />
+        </Button>
+      );
+    },
+    cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
   },
   {
     accessorKey: 'email',
@@ -64,18 +75,26 @@ export const columns: ColumnDef<Candidate>[] = [
     cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
   },
   {
-    accessorKey: 'amount',
-    header: () => <div className="text-right">Amount</div>,
+    accessorKey: 'createdAt',
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
+      return (
+        <div className="justify-end">
+          <Button
+            onClick={() => column.toggleSorting(isSorted === 'asc')}
+            variant="ghost"
+            size="sm"
+          >
+            Joined At <SortIcon isSorted={isSorted} />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ row }) => {
-      const amount = parseFloat(row.getValue('amount'));
+      const formatted = formatRelative(row.getValue('createdAt'));
 
-      // Format the amount as a dollar amount
-      const formatted = new Intl.NumberFormat('en-US', {
-        style: 'currency',
-        currency: 'USD',
-      }).format(amount);
-
-      return <div className="text-right font-medium">{formatted}</div>;
+      return <div className="text-right">{formatted}</div>;
     },
   },
   {
