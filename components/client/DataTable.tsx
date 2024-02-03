@@ -73,10 +73,11 @@ export const DataTable = <TData extends UnknownData>({
             table.getColumn('email')?.setFilterValue(event.target.value)
           }
           className="max-w-sm"
+          size="sm"
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
+            <Button variant="outline" className="ml-auto" size="xs">
               Columns <ChevronDown className="ml-2 h-4 w-4" />
             </Button>
           </DropdownMenuTrigger>

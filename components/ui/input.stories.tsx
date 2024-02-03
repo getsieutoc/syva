@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react';
 
-import { Input } from './input';
+import { Input, InputProps } from './input';
+
+const sizeOptions: InputProps['size'][] = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const meta = {
   title: 'Input',
@@ -9,6 +11,12 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
+  // argTypes: {
+  //   size: {
+  //     control: 'radio',
+  //     options: sizeOptions,
+  //   },
+  // },
 } satisfies Meta<typeof Input>;
 
 export default meta;
@@ -16,5 +24,11 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
-  render: (args) => <Input type="email" placeholder="Email" />,
+  render: (_args) => (
+    <div style={{ display: 'flex', gap: '10px' }}>
+      {sizeOptions.map((opt) => {
+        return <Input key={opt} size={opt} placeholder="Demo" />;
+      })}
+    </div>
+  ),
 };
