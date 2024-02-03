@@ -19,12 +19,12 @@ import {
 import { Eye } from '@/components/icons';
 import { useDisclosure, useRouter, useSearchParams } from '@/hooks';
 import { newURLWithSearchParams, formatTime } from '@/lib/utils';
-import { User } from '@/types';
+import { Job } from '@/types';
 
-type ViewCandidateItemProps = {
-  candidate: User;
+type ViewJobItemProps = {
+  job: Job;
 };
-export const ViewCandidateItem = ({ candidate }: ViewCandidateItemProps) => {
+export const ViewJobItem = ({ job }: ViewJobItemProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -35,12 +35,12 @@ export const ViewCandidateItem = ({ candidate }: ViewCandidateItemProps) => {
 
     if (isOpen) {
       onOpen();
-      newSearchParams.set('id', candidate.id);
+      newSearchParams.set('id', job.id);
     } else {
       onClose();
       newSearchParams.delete('id');
     }
-    router.push(newURLWithSearchParams('/candidates', newSearchParams));
+    router.push(newURLWithSearchParams('/jobs', newSearchParams));
   };
 
   return (
@@ -53,22 +53,22 @@ export const ViewCandidateItem = ({ candidate }: ViewCandidateItemProps) => {
             onOpen();
           }}
         >
-          <Eye className="h-4 w-4" /> View Candidate
+          <Eye className="h-4 w-4" /> View Job
         </DropdownMenuItem>
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Candidate Details</DialogTitle>
+          <DialogTitle>Job Details</DialogTitle>
         </DialogHeader>
 
         <Card>
           <CardHeader>
-            <CardTitle>{candidate.name}</CardTitle>
-            <CardDescription>{candidate.email}</CardDescription>
+            <CardTitle>{job.name}</CardTitle>
+            <CardDescription>{job.email}</CardDescription>
           </CardHeader>
           <CardContent>lorem ipsum</CardContent>
           <CardFooter className="text-sm text-muted-foreground">
-            Joined at {formatTime(candidate.createdAt)}
+            Posted at {formatTime(job.createdAt)}
           </CardFooter>
         </Card>
 

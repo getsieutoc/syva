@@ -114,12 +114,14 @@ export const AddNewCandidateButton = () => {
 
   const isDisabled = isSubmitting || !isDirty;
 
-  const onSubmit: SubmitHandler<ManualInputs> = async (data) => {
+  const onSubmit: SubmitHandler<ManualInputs> = async (inputs) => {
     if (isDisabled) return;
 
     const result = await createUser({
-      ...data,
-      role: Role.CANDIDATE,
+      data: {
+        ...inputs,
+        role: Role.CANDIDATE,
+      },
     });
 
     if (result) {

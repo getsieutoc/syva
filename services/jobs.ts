@@ -3,46 +3,46 @@
 import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { Prisma, Role } from '@/types';
+import { Prisma } from '@/types';
 import deepmerge from 'deepmerge';
 
-export async function createUser(args: Prisma.UserCreateArgs) {
+export async function createJob(args: Prisma.JobCreateArgs) {
   const { session } = await getSession();
 
   if (!session) {
     throw new Error('Unauthorized');
   }
 
-  const response = await prisma.user.create(args);
+  const response = await prisma.job.create(args);
 
-  revalidatePath('/candidates');
+  revalidatePath('/jobs');
 
   return response;
 }
 
-export async function getCandidates(args: Prisma.UserFindManyArgs = {}) {
+export async function getJobs(args: Prisma.JobFindManyArgs = {}) {
   const { session } = await getSession();
 
   if (!session) {
     throw new Error('Unauthorized');
   }
 
-  const finalArgs: Prisma.UserFindManyArgs = deepmerge(
+  const finalArgs: Prisma.JobFindManyArgs = deepmerge(
     {
-      where: { role: Role.CANDIDATE },
+      where: {},
       orderBy: [{ createdAt: 'desc' }],
     },
     args
   );
 
-  const response = await prisma.user.findMany(finalArgs);
+  const response = await prisma.job.findMany(finalArgs);
 
   return response;
 }
 
-export async function updateUser(
+export async function updateJob(
   id: string,
-  data: Prisma.UserUpdateArgs['data']
+  data: Prisma.JobUpdateArgs['data']
 ) {
   const { session } = await getSession();
 
@@ -50,21 +50,21 @@ export async function updateUser(
     throw new Error('Unauthorized');
   }
 
-  const response = await prisma.user.update({ where: { id }, data });
+  const response = await prisma.job.update({ where: { id }, data });
 
   revalidatePath('/candidates');
 
   return response;
 }
 
-export async function deleteUser(id: string) {
+export async function deleteJob(id: string) {
   const { session } = await getSession();
 
   if (!session) {
     throw new Error('Unauthorized');
   }
 
-  const response = await prisma.user.delete({ where: { id } });
+  const response = await prisma.job.delete({ where: { id } });
 
   revalidatePath('/candidates');
 

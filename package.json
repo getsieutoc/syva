@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@auth/prisma-adapter": "1.1.0",
+    "@hookform/resolvers": "^3.3.4",
     "@langchain/community": "0.0.22",
     "@langchain/core": "0.1.19",
     "@langchain/openai": "0.0.13",
@@ -68,7 +69,8 @@
     "sonner": "1.4.0",
     "swr": "2.2.4",
     "tailwind-merge": "2.2.1",
-    "vaul": "0.8.9"
+    "vaul": "0.8.9",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "7.6.11",
