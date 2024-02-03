@@ -1,5 +1,5 @@
 'use client';
 
-export * from './AddNewButton';
+export * from './AddNewCandidateButton';
 export * from './CandidateList';
 export * from './CandidateItem';

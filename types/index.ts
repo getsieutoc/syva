@@ -4,6 +4,7 @@ export type {
   ChangeEvent,
   ReactNode,
   ElementRef,
+  ComponentProps,
 } from 'react';
 export type {
   Column,
