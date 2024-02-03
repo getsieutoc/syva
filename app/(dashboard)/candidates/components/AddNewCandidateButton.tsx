@@ -179,7 +179,7 @@ export const AddNewCandidateButton = () => {
                 className="max-w-fit"
                 type="submit"
               >
-                Submit
+                Create
               </Button>
             </DialogFooter>
           </form>

@@ -39,3 +39,31 @@ export async function getCandidates(args: Prisma.UserFindManyArgs = {}) {
 
   return response;
 }
+
+export async function updateUser(id: string, data: Partial<User>) {
+  const { session } = await getSession();
+
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
+
+  const response = await prisma.user.update({ where: { id }, data });
+
+  revalidatePath('/candidates');
+
+  return response;
+}
+
+export async function deleteUser(id: string) {
+  const { session } = await getSession();
+
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
+
+  const response = await prisma.user.delete({ where: { id } });
+
+  revalidatePath('/candidates');
+
+  return response;
+}

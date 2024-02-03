@@ -18,10 +18,7 @@ export const CandidateItem = ({ candidate }: CandidateItemProps) => {
   const router = useRouter();
 
   return (
-    <Card
-      className="cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900"
-      onClick={() => router.push(`/candidates/${candidate.id}`)}
-    >
+    <Card className="hover:bg-gray-100 dark:hover:bg-gray-900">
       <CardHeader>
         <CardTitle>{candidate.name}</CardTitle>
         <CardDescription>{candidate.jobDescription}</CardDescription>
