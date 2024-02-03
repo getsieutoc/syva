@@ -2,9 +2,8 @@
 
 import { Candidate, ColumnDef } from '@/types';
 
-import { DataTable } from '@/components/client';
+import { DataTable, SortIcon } from '@/components/client';
 
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
 import {
   Button,
   Checkbox,
@@ -15,6 +14,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui';
+import { MoreHorizontal } from '@/components/icons';
 
 export const columns: ColumnDef<Candidate>[] = [
   {
@@ -49,13 +49,15 @@ export const columns: ColumnDef<Candidate>[] = [
   {
     accessorKey: 'email',
     header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
       return (
         <Button
+          onClick={() => column.toggleSorting(isSorted === 'asc')}
           variant="ghost"
-          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+          size="sm"
         >
-          Email
-          <ArrowUpDown className="ml-2 h-4 w-4" />
+          Email <SortIcon isSorted={isSorted} />
         </Button>
       );
     },
@@ -114,7 +116,7 @@ export type CandidateListProps = {
 export const CandidateList = ({ data }: CandidateListProps) => {
   return (
     <div className="mx-auto w-[80%] min-w-max max-w-4xl">
-      <DataTable data={data} columns={columns} />
+      <DataTable data={data} columns={columns} filterKey="email" />
     </div>
   );
 };

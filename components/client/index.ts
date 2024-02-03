@@ -7,3 +7,4 @@ export * from './DataTable';
 export * from './HeaderDemo';
 export * from './Navbar';
 export * from './Logo';
+export * from './SortIcon';

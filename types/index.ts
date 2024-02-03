@@ -6,9 +6,11 @@ export type {
   ElementRef,
 } from 'react';
 export type {
+  Column,
   ColumnDef,
   ColumnFiltersState,
   SortingState,
+  SortDirection,
   CellContext,
   RowData,
 } from '@tanstack/react-table';

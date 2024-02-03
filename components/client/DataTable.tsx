@@ -33,11 +33,13 @@ import { useState } from 'react';
 export type DataTableProps<TData extends UnknownData> = {
   data?: TData[];
   columns: ColumnDef<TData>[];
+  filterKey?: string;
 };
 
 export const DataTable = <TData extends UnknownData>({
   data,
   columns,
+  filterKey,
 }: DataTableProps<TData>) => {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -66,15 +68,19 @@ export const DataTable = <TData extends UnknownData>({
   return (
     <div className="w-full">
       <div className="flex items-center gap-4 py-4">
-        <Input
-          placeholder="Filter emails..."
-          value={(table.getColumn('email')?.getFilterValue() as string) ?? ''}
-          onChange={(event) =>
-            table.getColumn('email')?.setFilterValue(event.target.value)
-          }
-          className="max-w-sm"
-          size="sm"
-        />
+        {filterKey && (
+          <Input
+            placeholder={`Filter ${filterKey}...`}
+            value={
+              (table.getColumn(filterKey)?.getFilterValue() as string) ?? ''
+            }
+            onChange={(event) =>
+              table.getColumn(filterKey)?.setFilterValue(event.target.value)
+            }
+            className="max-w-sm"
+            size="sm"
+          />
+        )}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" className="ml-auto" size="xs">
