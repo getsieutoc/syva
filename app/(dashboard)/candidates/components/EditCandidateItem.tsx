@@ -97,7 +97,11 @@ export const EditCandidateItem = ({
           </div>
 
           <DialogFooter className="mt-6 w-full justify-between">
-            <Button onClick={onClose} className="max-w-fit" variant="ghost">
+            <Button
+              onClick={() => handleOpenChange(false)}
+              className="max-w-fit"
+              variant="ghost"
+            >
               Cancel
             </Button>
 

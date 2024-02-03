@@ -13,6 +13,7 @@ import { User } from '@/types';
 
 import { EditCandidateItem } from './EditCandidateItem';
 import { DeleteCandidateItem } from './DeleteCandidateItem';
+import { ViewCandidateItem } from './ViewCandidateItem';
 
 type ActionMenuProps = {
   candidate: User;
@@ -22,10 +23,10 @@ export const ActionMenu = ({ candidate }: ActionMenuProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen === false) {
-      onClose();
-    } else {
+    if (isOpen) {
       onOpen();
+    } else {
+      onClose();
     }
   };
 
@@ -46,6 +47,8 @@ export const ActionMenu = ({ candidate }: ActionMenuProps) => {
           <ClipboardCopy className="h-4 w-4" />
           Copy candidate ID
         </DropdownMenuItem>
+
+        <ViewCandidateItem candidate={candidate} />
 
         <EditCandidateItem candidate={candidate} onFinish={onClose} />
 

@@ -24,10 +24,10 @@ export const DeleteCandidateItem = ({
   const { isLoading, startLoading, stopLoading } = useLoading();
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen === false) {
-      onClose();
-    } else {
+    if (isOpen) {
       onOpen();
+    } else {
+      onClose();
     }
   };
 
@@ -68,7 +68,11 @@ export const DeleteCandidateItem = ({
         </div>
 
         <DialogFooter className="mt-6 w-full justify-between">
-          <Button onClick={onClose} className="max-w-fit" variant="ghost">
+          <Button
+            onClick={() => handleOpenChange(false)}
+            className="max-w-fit"
+            variant="ghost"
+          >
             Cancel
           </Button>
 
