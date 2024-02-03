@@ -106,7 +106,7 @@ export type CandidateListProps = {
   data?: Candidate[];
 };
 
-export const CandidateList = ({ data }: CandidateListProps) => {
+export const CandidateTable = ({ data }: CandidateListProps) => {
   return (
     <div className="mx-auto w-[80%] min-w-max max-w-4xl">
       <DataTable data={data} columns={columns} filterKey="name" />

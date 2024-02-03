@@ -114,11 +114,11 @@ model Interview {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  jobId     String
-  job       Job        @relation(fields: [jobId], references: [id])
-  users     User[]
-  links     Link[]
-  documents Document[]
+  jobId String
+  job   Job        @relation(fields: [jobId], references: [id])
+  users User[]
+  links Link[]
+  docs  Document[]
 }
 
 model Document {

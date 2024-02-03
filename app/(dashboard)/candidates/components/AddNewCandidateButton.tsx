@@ -83,9 +83,9 @@ const ManualMethod = ({
   );
 };
 
-const UploadResumeMethod = () => {
-  return <div>this is upload form</div>;
-};
+// const UploadResumeMethod = () => {
+//   return <div>this is upload form</div>;
+// };
 
 export const AddNewCandidateButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();

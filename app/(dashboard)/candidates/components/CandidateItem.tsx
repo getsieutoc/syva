@@ -1,6 +1,5 @@
 'use client';
 
-import { useRouter } from 'next/navigation';
 import {
   Card,
   CardContent,
@@ -15,8 +14,6 @@ type CandidateItemProps = {
   candidate: Candidate;
 };
 export const CandidateItem = ({ candidate }: CandidateItemProps) => {
-  const router = useRouter();
-
   return (
     <Card className="hover:bg-gray-100 dark:hover:bg-gray-900">
       <CardHeader>

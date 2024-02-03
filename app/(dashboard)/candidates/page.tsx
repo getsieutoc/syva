@@ -1,5 +1,5 @@
 import { getCandidates } from '@/services/users';
-import { AddNewCandidateButton, CandidateList } from './components';
+import { AddNewCandidateButton, CandidateTable } from './components';
 
 export default async function CandidatesPage() {
   const candidates = await getCandidates();
@@ -13,7 +13,7 @@ export default async function CandidatesPage() {
         <AddNewCandidateButton />
       </div>
 
-      <CandidateList data={candidates} />
+      <CandidateTable data={candidates} />
     </div>
   );
 }

@@ -7,20 +7,24 @@ import { config } from '@/lib/pgvector';
 import { prisma } from '@/lib/prisma';
 
 type AnalyzeRequest = {
-  audioUrl: string;
+  linkId: string;
   audioStartFrom?: number;
   audioEndAt?: number;
 };
 
 export async function POST(req: NextRequest) {
   const {
-    audioUrl,
+    linkId,
     audioStartFrom = 0,
     audioEndAt = 5,
   }: AnalyzeRequest = await req.json();
 
+  const link = await prisma.link.findUnique({
+    where: { id: linkId },
+  });
+
   const loader = new AudioTranscriptSentencesLoader({
-    audio: audioUrl,
+    audio: link.url,
     audio_start_from: audioStartFrom * 1000,
     audio_end_at: audioEndAt * 1000,
   });
@@ -35,13 +39,6 @@ export async function POST(req: NextRequest) {
     encodingName: 'cl100k_base',
     chunkSize: 100,
     chunkOverlap: 5,
-  });
-
-  const link = await prisma.link.create({
-    data: {
-      url: audioUrl,
-      user: { connect: { id: 'hc2d0re130ohhokbf7elgiil' } },
-    },
   });
 
   const pgvectorStore = await PGVectorStore.initialize(embeddings, {

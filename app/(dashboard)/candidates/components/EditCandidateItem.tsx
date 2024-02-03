@@ -28,6 +28,7 @@ export const EditCandidateItem = ({
   onFinish?: (id: string) => void;
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
+
   const {
     register,
     handleSubmit,
@@ -37,10 +38,10 @@ export const EditCandidateItem = ({
   });
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen === false) {
-      onClose();
-    } else {
+    if (isOpen) {
       onOpen();
+    } else {
+      onClose();
     }
   };
 
@@ -53,7 +54,7 @@ export const EditCandidateItem = ({
       onFinish?.(candidate.id);
     }
 
-    onClose?.();
+    handleOpenChange(false);
   };
 
   return (
