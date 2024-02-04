@@ -17,6 +17,11 @@ import {
   Form,
   Input,
   Textarea,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
   Switch,
 } from '@/components/ui';
 import { Employment, SubmitHandler, Prisma } from '@/types';
@@ -145,6 +150,7 @@ export const AddNewJobButton = () => {
                       <FormDescription>
                         Job that can be done from anywhere
                       </FormDescription>
+                      <FormMessage />
                     </div>
                     <FormControl>
                       <Switch
@@ -161,20 +167,29 @@ export const AddNewJobButton = () => {
                 control={form.control}
                 name="employment"
                 render={({ field }) => (
-                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                    <div className="space-y-0.5">
-                      <FormLabel className="text-base">Remote Job</FormLabel>
-                      <FormDescription>
-                        Job that can be done from anywhere
-                      </FormDescription>
-                    </div>
-                    <FormControl>
-                      <Switch
-                        onCheckedChange={field.onChange}
-                        checked={field.value}
-                        aria-readonly
-                      />
-                    </FormControl>
+                  <FormItem>
+                    <FormLabel>Employment type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.keys(Employment).map((key) => (
+                          <SelectItem key={key} value={key}>
+                            {key}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Job type (full-time, part-time, etc.)
+                    </FormDescription>
+                    <FormMessage />
                   </FormItem>
                 )}
               />
