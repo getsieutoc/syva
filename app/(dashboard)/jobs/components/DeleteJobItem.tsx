@@ -11,13 +11,13 @@ import {
 import { useDisclosure, useLoading } from '@/hooks';
 import { deleteJob } from '@/services/jobs';
 import { Trash2 } from '@/components/icons';
-import { User } from '@/types';
+import { Job } from '@/types';
 
 export const DeleteJobItem = ({
   job,
   onFinish,
 }: {
-  job: User;
+  job: Job;
   onFinish?: (id: string) => void;
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();

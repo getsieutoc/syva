@@ -29,8 +29,7 @@ import { useDisclosure, useForm } from '@/hooks';
 import { createJob } from '@/services/jobs';
 
 const defaultValues: Prisma.JobCreateArgs['data'] = {
-  aasdf: 123,
-  name2: '',
+  name: '',
   description: '',
   employment: Employment.FULLTIME,
   address: '',
