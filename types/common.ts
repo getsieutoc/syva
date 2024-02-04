@@ -1,3 +1,5 @@
+import { Prisma } from '@prisma/client';
+
 export type UnknownData = Record<string, unknown>;
 
 export enum HttpMethod {
@@ -16,3 +18,17 @@ export type GitHubOrganization = {
   login: string;
   id: number;
 };
+
+export type InterviewWithPayload = Prisma.InterviewGetPayload<{
+  include: {
+    candidate: true;
+    job: true;
+  };
+}>;
+
+export type CandidateWithPayload = Prisma.UserGetPayload<{
+  include: {
+    appliedInterviews: true;
+    boardInterviews: true;
+  };
+}>;

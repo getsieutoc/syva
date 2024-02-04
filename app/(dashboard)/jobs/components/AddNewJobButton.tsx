@@ -42,14 +42,12 @@ const defaultValues = {
   experienceRequirements: '',
 } satisfies Partial<Job>;
 
-type ManualInputs = typeof defaultValues;
+type Inputs = typeof defaultValues;
 
 export const AddNewJobButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const form = useForm<ManualInputs>({ defaultValues });
-
-  console.log('### form Values: ', form.getValues());
+  const form = useForm<Inputs>({ defaultValues });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
@@ -61,7 +59,7 @@ export const AddNewJobButton = () => {
 
   const isDisabled = form.formState.isSubmitting || !form.formState.isDirty;
 
-  const onSubmit: SubmitHandler<ManualInputs> = async (input) => {
+  const onSubmit: SubmitHandler<Inputs> = async (input) => {
     if (isDisabled) return;
 
     const result = await createJob({

@@ -1,8 +1,8 @@
-import { getCandidates } from '@/services/users';
+import { findCandidates } from '@/services/users';
 import { AddNewCandidateButton, CandidateTable } from './components';
 
 export default async function CandidatesPage() {
-  const candidates = await getCandidates();
+  const candidates = await findCandidates();
 
   return (
     <div className="flex w-full flex-col">

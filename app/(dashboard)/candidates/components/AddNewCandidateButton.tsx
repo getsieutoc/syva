@@ -9,19 +9,24 @@ import {
   Input,
   Label,
 } from '@/components/ui';
-import { FormInput, ScrollText, ChevronLeft } from '@/components/icons';
+import {
+  FormInput,
+  ScrollText,
+  ChevronLeft,
+  LucideIcon,
+} from '@/components/icons';
 import { ComponentProps, Role, SubmitHandler, UseFormRegister } from '@/types';
 import { useDisclosure, useForm, useState } from '@/hooks';
 import { createUser } from '@/services/users';
 
 const newOptions = [
   {
-    icon: (p: ComponentProps<typeof FormInput>) => <FormInput {...p} />,
+    icon: (p: ComponentProps<LucideIcon>) => <FormInput {...p} />,
     label: 'Manually Input',
     value: 'manual',
   },
   {
-    icon: (p: ComponentProps<typeof ScrollText>) => <ScrollText {...p} />,
+    icon: (p: ComponentProps<LucideIcon>) => <ScrollText {...p} />,
     label: 'Upload Resume',
     value: 'resume',
   },
@@ -49,17 +54,13 @@ const NewCandidateOption = ({
   );
 };
 
-type ManualInputs = {
+type Inputs = {
   name: string;
   email: string;
-  jobIds: string[];
+  jobIds?: string[];
 };
 
-const ManualMethod = ({
-  register,
-}: {
-  register: UseFormRegister<ManualInputs>;
-}) => {
+const ManualMethod = ({ register }: { register: UseFormRegister<Inputs> }) => {
   return (
     <div className="flex flex-col gap-4">
       <div className="flex flex-col gap-2">
@@ -96,7 +97,7 @@ export const AddNewCandidateButton = () => {
     register,
     handleSubmit,
     formState: { isSubmitting, isDirty },
-  } = useForm<ManualInputs>({
+  } = useForm<Inputs>({
     defaultValues: {
       name: '',
       email: '',
@@ -114,7 +115,7 @@ export const AddNewCandidateButton = () => {
 
   const isDisabled = isSubmitting || !isDirty;
 
-  const onSubmit: SubmitHandler<ManualInputs> = async (inputs) => {
+  const onSubmit: SubmitHandler<Inputs> = async (inputs) => {
     if (isDisabled) return;
 
     const result = await createUser({

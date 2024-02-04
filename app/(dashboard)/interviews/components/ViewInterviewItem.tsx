@@ -24,6 +24,7 @@ import { Interview } from '@/types';
 type ViewInterviewItemProps = {
   interview: Interview;
 };
+
 export const ViewInterviewItem = ({ interview }: ViewInterviewItemProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -63,10 +64,10 @@ export const ViewInterviewItem = ({ interview }: ViewInterviewItemProps) => {
 
         <Card>
           <CardHeader>
-            <CardTitle>{interview.name}</CardTitle>
-            <CardDescription>{interview.description}</CardDescription>
+            <CardTitle>{interview.id}</CardTitle>
+            <CardDescription>{interview.jobId}</CardDescription>
           </CardHeader>
-          <CardContent>{interview.experienceRequirements}</CardContent>
+          <CardContent>{interview.candidateId}</CardContent>
           <CardFooter className="text-sm text-muted-foreground">
             Posted at {formatTime(interview.createdAt)}
           </CardFooter>

@@ -10,15 +10,16 @@ export const useFormContext = () => {
 export const FormProvider = ({ children }: { children: ReactNode }) => {
   const [formData, setFormData] = useState({});
 
-  const updateFormData = (newData: typeof formData) => {
-    setFormData((prevData) => {
-      const updatedData = deepmerge(prevData, newData);
-      return updatedData;
-    });
+  const update = (newData: typeof formData) => {
+    setFormData((prevData) => deepmerge(prevData, newData));
+  };
+
+  const reset = () => {
+    setFormData({});
   };
 
   return (
-    <FormContext.Provider value={{ formData, updateFormData }}>
+    <FormContext.Provider value={{ formData, update, reset }}>
       {children}
     </FormContext.Provider>
   );
