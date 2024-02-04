@@ -3,7 +3,7 @@
 import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { Prisma } from '@/types';
+import { Job, Prisma } from '@/types';
 import deepmerge from 'deepmerge';
 
 export async function createJob(args: Prisma.JobCreateArgs) {
@@ -40,10 +40,7 @@ export async function getJobs(args: Prisma.JobFindManyArgs = {}) {
   return response;
 }
 
-export async function updateJob(
-  id: string,
-  data: Prisma.JobUpdateArgs['data']
-) {
+export async function updateJob(id: string, data: Partial<Job>) {
   const { session } = await getSession();
 
   if (!session) {

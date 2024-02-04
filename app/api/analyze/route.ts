@@ -23,6 +23,10 @@ export async function POST(req: NextRequest) {
     where: { id: linkId },
   });
 
+  if (!link) {
+    throw new Error('Link not found');
+  }
+
   const loader = new AudioTranscriptSentencesLoader({
     audio: link.url,
     audio_start_from: audioStartFrom * 1000,

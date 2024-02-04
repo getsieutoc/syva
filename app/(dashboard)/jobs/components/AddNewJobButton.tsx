@@ -24,23 +24,23 @@ import {
   SelectValue,
   Switch,
 } from '@/components/ui';
-import { Employment, SubmitHandler, Prisma } from '@/types';
+import { Employment, SubmitHandler, Job } from '@/types';
 import { useDisclosure, useForm } from '@/hooks';
 import { createJob } from '@/services/jobs';
 
-const defaultValues: Prisma.JobCreateArgs['data'] = {
+const defaultValues = {
   name: '',
   description: '',
   employment: Employment.FULLTIME,
   address: '',
   isRemote: true,
-  salary: 0,
+  salary: '0-100000',
   responsibilities: '',
   skills: '',
   qualifications: '',
   educationRequirements: '',
   experienceRequirements: '',
-};
+} satisfies Partial<Job>;
 
 type ManualInputs = typeof defaultValues;
 

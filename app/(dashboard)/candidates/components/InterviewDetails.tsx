@@ -9,13 +9,13 @@ import {
   ResizablePanel,
   ResizablePanelGroup,
 } from '@/components/ui';
-import { Chatbox } from '@/components/client';
-import { Candidate, HttpMethod } from '@/types';
 import { useChat, useLoading, useLocalStorage, useState } from '@/hooks';
+import { Chatbox } from '@/components/client';
+import { User, HttpMethod } from '@/types';
 import { fetcher } from '@/lib/fetcher';
 
 export type SingleCandidatePageProps = {
-  candidate: Candidate;
+  candidate: User;
 };
 
 export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
@@ -58,7 +58,10 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
           <ResizablePanel defaultSize={15}>
             <div className="flex h-full items-center justify-center">
               <Avatar size="md">
-                <AvatarImage alt={candidate?.name} src={candidate?.avatar} />
+                <AvatarImage
+                  alt={candidate?.name ?? ''}
+                  src={candidate?.image ?? ''}
+                />
               </Avatar>
               <h2 className="text-lg font-bold">{candidate?.name}</h2>
             </div>

@@ -1,16 +1,16 @@
-import { createContext, useContext, useState } from 'react';
+import { ReactNode, createContext, useContext, useState } from 'react';
 import deepmerge from 'deepmerge';
 
-const FormContext = createContext();
+const FormContext = createContext({});
 
 export const useFormContext = () => {
   return useContext(FormContext);
 };
 
-export const FormProvider = ({ children }) => {
+export const FormProvider = ({ children }: { children: ReactNode }) => {
   const [formData, setFormData] = useState({});
 
-  const updateFormData = (newData) => {
+  const updateFormData = (newData: typeof formData) => {
     setFormData((prevData) => {
       const updatedData = deepmerge(prevData, newData);
       return updatedData;

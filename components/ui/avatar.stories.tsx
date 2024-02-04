@@ -24,7 +24,7 @@ export const Default: Story = {
     size: 'md',
   },
 
-  render: (_args) => (
+  render: (args) => (
     <Avatar size={args.size}>
       <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
       <AvatarFallback>CN</AvatarFallback>
