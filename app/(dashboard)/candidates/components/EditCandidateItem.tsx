@@ -15,10 +15,7 @@ import { updateUser } from '@/services/users';
 import { User, SubmitHandler } from '@/types';
 import { Pencil } from '@/components/icons';
 
-type ManualInputs = {
-  name: string;
-  email: string;
-};
+type ManualInputs = Partial<User>;
 
 export const EditCandidateItem = ({
   candidate,

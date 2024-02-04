@@ -22,7 +22,7 @@ export const Default: Story = {
       defaultValue: 16 / 9,
     },
   },
-  render: (_args) => (
+  render: (args) => (
     <div className="w-[450px]">
       <AspectRatio ratio={args.ratio} className="bg-muted">
         <Image

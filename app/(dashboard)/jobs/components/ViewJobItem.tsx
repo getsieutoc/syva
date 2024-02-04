@@ -64,7 +64,7 @@ export const ViewJobItem = ({ job }: ViewJobItemProps) => {
         <Card>
           <CardHeader>
             <CardTitle>{job.name}</CardTitle>
-            <CardDescription>{job.email}</CardDescription>
+            <CardDescription>{job.description}</CardDescription>
           </CardHeader>
           <CardContent>{job.experienceRequirements}</CardContent>
           <CardFooter className="text-sm text-muted-foreground">

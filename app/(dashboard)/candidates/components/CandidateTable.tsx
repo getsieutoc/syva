@@ -1,12 +1,12 @@
 'use client';
 
-import { Button, Checkbox } from '@/components/ui';
 import { DataTable, SortIcon } from '@/components/client';
-import { Candidate, ColumnDef } from '@/types';
+import { Button, Checkbox } from '@/components/ui';
 import { formatRelative } from '@/lib/utils';
+import { User, ColumnDef } from '@/types';
 import { ActionMenu } from './ActionMenu';
 
-export const columns: ColumnDef<Candidate>[] = [
+export const columns: ColumnDef<User>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -103,7 +103,7 @@ export const columns: ColumnDef<Candidate>[] = [
 ];
 
 export type CandidateListProps = {
-  data?: Candidate[];
+  data?: User[];
 };
 
 export const CandidateTable = ({ data }: CandidateListProps) => {
