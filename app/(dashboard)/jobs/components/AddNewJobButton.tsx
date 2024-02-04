@@ -13,43 +13,39 @@ import {
   FormField,
   FormItem,
   FormLabel,
+  FormMessage,
   Form,
   Input,
-  Label,
   Textarea,
   Switch,
 } from '@/components/ui';
-import { Employment, SubmitHandler } from '@/types';
-import { ChevronLeft } from '@/components/icons';
+import { Employment, SubmitHandler, Prisma } from '@/types';
 import { useDisclosure, useForm } from '@/hooks';
 import { createJob } from '@/services/jobs';
 
-type ManualInputs = {
-  name: string;
-  description: string;
-  employment: Employment;
-  address: string;
-  isRemote: boolean;
-  salary?: string;
-  responsibilities?: string;
-  skills?: string;
-  qualifications?: string;
-  educationRequirements?: string;
-  experienceRequirements?: string;
+const defaultValues: Prisma.JobCreateArgs['data'] = {
+  aasdf: 123,
+  name2: '',
+  description: '',
+  employment: Employment.FULLTIME,
+  address: '',
+  isRemote: true,
+  salary: 0,
+  responsibilities: '',
+  skills: '',
+  qualifications: '',
+  educationRequirements: '',
+  experienceRequirements: '',
 };
+
+type ManualInputs = typeof defaultValues;
 
 export const AddNewJobButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const form = useForm<ManualInputs>({
-    defaultValues: {
-      name: '',
-      description: '',
-      address: '',
-      isRemote: true,
-    },
-  });
-  console.log('### isRemote: ', form.getValues());
+  const form = useForm<ManualInputs>({ defaultValues });
+
+  console.log('### form Values: ', form.getValues());
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
@@ -94,59 +90,94 @@ export const AddNewJobButton = () => {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="flex flex-col gap-4">
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  id="name"
-                  placeholder="Name"
-                  {...form.register('name', { required: true })}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Job Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Job name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  rows={3}
-                  id="description"
-                  placeholder="Start writing..."
-                  {...form.register('description', { required: true })}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Job description" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
 
-              <div className="flex flex-col gap-2">
-                <Label htmlFor="address">Address</Label>
-                <Textarea
-                  id="address"
-                  rows={3}
-                  placeholder="Start writing..."
-                  {...form.register('address')}
-                />
-              </div>
-              <div className="flex flex-col gap-2">
-                <FormField
-                  control={form.control}
-                  name="isRemote"
-                  render={({ field }) => (
-                    <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
-                      <div className="space-y-0.5">
-                        <FormLabel className="text-base">
-                          Is Remote Job?
-                        </FormLabel>
-                        <FormDescription>
-                          Job that can be done from anywhere
-                        </FormDescription>
-                      </div>
-                      <FormControl>
-                        <Switch
-                          onCheckedChange={field.onChange}
-                          checked={field.value}
-                          aria-readonly
-                        />
-                      </FormControl>
-                    </FormItem>
-                  )}
-                />
-              </div>
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Job Address</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Job address" {...field} />
+                    </FormControl>
+                    <FormDescription>
+                      Can be empty if the job is remote
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isRemote"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">Remote Job</FormLabel>
+                      <FormDescription>
+                        Job that can be done from anywhere
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        onCheckedChange={field.onChange}
+                        checked={field.value}
+                        aria-readonly
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="employment"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">Remote Job</FormLabel>
+                      <FormDescription>
+                        Job that can be done from anywhere
+                      </FormDescription>
+                    </div>
+                    <FormControl>
+                      <Switch
+                        onCheckedChange={field.onChange}
+                        checked={field.value}
+                        aria-readonly
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
             </div>
 
             <DialogFooter className="mt-6 w-full justify-between">
@@ -155,7 +186,6 @@ export const AddNewJobButton = () => {
                 className="max-w-fit"
                 variant="ghost"
               >
-                <ChevronLeft />
                 Cancel
               </Button>
 

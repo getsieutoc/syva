@@ -16,7 +16,7 @@ export default meta;
 type Story = StoryObj<typeof Toaster>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: (_args) => {
     return (
       <>
         <Toaster />

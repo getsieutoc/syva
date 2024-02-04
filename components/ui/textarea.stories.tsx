@@ -35,7 +35,7 @@ export const Rows: Story = {
     controls: { exclude: ['rows'] },
   },
 
-  render: (args) => {
+  render: (_args) => {
     return (
       <div>
         <div>rows: default</div>
@@ -51,7 +51,7 @@ export const Rows: Story = {
   },
 };
 export const Disabled: Story = {
-  render: (args) => {
+  render: (_args) => {
     return <Textarea disabled placeholder="disabled={true}" />;
   },
 };

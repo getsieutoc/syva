@@ -6,7 +6,7 @@ export const formatMessage = (message: Message) => {
   return `${message.role}: ${message.content}`;
 };
 
-const getChatMessages = (history: Message[]): any[] => {
+const getChatMessages = (history: Message[]) => {
   return history.map((message) =>
     message.role === 'user'
       ? new HumanMessage(message.content)

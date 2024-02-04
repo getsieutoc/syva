@@ -20,7 +20,7 @@ export default meta;
 type Story = StoryObj<typeof Tooltip>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: (_args) => {
     return (
       <TooltipProvider>
         <Tooltip>

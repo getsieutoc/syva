@@ -43,7 +43,7 @@ export const ActionMenu = ({ job }: ActionMenuProps) => {
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={() => navigator.clipboard.writeText(job.id)}>
           <ClipboardCopy className="h-4 w-4" />
-          Copy candidate ID
+          Copy job ID
         </DropdownMenuItem>
 
         <ViewJobItem job={job} />

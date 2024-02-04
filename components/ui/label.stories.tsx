@@ -21,7 +21,7 @@ export const Default: Story = {
     controls: { exclude: ['placeholder'] },
   },
 
-  render: (args) => {
+  render: (_args) => {
     return (
       <div className="w-[300px]">
         <Label>Name</Label>

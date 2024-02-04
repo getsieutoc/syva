@@ -20,7 +20,7 @@ export default meta;
 type Story = StoryObj<AccordionImplProps>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: (_args) => {
     return (
       <div className="w-[400px]">
         <Accordion type="single" collapsible className="w-full">

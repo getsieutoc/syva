@@ -5,9 +5,6 @@ import {
   SelectGroup,
   SelectItem,
   SelectLabel,
-  SelectScrollDownButton,
-  SelectScrollUpButton,
-  SelectSeparator,
   SelectTrigger,
   SelectValue,
 } from './select';
@@ -24,7 +21,7 @@ export default meta;
 type Story = StoryObj<typeof Select>;
 
 export const Default: Story = {
-  render: (args) => {
+  render: (_args) => {
     return (
       <Select>
         <SelectTrigger className="w-[280px]">

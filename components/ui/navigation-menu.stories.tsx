@@ -2,12 +2,10 @@ import type { Meta, StoryObj } from '@storybook/react';
 import {
   NavigationMenu,
   NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  NavigationMenuViewport,
   navigationMenuTriggerStyle,
 } from './navigation-menu';
 import { forwardRef } from 'react';
@@ -63,7 +61,7 @@ const components: { title: string; href: string; description: string }[] = [
   },
 ];
 export const Default: Story = {
-  render: (args) => {
+  render: (_args) => {
     return (
       <NavigationMenu>
         <NavigationMenuList>

@@ -1,8 +1,8 @@
 import { AssemblyAI } from 'assemblyai';
 
-// We need var in declare global
-// eslint-disable-next-line no-var, vars-on-top
 declare global {
+  // We need var in declare global
+  // eslint-disable-next-line no-var, vars-on-top
   var assembly: AssemblyAI | undefined;
 }
 

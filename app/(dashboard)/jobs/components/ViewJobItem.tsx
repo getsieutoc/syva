@@ -66,7 +66,7 @@ export const ViewJobItem = ({ job }: ViewJobItemProps) => {
             <CardTitle>{job.name}</CardTitle>
             <CardDescription>{job.email}</CardDescription>
           </CardHeader>
-          <CardContent>lorem ipsum</CardContent>
+          <CardContent>{job.experienceRequirements}</CardContent>
           <CardFooter className="text-sm text-muted-foreground">
             Posted at {formatTime(job.createdAt)}
           </CardFooter>

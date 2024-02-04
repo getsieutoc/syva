@@ -37,7 +37,7 @@ export const Default: Story = {
   ),
 };
 export const Sizes: Story = {
-  render: (args) => (
+  render: (_args) => (
     <>
       {checkboxSizes.map((size, idx) => (
         <div key={idx} className="items-top my-5 flex space-x-2">

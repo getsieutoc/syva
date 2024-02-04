@@ -23,7 +23,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 export const SimpleCard: Story = {
-  render: (args) => (
+  render: (_args) => (
     <div className="w-[300px]">
       <Card>
         <CardHeader>
@@ -41,7 +41,7 @@ export const SimpleCard: Story = {
   ),
 };
 export const Example: Story = {
-  render: (args) => {
+  render: (_args) => {
     return (
       <Card className="w-[350px]">
         <CardHeader>
