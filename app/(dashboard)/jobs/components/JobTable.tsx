@@ -54,8 +54,28 @@ export const columns: ColumnDef<Job>[] = [
   {
     accessorKey: 'description',
     header: () => <span>Description</span>,
+    cell: ({ row }) => <div>{row.getValue('description')}</div>,
+  },
+  {
+    accessorKey: 'employment',
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
+      return (
+        <div className="flex items-center justify-start gap-1">
+          <span>Employment</span>
+          <Button
+            onClick={() => column.toggleSorting(isSorted === 'asc')}
+            variant="ghost"
+            size="icon"
+          >
+            <SortIcon isSorted={isSorted} />
+          </Button>
+        </div>
+      );
+    },
     cell: ({ row }) => (
-      <div className="lowercase">{row.getValue('description')}</div>
+      <div className="font-bold">{row.getValue('employment')}</div>
     ),
   },
   {
