@@ -26,13 +26,16 @@ export const EditCandidateItem = ({
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
+  const defaultValues = {
+    name: candidate.name,
+    email: candidate.email,
+  };
+
   const {
     register,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<ManualInputs>({
-    defaultValues: candidate,
-  });
+  } = useForm<ManualInputs>({ defaultValues });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {

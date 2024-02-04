@@ -19,6 +19,7 @@ export {
   useKeyPressEvent,
   useLocalStorage,
 } from 'react-use';
+export { useDebouncedCallback, useDebounce } from 'use-debounce';
 export { default as useSWRInfinite } from 'swr/infinite';
 export { useChat, useCompletion } from 'ai/react';
 export { useForm } from 'react-hook-form';

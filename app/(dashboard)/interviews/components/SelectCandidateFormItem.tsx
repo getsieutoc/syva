@@ -9,21 +9,17 @@ import {
   CommandEmpty,
   CommandGroup,
   CommandItem,
+  CommandLoading,
 } from '@/components/ui';
 import { Check, ChevronsUpDown } from '@/components/icons';
 import { CandidateWithPayload } from '@/types';
-import { useDisclosure, useState } from '@/hooks';
-import { cn } from '@/lib/utils';
+import { useDebounce, useDisclosure, useState, useSWR } from '@/hooks';
+import { cn, queryStringify } from '@/lib/utils';
 
 export type SelectCandidateProps = {
   selected: string;
   onSelect: (candidateId: string) => void;
 };
-
-const foundCandidates = [
-  { id: 'test', name: 'Test' },
-  { id: '11121', name: 'number' },
-];
 
 export const SelectCandidateFormItem = ({
   selected,
@@ -31,6 +27,17 @@ export const SelectCandidateFormItem = ({
 }: SelectCandidateProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [search, setSearch] = useState('');
+  const [debouncedSearch] = useDebounce(search, 300);
+
+  const queryString = queryStringify({
+    model: 'candidate',
+    search: debouncedSearch,
+  });
+
+  const { data: foundCandidates, isLoading } = useSWR<CandidateWithPayload[]>(
+    `/api/search?${queryString}`,
+    { keepPreviousData: true }
+  );
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
@@ -53,7 +60,7 @@ export const SelectCandidateFormItem = ({
             )}
           >
             {selected
-              ? foundCandidates.find((candidate) => candidate.id === selected)
+              ? foundCandidates?.find((candidate) => candidate.id === selected)
                   ?.name
               : 'Search candidate by name'}
             <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -61,7 +68,7 @@ export const SelectCandidateFormItem = ({
         </FormControl>
       </PopoverTrigger>
       <PopoverContent className="w-[400px] p-0">
-        <Command>
+        <Command shouldFilter={false}>
           <CommandInput
             placeholder="Type to search..."
             onValueChange={setSearch}
@@ -69,10 +76,11 @@ export const SelectCandidateFormItem = ({
           />
           <CommandEmpty>No candidate found.</CommandEmpty>
           <CommandGroup>
-            {foundCandidates.map((candidate) => (
+            {isLoading && <CommandLoading>Fetching…</CommandLoading>}
+            {foundCandidates?.map((candidate) => (
               <CommandItem
-                value={candidate.name ?? ''}
                 key={candidate.id}
+                value={candidate.id}
                 onSelect={() => {
                   onSelect(candidate.id);
                   handleOpenChange(false);
