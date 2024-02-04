@@ -2,8 +2,4 @@
 
 <p align="center">Made by ⚡Sieutoc</p>
 
-<p align="center" width="100%">
-    <img src="https://i.imgflip.com/8cdo87.jpg" />
-</p>
-
 Know your candidates
