@@ -29,6 +29,14 @@ enum AnalyzeStatus {
   ERROR
 }
 
+enum Stage {
+  SCREENING
+  TESTING
+  EVALUATING
+  OFFERING
+  CLOSING
+}
+
 model Account {
   id                       String  @id @default(uuid())
   type                     String
@@ -79,10 +87,10 @@ model User {
   image         String?
   role          Role      @default(MEMBER)
 
-  accounts   Account[]
-  sessions   Session[]
-  jobs       Job[]
-  interviews Interview[]
+  accounts          Account[]
+  sessions          Session[]
+  boardInterviews   Interview[] @relation("BoardOnInterviews")
+  appliedInterviews Interview[]
 }
 
 model Job {
@@ -103,7 +111,6 @@ model Job {
   educationRequirements  String?
   experienceRequirements String?
 
-  users      User[]
   interviews Interview[]
 
   @@index([name])
@@ -113,12 +120,17 @@ model Interview {
   id        String   @id @default(cuid())
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
+  stage     Stage?
 
-  jobId String
-  job   Job        @relation(fields: [jobId], references: [id])
-  users User[]
-  links Link[]
-  docs  Document[]
+  jobId        String
+  job          Job        @relation(fields: [jobId], references: [id])
+  candidateId  String
+  candidate    User       @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  interviewers User[]     @relation("BoardOnInterviews")
+  links        Link[]
+  docs         Document[]
+
+  @@index([jobId, candidateId])
 }
 
 model Document {

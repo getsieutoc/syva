@@ -18,7 +18,7 @@ export const Sidebar = () => {
   const { session } = useAuth();
 
   const tabs = useMemo(() => {
-    if (segments[0] === 'projects' && id) {
+    if (segments[0] === 'candidates' && id) {
       return [
         {
           name: 'Back to All Candidates',
@@ -54,6 +54,16 @@ export const Sidebar = () => {
     }
 
     return [
+      {
+        name: 'Interviews',
+        href: '/interviews',
+        isActive: segments[0] === 'interviews',
+        visible: {
+          [Role.ADMIN]: true,
+          [Role.MEMBER]: true,
+          [Role.CANDIDATE]: false,
+        },
+      },
       {
         name: 'Candidates',
         href: '/candidates',
