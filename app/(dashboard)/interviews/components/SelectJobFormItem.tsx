@@ -10,21 +10,18 @@ import {
   CommandGroup,
   CommandItem,
 } from '@/components/ui';
-import { Check, ChevronsUpDown } from '@/components/icons';
-import { CandidateWithPayload } from '@/types';
 import { useDebouncedCallback, useDisclosure, useState, useSWR } from '@/hooks';
+import { Check, ChevronsUpDown } from '@/components/icons';
 import { cn, queryStringify } from '@/lib/utils';
 import { Spinner } from '@/components/client';
+import { JobWithPayload } from '@/types';
 
-export type SelectCandidateProps = {
+export type SelectJobProps = {
   selected: string;
-  onSelect: (candidateId: string) => void;
+  onSelect: (jobId: string) => void;
 };
 
-export const SelectCandidateFormItem = ({
-  selected,
-  onSelect,
-}: SelectCandidateProps) => {
+export const SelectJobFormItem = ({ selected, onSelect }: SelectJobProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const [search, setSearch] = useState('');
@@ -32,14 +29,16 @@ export const SelectCandidateFormItem = ({
   const debounced = useDebouncedCallback((v: string) => setSearch(v), 300);
 
   const queryString = queryStringify({
-    model: 'candidate',
+    model: 'job',
     search,
   });
 
-  const { data: foundCandidates, isLoading } = useSWR<CandidateWithPayload[]>(
+  const { data: foundJobs, isLoading } = useSWR<JobWithPayload[]>(
     `/api/search?${queryString}`,
     { keepPreviousData: true }
   );
+
+  console.log('### foundJobs: ', { foundJobs });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
@@ -61,10 +60,9 @@ export const SelectCandidateFormItem = ({
               selected && 'text-muted-foreground'
             )}
           >
-            {selected && foundCandidates && foundCandidates.length > 0
-              ? foundCandidates?.find((candidate) => candidate.id === selected)
-                  ?.name
-              : 'Search by name'}
+            {selected && foundJobs && foundJobs.length > 0
+              ? foundJobs.find((job) => job.id === selected)?.name
+              : 'Search by name, description and address'}
 
             {isLoading || debounced.isPending() ? (
               <Spinner className="ml-2 shrink-0" />
@@ -80,24 +78,24 @@ export const SelectCandidateFormItem = ({
             onValueChange={(v) => debounced(v)}
             placeholder="Type to search..."
           />
-          <CommandEmpty>No candidate found.</CommandEmpty>
+          <CommandEmpty>No job found.</CommandEmpty>
           <CommandGroup>
-            {foundCandidates?.map((candidate) => (
+            {foundJobs?.map((job) => (
               <CommandItem
-                key={candidate.id}
-                value={candidate.id}
+                key={job.id}
+                value={job.id}
                 onSelect={() => {
-                  onSelect(candidate.id);
+                  onSelect(job.id);
                   handleOpenChange(false);
                 }}
               >
                 <Check
                   className={cn(
                     'mr-2 h-4 w-4',
-                    candidate.id === selected ? 'opacity-100' : 'opacity-0'
+                    job.id === selected ? 'opacity-100' : 'opacity-0'
                   )}
                 />
-                {candidate.name}
+                {job.name}
               </CommandItem>
             ))}
           </CommandGroup>

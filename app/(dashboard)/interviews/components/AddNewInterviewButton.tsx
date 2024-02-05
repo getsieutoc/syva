@@ -8,7 +8,6 @@ import {
   DialogTitle,
   DialogTrigger,
   DialogFooter,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
@@ -18,7 +17,9 @@ import {
 import { SubmitHandler, Stage, Interview } from '@/types';
 import { createInterview } from '@/services/interviews';
 import { useDisclosure, useForm } from '@/hooks';
+
 import { SelectCandidateFormItem } from './SelectCandidateFormItem';
+import { SelectJobFormItem } from './SelectJobFormItem';
 
 const defaultValues = {
   jobId: '',
@@ -86,9 +87,21 @@ export const AddNewInterviewButton = () => {
                       selected={field.value}
                       onSelect={(id) => form.setValue('candidateId', id)}
                     />
-                    <FormDescription>
-                      This is the language that will be used in the dashboard.
-                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="jobId"
+                render={({ field }) => (
+                  <FormItem className="flex flex-col">
+                    <FormLabel>Job</FormLabel>
+                    <SelectJobFormItem
+                      selected={field.value}
+                      onSelect={(id) => form.setValue('jobId', id)}
+                    />
                     <FormMessage />
                   </FormItem>
                 )}

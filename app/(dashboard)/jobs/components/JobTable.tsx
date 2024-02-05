@@ -103,6 +103,30 @@ export const columns: ColumnDef<Job>[] = [
     },
   },
   {
+    accessorKey: 'expiredAt',
+    header: ({ column }) => {
+      const isSorted = column.getIsSorted();
+
+      return (
+        <div className="flex items-center justify-end gap-1">
+          <span>Expired At</span>
+          <Button
+            onClick={() => column.toggleSorting(isSorted === 'asc')}
+            variant="ghost"
+            size="icon"
+          >
+            <SortIcon isSorted={isSorted} />
+          </Button>
+        </div>
+      );
+    },
+    cell: ({ row }) => {
+      const formatted = formatRelative(row.getValue('expiredAt'));
+
+      return <div className="text-right">{formatted}</div>;
+    },
+  },
+  {
     id: 'actions',
     enableHiding: false,
     cell: ({ row }) => <ActionMenu job={row.original} />,

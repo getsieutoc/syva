@@ -1,8 +1,8 @@
-import { getJobs } from '@/services/jobs';
+import { findJobs } from '@/services/jobs';
 import { AddNewJobButton, JobTable } from './components';
 
 export default async function JobsPage() {
-  const jobs = await getJobs();
+  const jobs = await findJobs();
 
   return (
     <div className="flex w-full flex-col">

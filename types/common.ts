@@ -32,3 +32,9 @@ export type CandidateWithPayload = Prisma.UserGetPayload<{
     boardInterviews: true;
   };
 }>;
+
+export type JobWithPayload = Prisma.JobGetPayload<{
+  include: {
+    interviews: true;
+  };
+}>;

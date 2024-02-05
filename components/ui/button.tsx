@@ -1,6 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority';
+import { Spinner } from '@/components/client/Spinner';
 import { Slot } from '@radix-ui/react-slot';
-import { Loader2 } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import * as React from 'react';
 
@@ -57,7 +57,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isLoading}
         {...props}
       >
-        {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        {isLoading && <Spinner className="mr-2" />}
 
         {children}
       </Comp>

@@ -3,7 +3,12 @@
 import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import deepmerge from 'deepmerge';
 import { Job } from '@/types';
+
+const richInclude = {
+  interviews: true,
+};
 
 export async function createJob(
   input: Parameters<typeof prisma.job.create>[0]
@@ -21,19 +26,25 @@ export async function createJob(
   return response;
 }
 
-export async function getJobs(
-  input: Parameters<typeof prisma.job.findMany>[0] = {}
-) {
+type JobFindManyArgs = Parameters<typeof prisma.job.findMany>[0];
+
+export async function findJobs(input: JobFindManyArgs = {}) {
   const { session } = await getSession();
 
   if (!session) {
     throw new Error('Unauthorized');
   }
 
+  const args = deepmerge<JobFindManyArgs>(
+    {
+      orderBy: [{ createdAt: 'desc' }],
+    },
+    input
+  );
+
   const response = await prisma.job.findMany({
-    where: {},
-    orderBy: [{ createdAt: 'desc' }],
-    ...input,
+    ...args,
+    include: richInclude,
   });
 
   return response;
