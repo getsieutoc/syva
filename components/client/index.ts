@@ -8,4 +8,5 @@ export * from './HeaderWithSort';
 export * from './Loading';
 export * from './Logo';
 export * from './Navbar';
+export * from './Ping';
 export * from './Spinner';

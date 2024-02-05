@@ -10,18 +10,18 @@ import {
   ResizablePanelGroup,
 } from '@/components/ui';
 import { Chatbox } from '@/components/client';
-import { User, HttpMethod } from '@/types';
+import { InterviewWithPayload, HttpMethod } from '@/types';
 import { useChat, useLoading, useLocalStorage, useState } from '@/hooks';
 import { fetcher } from '@/lib/fetcher';
 
 export type SingleCandidatePageProps = {
-  candidate: User;
+  interview: InterviewWithPayload;
 };
 
-export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
+export const InterviewDetails = ({ interview }: SingleCandidatePageProps) => {
   const { isLoading, startLoading, stopLoading } = useLoading();
 
-  const [audioUrl, setAudioUrl] = useLocalStorage(candidate.id, '');
+  const [audioUrl, setAudioUrl] = useLocalStorage(interview.candidate.id, '');
 
   const [audioStartFrom, setStartFrom] = useLocalStorage('audio-start-from', 0);
 
@@ -49,34 +49,7 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
   };
 
   return (
-    <ResizablePanelGroup
-      direction="horizontal"
-      className="max-w-full rounded-lg border"
-    >
-      <ResizablePanel defaultSize={30}>
-        <ResizablePanelGroup direction="vertical">
-          <ResizablePanel defaultSize={15}>
-            <div className="flex h-full items-center justify-center">
-              <Avatar size="md">
-                <AvatarImage
-                  alt={candidate?.name ?? ''}
-                  src={candidate?.image ?? ''}
-                />
-              </Avatar>
-              <h2 className="text-lg font-bold">{candidate?.name}</h2>
-            </div>
-          </ResizablePanel>
-
-          <ResizableHandle />
-
-          <ResizablePanel defaultSize={85}>
-            <Chatbox {...bindChat} />
-          </ResizablePanel>
-        </ResizablePanelGroup>
-      </ResizablePanel>
-
-      <ResizableHandle />
-
+    <ResizablePanelGroup direction="horizontal">
       <ResizablePanel defaultSize={70} className="flex flex-col gap-2 p-6">
         <div className="flex items-center justify-center gap-2">
           <Input
@@ -107,6 +80,30 @@ export const InterviewDetails = ({ candidate }: SingleCandidatePageProps) => {
             <p>{JSON.stringify(response)}</p>
           </div>
         )}
+      </ResizablePanel>
+
+      <ResizableHandle withHandle />
+
+      <ResizablePanel defaultSize={30}>
+        <ResizablePanelGroup direction="vertical">
+          <ResizablePanel defaultSize={15}>
+            <div className="flex h-full items-center justify-center">
+              <Avatar size="md">
+                <AvatarImage
+                  alt={interview.candidate?.name ?? ''}
+                  src={interview.candidate?.image ?? ''}
+                />
+              </Avatar>
+              <h2 className="text-lg font-bold">{interview.candidate?.name}</h2>
+            </div>
+          </ResizablePanel>
+
+          <ResizableHandle />
+
+          <ResizablePanel defaultSize={85}>
+            <Chatbox {...bindChat} />
+          </ResizablePanel>
+        </ResizablePanelGroup>
       </ResizablePanel>
     </ResizablePanelGroup>
   );

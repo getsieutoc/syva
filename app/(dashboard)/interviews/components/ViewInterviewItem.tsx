@@ -19,10 +19,10 @@ import {
 import { Eye } from '@/components/icons';
 import { useDisclosure, useRouter, useSearchParams } from '@/hooks';
 import { newURLWithSearchParams, formatTime } from '@/lib/utils';
-import { Interview } from '@/types';
+import { InterviewWithPayload } from '@/types';
 
 type ViewInterviewItemProps = {
-  interview: Interview;
+  interview: InterviewWithPayload;
 };
 
 export const ViewInterviewItem = ({ interview }: ViewInterviewItemProps) => {
@@ -54,20 +54,22 @@ export const ViewInterviewItem = ({ interview }: ViewInterviewItemProps) => {
             onOpen();
           }}
         >
-          <Eye className="h-4 w-4" /> View Interview
+          <Eye className="h-4 w-4" /> Quick View
         </DropdownMenuItem>
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Interview Details</DialogTitle>
+          <DialogTitle>Quick View Interview</DialogTitle>
         </DialogHeader>
 
         <Card>
           <CardHeader>
-            <CardTitle>{interview.id}</CardTitle>
-            <CardDescription>{interview.jobId}</CardDescription>
+            <CardTitle>{interview.candidate.name}</CardTitle>
+            <CardDescription>
+              {interview.job.name} / {interview.job.employment}
+            </CardDescription>
           </CardHeader>
-          <CardContent>{interview.candidateId}</CardContent>
+          <CardContent>{interview.job.description}</CardContent>
           <CardFooter className="text-sm text-muted-foreground">
             Posted at {formatTime(interview.createdAt)}
           </CardFooter>

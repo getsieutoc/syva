@@ -51,6 +51,21 @@ export async function getInterviews(input: InterviewFindManyArgs = {}) {
   return response;
 }
 
+export async function getSingleInterview(id: string) {
+  const { session } = await getSession();
+
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
+
+  const response = await prisma.interview.findUnique({
+    where: { id },
+    include: richInclude,
+  });
+
+  return response;
+}
+
 export async function updateInterview(id: string, input: Partial<Interview>) {
   const { session } = await getSession();
 
