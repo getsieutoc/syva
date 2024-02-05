@@ -26,7 +26,9 @@ export const SelectCandidateFormItem = ({
   onSelect,
 }: SelectCandidateProps) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   const [search, setSearch] = useState('');
+
   const [debouncedSearch] = useDebounce(search, 300);
 
   const queryString = queryStringify({
