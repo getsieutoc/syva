@@ -72,6 +72,7 @@ export const columns: ColumnDef<InterviewWithPayload>[] = [
     accessorKey: 'createdAt',
     header: ({ column }) => (
       <HeaderWithSort
+        className="justify-end"
         title="Created At"
         isSorted={column.getIsSorted()}
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
@@ -96,7 +97,7 @@ export type InterviewListProps = {
 
 export const InterviewTable = ({ data }: InterviewListProps) => {
   return (
-    <div className="mx-auto w-[80%] min-w-max max-w-4xl">
+    <div className="w-full min-w-max max-w-full">
       <DataTable data={data} columns={columns} filterKey="candidate" />
     </div>
   );

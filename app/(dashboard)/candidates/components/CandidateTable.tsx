@@ -3,11 +3,11 @@
 import { DataTable, HeaderWithSort } from '@/components/client';
 import { Checkbox } from '@/components/ui';
 import { formatRelative } from '@/lib/utils';
-import { User, ColumnDef } from '@/types';
+import { CandidateWithPayload, ColumnDef } from '@/types';
 
 import { ActionMenu } from './ActionMenu';
 
-export const columns: ColumnDef<User>[] = [
+export const columns: ColumnDef<CandidateWithPayload>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -58,6 +58,7 @@ export const columns: ColumnDef<User>[] = [
     accessorKey: 'createdAt',
     header: ({ column }) => (
       <HeaderWithSort
+        className="justify-end"
         title="Created At"
         isSorted={column.getIsSorted()}
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
@@ -77,12 +78,12 @@ export const columns: ColumnDef<User>[] = [
 ];
 
 export type CandidateListProps = {
-  data?: User[];
+  data?: CandidateWithPayload[];
 };
 
 export const CandidateTable = ({ data }: CandidateListProps) => {
   return (
-    <div className="mx-auto w-[80%] min-w-max max-w-4xl">
+    <div className="w-full min-w-max max-w-full">
       <DataTable data={data} columns={columns} filterKey="name" />
     </div>
   );

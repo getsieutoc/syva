@@ -2,11 +2,11 @@
 
 import { DataTable, HeaderWithSort } from '@/components/client';
 import { Checkbox } from '@/components/ui';
-import { Job, ColumnDef } from '@/types';
+import { JobWithPayload, ColumnDef } from '@/types';
 import { formatRelative } from '@/lib/utils';
 import { ActionMenu } from './ActionMenu';
 
-export const columns: ColumnDef<Job>[] = [
+export const columns: ColumnDef<JobWithPayload>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -65,6 +65,7 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => (
       <HeaderWithSort
         title="Created At"
+        className="justify-end"
         isSorted={column.getIsSorted()}
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
       />
@@ -80,6 +81,7 @@ export const columns: ColumnDef<Job>[] = [
     header: ({ column }) => (
       <HeaderWithSort
         title="Expired At"
+        className="justify-end"
         isSorted={column.getIsSorted()}
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
       />
@@ -98,12 +100,12 @@ export const columns: ColumnDef<Job>[] = [
 ];
 
 export type JobListProps = {
-  data?: Job[];
+  data?: JobWithPayload[];
 };
 
 export const JobTable = ({ data }: JobListProps) => {
   return (
-    <div className="mx-auto w-[80%] min-w-max max-w-4xl">
+    <div className="w-full min-w-max max-w-full">
       <DataTable data={data} columns={columns} filterKey="name" />
     </div>
   );

@@ -9,6 +9,7 @@ import {
   DropdownMenuItem,
   Input,
   Label,
+  Textarea,
 } from '@/components/ui';
 import { useDisclosure, useForm } from '@/hooks';
 import { updateJob } from '@/services/jobs';
@@ -42,10 +43,13 @@ export const EditJobItem = ({
     }
   };
 
-  const onSubmit: SubmitHandler<ManualInputs> = async (data) => {
+  const onSubmit: SubmitHandler<ManualInputs> = async (input) => {
     if (isSubmitting) return;
 
-    const result = await updateJob(job.id, data);
+    const result = await updateJob(job.id, {
+      name: input.name,
+      description: input.description,
+    });
 
     if (result) {
       onFinish?.(job.id);
@@ -85,7 +89,7 @@ export const EditJobItem = ({
 
             <div className="flex flex-col gap-2">
               <Label htmlFor="description">Description</Label>
-              <Input
+              <Textarea
                 id="description"
                 placeholder="Start writing..."
                 {...register('description', { required: true })}

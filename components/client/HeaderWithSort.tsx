@@ -5,6 +5,8 @@ import {
 } from '@/components/icons';
 import { Button } from '@/components/ui';
 import { SortDirection } from '@/types';
+import { forwardRef } from 'react';
+import { cn } from '@/lib/utils';
 
 export type SortIconProps = {
   isSorted: boolean | SortDirection;
@@ -26,23 +28,26 @@ export type HeaderWithSortProps = {
   title: string;
   isSorted: boolean | SortDirection;
   onToggleSort: (isAsc: boolean) => void;
+  className?: string;
 };
 
-export const HeaderWithSort = ({
-  title,
-  isSorted,
-  onToggleSort,
-}: HeaderWithSortProps) => {
-  return (
-    <div className="flex items-center justify-start gap-1">
-      <span>{title}</span>
-      <Button
-        onClick={() => onToggleSort(isSorted === 'asc')}
-        variant="ghost"
-        size="icon"
+export const HeaderWithSort = forwardRef<HTMLDivElement, HeaderWithSortProps>(
+  ({ title, isSorted, onToggleSort, className, ...rest }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn('flex items-center justify-start gap-1', className)}
+        {...rest}
       >
-        <SortIcon isSorted={isSorted} />
-      </Button>
-    </div>
-  );
-};
+        <span>{title}</span>
+        <Button
+          onClick={() => onToggleSort(isSorted === 'asc')}
+          variant="ghost"
+          size="icon"
+        >
+          <SortIcon isSorted={isSorted} />
+        </Button>
+      </div>
+    );
+  }
+);

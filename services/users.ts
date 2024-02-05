@@ -8,6 +8,7 @@ import deepmerge from 'deepmerge';
 
 const richInclude = {
   appliedInterviews: true,
+  boardInterviews: true,
 };
 
 export async function createUser(

@@ -5,11 +5,9 @@ export default async function JobsPage() {
   const jobs = await findJobs();
 
   return (
-    <div className="flex w-full flex-col">
-      <div className="flex justify-between px-6 py-4">
-        <h1 className=" text-4xl font-bold text-slate-400 dark:text-slate-600">
-          Jobs
-        </h1>
+    <div className="flex w-full flex-col px-6">
+      <div className="flex justify-between py-4">
+        <h1 className=" text-3xl font-bold text-slate-500">Jobs</h1>
         <AddNewJobButton />
       </div>
 
