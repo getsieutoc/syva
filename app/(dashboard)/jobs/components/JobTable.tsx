@@ -57,7 +57,7 @@ export const columns: ColumnDef<JobWithPayload>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="font-bold">{row.getValue('employment')}</div>
+      <div className="text-xs font-bold">{row.getValue('employment')}</div>
     ),
   },
   {

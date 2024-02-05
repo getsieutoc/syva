@@ -67,7 +67,9 @@ export const columns: ColumnDef<InterviewWithPayload>[] = [
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
       />
     ),
-    cell: ({ row }) => <div className="font-bold">{row.getValue('stage')}</div>,
+    cell: ({ row }) => (
+      <div className="text-xs font-bold">{row.getValue('stage')}</div>
+    ),
   },
   {
     accessorKey: 'createdAt',
