@@ -113,7 +113,11 @@ export const AddNewJobButton = () => {
                   <FormItem>
                     <FormLabel>Description</FormLabel>
                     <FormControl>
-                      <Textarea placeholder="Job description" {...field} />
+                      <Textarea
+                        placeholder="Job description"
+                        rows={3}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -127,11 +131,11 @@ export const AddNewJobButton = () => {
                   <FormItem>
                     <FormLabel>Job Address</FormLabel>
                     <FormControl>
-                      <Input placeholder="Job address" {...field} />
+                      <Input
+                        placeholder="Address can be empty if the job is remote"
+                        {...field}
+                      />
                     </FormControl>
-                    <FormDescription>
-                      Can be empty if the job is remote
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}
@@ -183,9 +187,6 @@ export const AddNewJobButton = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormDescription>
-                      Job type (full-time, part-time, etc.)
-                    </FormDescription>
                     <FormMessage />
                   </FormItem>
                 )}

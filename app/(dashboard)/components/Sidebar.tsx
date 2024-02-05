@@ -7,8 +7,10 @@ import {
   useMemo,
 } from '@/hooks';
 import { Logo, NextLink } from '@/components/client';
-import { Role } from '@/types';
 import { cn } from '@/lib/utils';
+import { Role } from '@/types';
+
+import { Profile } from './Profile';
 
 export const Sidebar = () => {
   const segments = useSelectedLayoutSegments();
@@ -16,6 +18,7 @@ export const Sidebar = () => {
   const { id } = useParams<{ id: string }>();
 
   const { session } = useAuth();
+  console.log('### session: ', { session });
 
   const tabs = useMemo(() => {
     if (segments[0] === 'candidates' && id) {
@@ -88,8 +91,8 @@ export const Sidebar = () => {
   }, [segments, id]);
 
   return (
-    <div className="flex h-full min-w-[240px] flex-col justify-between gap-6 border-r text-sm">
-      <div className="flex h-full w-full grow flex-col gap-6 pt-6">
+    <div className="flex h-full min-w-[240px] flex-col justify-between border-r py-6 text-sm">
+      <div className="flex h-full w-full grow flex-col gap-6">
         <Logo size="xs" className="ml-6" />
 
         <div className="flex flex-col gap-1">
@@ -111,6 +114,8 @@ export const Sidebar = () => {
             ))}
         </div>
       </div>
+
+      {session?.user && <Profile user={session?.user} />}
     </div>
   );
 };

@@ -1,5 +1,6 @@
 import { newURLWithSearchParams } from '@/lib/utils';
 import { redirect } from 'next/navigation';
+import { Separator } from '@/components/ui';
 import { Logo } from '@/components/client';
 import { getSession } from '@/lib/auth';
 
@@ -20,16 +21,18 @@ export default async function LoginPage({
   }
 
   return (
-    <div className="mx-auto flex h-[70%] max-w-md flex-col items-center justify-evenly">
-      <div className="flex w-full flex-col items-center border-b-gray-200">
-        <Logo />
+    <div className="mx-auto flex h-[80%] max-w-sm flex-col items-center justify-evenly">
+      <div className="flex w-full flex-col items-center gap-2">
+        <Logo size="xl" />
 
-        <h1 className="text-lg">Login</h1>
+        <h1 className="text-3xl font-bold">Login</h1>
+
+        <Separator />
       </div>
 
       {hasGithubProvider && <LoginByGitHub org={process.env.GITHUB_ORG} />}
 
-      <div className="flex w-full flex-col items-center gap-4">
+      <div className="flex w-full flex-col items-center gap-2">
         <p className="text-center text-xs">
           By continue using service, you agree to our Terms
         </p>

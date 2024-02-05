@@ -99,7 +99,7 @@ model Job {
   createdAt              DateTime   @default(now())
   updatedAt              DateTime   @default(now()) @updatedAt
   publishedAt            DateTime?
-  expiredIn              Int        @default(30)
+  expiredAt              DateTime?
   name                   String
   description            String
   employment             Employment @default(FULLTIME)

@@ -5,7 +5,6 @@ import { Checkbox } from '@/components/ui';
 import { JobWithPayload, ColumnDef } from '@/types';
 import { formatTime } from '@/lib/utils';
 import { ActionMenu } from './ActionMenu';
-import { addDays } from 'date-fns';
 
 export const columns: ColumnDef<JobWithPayload>[] = [
   {
@@ -73,12 +72,11 @@ export const columns: ColumnDef<JobWithPayload>[] = [
     ),
     cell: ({ row }) => {
       const formatted = formatTime(row.getValue('createdAt'));
-
       return <div className="text-right">{formatted}</div>;
     },
   },
   {
-    accessorKey: 'expiredIn',
+    accessorKey: 'expiredAt',
     header: ({ column }) => (
       <HeaderWithSort
         title="Expired At"
@@ -88,12 +86,7 @@ export const columns: ColumnDef<JobWithPayload>[] = [
       />
     ),
     cell: ({ row }) => {
-      const expiredAt = addDays(
-        new Date(row.getValue('createdAt')),
-        row.getValue('expiredIn')
-      );
-      const formatted = formatTime(expiredAt);
-
+      const formatted = formatTime(row.getValue('expiredAt'));
       return <div className="text-right">{formatted}</div>;
     },
   },
