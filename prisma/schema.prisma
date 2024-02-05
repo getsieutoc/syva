@@ -99,12 +99,12 @@ model Job {
   createdAt              DateTime   @default(now())
   updatedAt              DateTime   @default(now()) @updatedAt
   publishedAt            DateTime?
-  expiredAt              DateTime?
+  expiredIn              Int        @default(30)
   name                   String
   description            String
   employment             Employment @default(FULLTIME)
+  isRemote               Boolean    @default(true)
   address                String?
-  isRemote               Boolean
   salary                 String?
   responsibilities       String?
   skills                 String?

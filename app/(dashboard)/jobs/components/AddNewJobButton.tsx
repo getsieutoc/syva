@@ -4,25 +4,25 @@ import {
   Button,
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
+  Form,
   FormControl,
   FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Form,
   Input,
-  Textarea,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
   Switch,
+  Textarea,
 } from '@/components/ui';
 import { Employment, SubmitHandler, Job } from '@/types';
 import { useDisclosure, useForm } from '@/hooks';
@@ -194,7 +194,10 @@ export const AddNewJobButton = () => {
 
             <DialogFooter className="mt-6 w-full justify-between">
               <Button
-                onClick={() => handleOpenChange(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleOpenChange(false);
+                }}
                 className="max-w-fit"
                 variant="ghost"
               >

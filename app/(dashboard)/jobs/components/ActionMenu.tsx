@@ -9,14 +9,14 @@ import {
 } from '@/components/ui';
 import { MoreHorizontal, ClipboardCopy } from '@/components/icons';
 import { useDisclosure } from '@/hooks';
-import { Job } from '@/types';
+import { JobWithPayload } from '@/types';
 
 import { EditJobItem } from './EditJobItem';
 import { DeleteJobItem } from './DeleteJobItem';
 import { ViewJobItem } from './ViewJobItem';
 
 type ActionMenuProps = {
-  job: Job;
+  job: JobWithPayload;
 };
 
 export const ActionMenu = ({ job }: ActionMenuProps) => {

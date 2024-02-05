@@ -19,10 +19,10 @@ import {
 import { Eye } from '@/components/icons';
 import { useDisclosure, useRouter, useSearchParams } from '@/hooks';
 import { newURLWithSearchParams, formatTime } from '@/lib/utils';
-import { Job } from '@/types';
+import { JobWithPayload } from '@/types';
 
 type ViewJobItemProps = {
-  job: Job;
+  job: JobWithPayload;
 };
 export const ViewJobItem = ({ job }: ViewJobItemProps) => {
   const router = useRouter();

@@ -7,33 +7,39 @@ import {
   DialogTitle,
   DialogTrigger,
   DropdownMenuItem,
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
   Input,
-  Label,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  Switch,
   Textarea,
 } from '@/components/ui';
 import { useDisclosure, useForm } from '@/hooks';
 import { updateJob } from '@/services/jobs';
-import { Job, SubmitHandler } from '@/types';
+import { Employment, JobWithPayload, SubmitHandler } from '@/types';
 import { Pencil } from '@/components/icons';
 
-type ManualInputs = Partial<Job>;
+type ManualInputs = Partial<JobWithPayload>;
 
 export const EditJobItem = ({
   job,
   onFinish,
 }: {
-  job: Job;
+  job: JobWithPayload;
   onFinish?: (id: string) => void;
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<ManualInputs>({
-    defaultValues: job,
-  });
+  const form = useForm<ManualInputs>({ defaultValues: job });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
@@ -44,12 +50,9 @@ export const EditJobItem = ({
   };
 
   const onSubmit: SubmitHandler<ManualInputs> = async (input) => {
-    if (isSubmitting) return;
+    delete input.interviews;
 
-    const result = await updateJob(job.id, {
-      name: input.name,
-      description: input.description,
-    });
+    const result = await updateJob(job.id, input);
 
     if (result) {
       onFinish?.(job.id);
@@ -76,49 +79,135 @@ export const EditJobItem = ({
           <DialogTitle>Edit Job: {job.name}</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="Name"
-                {...register('name', { required: true })}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Job Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Job name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="description"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Description</FormLabel>
+                    <FormControl>
+                      <Textarea placeholder="Job description" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="address"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Job Address</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Job address"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormDescription>
+                      Can be empty if the job is remote
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="isRemote"
+                render={({ field }) => (
+                  <FormItem className="flex flex-row items-center justify-between rounded-lg border p-4">
+                    <div className="space-y-0.5">
+                      <FormLabel className="text-base">Remote Job</FormLabel>
+                      <FormDescription>
+                        Job that can be done from anywhere
+                      </FormDescription>
+                      <FormMessage />
+                    </div>
+                    <FormControl>
+                      <Switch
+                        onCheckedChange={field.onChange}
+                        checked={field.value}
+                        aria-readonly
+                      />
+                    </FormControl>
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="employment"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Employment type</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a type" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.keys(Employment).map((key) => (
+                          <SelectItem key={key} value={key}>
+                            {key}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormDescription>
+                      Job type (full-time, part-time, etc.)
+                    </FormDescription>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="description">Description</Label>
-              <Textarea
-                id="description"
-                placeholder="Start writing..."
-                {...register('description', { required: true })}
-              />
-            </div>
-          </div>
+            <DialogFooter className="mt-6 w-full justify-between">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleOpenChange(false);
+                }}
+                className="max-w-fit"
+                variant="ghost"
+              >
+                Cancel
+              </Button>
 
-          <DialogFooter className="mt-6 w-full justify-between">
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                handleOpenChange(false);
-              }}
-              className="max-w-fit"
-              variant="ghost"
-            >
-              Cancel
-            </Button>
-
-            <Button
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-              className="max-w-fit"
-              type="submit"
-            >
-              Save
-            </Button>
-          </DialogFooter>
-        </form>
+              <Button
+                isLoading={form.formState.isSubmitting}
+                className="max-w-fit"
+                type="submit"
+              >
+                Save
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
