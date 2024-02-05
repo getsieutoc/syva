@@ -17,11 +17,13 @@ import { cn, queryStringify } from '@/lib/utils';
 import { Spinner } from '@/components/client';
 
 export type SelectCandidateProps = {
-  selected: string;
+  isDisabled?: boolean;
+  selected?: string | null;
   onSelect: (candidateId: string) => void;
 };
 
 export const SelectCandidateFormItem = ({
+  isDisabled,
   selected,
   onSelect,
 }: SelectCandidateProps) => {
@@ -37,7 +39,7 @@ export const SelectCandidateFormItem = ({
   });
 
   const { data: foundCandidates, isLoading } = useSWR<CandidateWithPayload[]>(
-    `/api/search?${queryString}`,
+    !isDisabled ? `/api/search?${queryString}` : null,
     { keepPreviousData: true }
   );
 
@@ -54,6 +56,7 @@ export const SelectCandidateFormItem = ({
       <PopoverTrigger asChild>
         <FormControl>
           <Button
+            disabled={isDisabled}
             variant="outline"
             role="combobox"
             className={cn(
@@ -77,6 +80,7 @@ export const SelectCandidateFormItem = ({
       <PopoverContent className="w-[300px] p-0" align="start">
         <Command shouldFilter={false}>
           <CommandInput
+            disabled={isDisabled}
             onValueChange={(v) => debounced(v)}
             placeholder="Type to search..."
           />
@@ -86,8 +90,8 @@ export const SelectCandidateFormItem = ({
               <CommandItem
                 key={candidate.id}
                 value={candidate.id}
-                onSelect={() => {
-                  onSelect(candidate.id);
+                onSelect={(v) => {
+                  onSelect(v);
                   handleOpenChange(false);
                 }}
               >

@@ -95,7 +95,10 @@ export const EditJobItem = ({
 
           <DialogFooter className="mt-6 w-full justify-between">
             <Button
-              onClick={() => handleOpenChange(false)}
+              onClick={(e) => {
+                e.preventDefault();
+                handleOpenChange(false);
+              }}
               className="max-w-fit"
               variant="ghost"
             >

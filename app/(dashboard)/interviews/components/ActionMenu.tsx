@@ -9,14 +9,14 @@ import {
 } from '@/components/ui';
 import { MoreHorizontal, ClipboardCopy } from '@/components/icons';
 import { useDisclosure } from '@/hooks';
-import { Interview } from '@/types';
+import { InterviewWithPayload } from '@/types';
 
 import { EditInterviewItem } from './EditInterviewItem';
 import { DeleteInterviewItem } from './DeleteInterviewItem';
 import { ViewInterviewItem } from './ViewInterviewItem';
 
 type ActionMenuProps = {
-  interview: Interview;
+  interview: InterviewWithPayload;
 };
 
 export const ActionMenu = ({ interview }: ActionMenuProps) => {

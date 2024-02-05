@@ -4,8 +4,7 @@ export { default as NextLink } from 'next/link';
 
 export * from './Chatbox';
 export * from './DataTable';
-export * from './HeaderDemo';
+export * from './HeaderWithSort';
 export * from './Logo';
 export * from './Navbar';
-export * from './SortIcon';
 export * from './Spinner';

@@ -17,7 +17,7 @@ import { Spinner } from '@/components/client';
 import { JobWithPayload } from '@/types';
 
 export type SelectJobProps = {
-  selected: string;
+  selected?: string | null;
   onSelect: (jobId: string) => void;
 };
 
@@ -37,8 +37,6 @@ export const SelectJobFormItem = ({ selected, onSelect }: SelectJobProps) => {
     `/api/search?${queryString}`,
     { keepPreviousData: true }
   );
-
-  console.log('### foundJobs: ', { foundJobs });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {

@@ -4,15 +4,21 @@ import {
   Button,
   Dialog,
   DialogContent,
+  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DialogFooter,
+  Form,
+  FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
-  Form,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui';
 import { SubmitHandler, Stage, Interview } from '@/types';
 import { createInterview } from '@/services/interviews';
@@ -34,8 +40,6 @@ export const AddNewInterviewButton = () => {
 
   const form = useForm<NewInterviewInputs>({ defaultValues });
 
-  console.log('### form Values: ', form.getValues());
-
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
       onOpen();
@@ -44,7 +48,7 @@ export const AddNewInterviewButton = () => {
     }
   };
 
-  const isDisabled = form.formState.isSubmitting || !form.formState.isDirty;
+  const isDisabled = form.formState.isSubmitting;
 
   const onSubmit: SubmitHandler<NewInterviewInputs> = async (input) => {
     if (isDisabled) return;
@@ -106,11 +110,42 @@ export const AddNewInterviewButton = () => {
                   </FormItem>
                 )}
               />
+
+              <FormField
+                control={form.control}
+                name="stage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Stage</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a stage" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.keys(Stage).map((key) => (
+                          <SelectItem key={key} value={key}>
+                            {key}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
             </div>
 
             <DialogFooter className="mt-6 w-full justify-between">
               <Button
-                onClick={() => handleOpenChange(false)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleOpenChange(false);
+                }}
                 className="max-w-fit"
                 variant="ghost"
               >

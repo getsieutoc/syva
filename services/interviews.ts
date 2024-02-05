@@ -4,6 +4,12 @@ import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Interview } from '@/types';
+import deepmerge from 'deepmerge';
+
+const richInclude = {
+  job: true,
+  candidate: true,
+};
 
 export async function createInterview(
   input: Parameters<typeof prisma.interview.create>[0]
@@ -21,18 +27,25 @@ export async function createInterview(
   return response;
 }
 
-export async function getInterviews(
-  input: Parameters<typeof prisma.interview.findMany>[0] = {}
-) {
+type InterviewFindManyArgs = Parameters<typeof prisma.interview.findMany>[0];
+
+export async function getInterviews(input: InterviewFindManyArgs = {}) {
   const { session } = await getSession();
 
   if (!session) {
     throw new Error('Unauthorized');
   }
 
+  const args = deepmerge<InterviewFindManyArgs>(
+    {
+      orderBy: [{ createdAt: 'desc' }],
+    },
+    input
+  );
+
   const response = await prisma.interview.findMany({
-    orderBy: [{ createdAt: 'desc' }],
-    ...input,
+    ...args,
+    include: richInclude,
   });
 
   return response;

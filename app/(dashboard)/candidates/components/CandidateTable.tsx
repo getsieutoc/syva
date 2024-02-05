@@ -1,9 +1,10 @@
 'use client';
 
-import { DataTable, SortIcon } from '@/components/client';
-import { Button, Checkbox } from '@/components/ui';
+import { DataTable, HeaderWithSort } from '@/components/client';
+import { Checkbox } from '@/components/ui';
 import { formatRelative } from '@/lib/utils';
 import { User, ColumnDef } from '@/types';
+
 import { ActionMenu } from './ActionMenu';
 
 export const columns: ColumnDef<User>[] = [
@@ -33,62 +34,35 @@ export const columns: ColumnDef<User>[] = [
   },
   {
     accessorKey: 'name',
-    header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-
-      return (
-        <div className="flex items-center justify-start gap-1">
-          <span>Name</span>
-          <Button
-            onClick={() => column.toggleSorting(isSorted === 'asc')}
-            variant="ghost"
-            size="icon"
-          >
-            <SortIcon isSorted={isSorted} />
-          </Button>
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <HeaderWithSort
+        title="Name"
+        isSorted={column.getIsSorted()}
+        onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
+      />
+    ),
     cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
   },
   {
     accessorKey: 'email',
-    header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-
-      return (
-        <div className="flex items-center justify-start gap-1">
-          <span>Email</span>
-          <Button
-            onClick={() => column.toggleSorting(isSorted === 'asc')}
-            variant="ghost"
-            size="icon"
-          >
-            <SortIcon isSorted={isSorted} />
-          </Button>
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <HeaderWithSort
+        title="Email"
+        isSorted={column.getIsSorted()}
+        onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
+      />
+    ),
     cell: ({ row }) => <div className="lowercase">{row.getValue('email')}</div>,
   },
   {
     accessorKey: 'createdAt',
-    header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-
-      return (
-        <div className="flex items-center justify-end gap-1">
-          <span>Joined At</span>
-          <Button
-            onClick={() => column.toggleSorting(isSorted === 'asc')}
-            variant="ghost"
-            size="icon"
-          >
-            <SortIcon isSorted={isSorted} />
-          </Button>
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <HeaderWithSort
+        title="Created At"
+        isSorted={column.getIsSorted()}
+        onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
+      />
+    ),
     cell: ({ row }) => {
       const formatted = formatRelative(row.getValue('createdAt'));
 

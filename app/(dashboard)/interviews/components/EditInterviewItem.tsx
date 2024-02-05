@@ -7,30 +7,35 @@ import {
   DialogTitle,
   DialogTrigger,
   DropdownMenuItem,
-  Input,
-  Label,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
 } from '@/components/ui';
-import { useDisclosure, useForm } from '@/hooks';
+import { InterviewWithPayload, Stage, SubmitHandler } from '@/types';
 import { updateInterview } from '@/services/interviews';
-import { Interview, SubmitHandler } from '@/types';
+import { useDisclosure, useForm } from '@/hooks';
 import { Pencil } from '@/components/icons';
 
-type ManualInputs = Partial<Interview>;
+type ManualInputs = Partial<InterviewWithPayload>;
 
 export const EditInterviewItem = ({
   interview,
   onFinish,
 }: {
-  interview: Interview;
+  interview: InterviewWithPayload;
   onFinish?: (id: string) => void;
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<ManualInputs>({
+  const form = useForm<Partial<InterviewWithPayload>>({
     defaultValues: interview,
   });
 
@@ -42,10 +47,8 @@ export const EditInterviewItem = ({
     }
   };
 
-  const onSubmit: SubmitHandler<ManualInputs> = async (data) => {
-    if (isSubmitting) return;
-
-    const result = await updateInterview(interview.id, data);
+  const onSubmit: SubmitHandler<ManualInputs> = async (input) => {
+    const result = await updateInterview(interview.id, { stage: input.stage });
 
     if (result) {
       onFinish?.(interview.id);
@@ -55,7 +58,7 @@ export const EditInterviewItem = ({
   };
 
   return (
-    <Dialog onOpenChange={handleOpenChange} open={isOpen}>
+    <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
         <DropdownMenuItem
           className="DropdownMenuItem"
@@ -67,51 +70,95 @@ export const EditInterviewItem = ({
           <Pencil className="h-4 w-4" /> Edit interview
         </DropdownMenuItem>
       </DialogTrigger>
-      <DialogContent className="DialogContent">
+
+      <DialogContent
+        onPointerDownOutside={(e) => {
+          if (form.formState.isSubmitting || !form.formState.isDirty) {
+            e.preventDefault();
+            return;
+          }
+        }}
+      >
         <DialogHeader>
-          <DialogTitle>Edit Interview: {interview.name}</DialogTitle>
+          <DialogTitle>Edit Interview</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="Name"
-                {...register('name', { required: true })}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-4">
+              <FormItem className="flex flex-col">
+                <FormLabel>Candidate</FormLabel>
+                <Button
+                  className="w-full justify-between text-muted-foreground"
+                  variant="outline"
+                  disabled
+                >
+                  {interview.candidate.name}
+                </Button>
+              </FormItem>
+
+              <FormItem className="flex flex-col">
+                <FormLabel>Job</FormLabel>
+                <Button
+                  className="w-full justify-between text-muted-foreground"
+                  variant="outline"
+                  disabled
+                >
+                  {interview.job.name} ({interview.job.employment})
+                </Button>
+              </FormItem>
+
+              <FormField
+                control={form.control}
+                name="stage"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Stage</FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      defaultValue={field.value ?? ''}
+                    >
+                      <FormControl>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Select a stage" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {Object.keys(Stage).map((key) => (
+                          <SelectItem key={key} value={key}>
+                            {key}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="description">Description</Label>
-              <Input
-                id="description"
-                placeholder="Start writing..."
-                {...register('description', { required: true })}
-              />
-            </div>
-          </div>
+            <DialogFooter className="mt-6 w-full justify-between">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleOpenChange(false);
+                }}
+                className="max-w-fit"
+                variant="ghost"
+              >
+                Cancel
+              </Button>
 
-          <DialogFooter className="mt-6 w-full justify-between">
-            <Button
-              onClick={() => handleOpenChange(false)}
-              className="max-w-fit"
-              variant="ghost"
-            >
-              Cancel
-            </Button>
-
-            <Button
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-              className="max-w-fit"
-              type="submit"
-            >
-              Save
-            </Button>
-          </DialogFooter>
-        </form>
+              <Button
+                isLoading={form.formState.isSubmitting}
+                className="max-w-fit"
+                type="submit"
+              >
+                Save
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );

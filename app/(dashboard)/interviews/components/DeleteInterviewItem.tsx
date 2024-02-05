@@ -11,13 +11,13 @@ import {
 import { useDisclosure, useLoading } from '@/hooks';
 import { deleteInterview } from '@/services/interviews';
 import { Trash2 } from '@/components/icons';
-import { Interview } from '@/types';
+import { InterviewWithPayload } from '@/types';
 
 export const DeleteInterviewItem = ({
   interview,
   onFinish,
 }: {
-  interview: Interview;
+  interview: InterviewWithPayload;
   onFinish?: (id: string) => void;
 }) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
@@ -59,7 +59,10 @@ export const DeleteInterviewItem = ({
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader className="text-red-500">
-          <DialogTitle>Delete interview: {interview.name}</DialogTitle>
+          <DialogTitle>
+            Delete interview of{' '}
+            <span className="font-bold">{interview.candidate.name}</span>
+          </DialogTitle>
         </DialogHeader>
 
         <div className="text-red-500">

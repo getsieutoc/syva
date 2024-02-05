@@ -1,12 +1,12 @@
 'use client';
 
-import { Button, Checkbox } from '@/components/ui';
-import { DataTable, SortIcon } from '@/components/client';
-import { Interview, ColumnDef } from '@/types';
+import { DataTable, HeaderWithSort } from '@/components/client';
+import { Checkbox } from '@/components/ui';
+import { InterviewWithPayload, ColumnDef } from '@/types';
 import { formatRelative } from '@/lib/utils';
 import { ActionMenu } from './ActionMenu';
 
-export const columns: ColumnDef<Interview>[] = [
+export const columns: ColumnDef<InterviewWithPayload>[] = [
   {
     id: 'select',
     header: ({ table }) => (
@@ -32,70 +32,51 @@ export const columns: ColumnDef<Interview>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: 'name',
-    header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-
-      return (
-        <div className="flex items-center justify-start gap-1">
-          <span>Name</span>
-          <Button
-            onClick={() => column.toggleSorting(isSorted === 'asc')}
-            variant="ghost"
-            size="icon"
-          >
-            <SortIcon isSorted={isSorted} />
-          </Button>
-        </div>
-      );
-    },
-    cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
-  },
-  {
-    accessorKey: 'description',
-    header: () => <span>Description</span>,
-    cell: ({ row }) => <div>{row.getValue('description')}</div>,
-  },
-  {
-    accessorKey: 'employment',
-    header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-
-      return (
-        <div className="flex items-center justify-start gap-1">
-          <span>Employment</span>
-          <Button
-            onClick={() => column.toggleSorting(isSorted === 'asc')}
-            variant="ghost"
-            size="icon"
-          >
-            <SortIcon isSorted={isSorted} />
-          </Button>
-        </div>
-      );
-    },
+    id: 'candidate',
+    accessorFn: ({ candidate }) => `${candidate.name}`,
+    header: ({ column }) => (
+      <HeaderWithSort
+        title="Candidate"
+        isSorted={column.getIsSorted()}
+        onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
+      />
+    ),
     cell: ({ row }) => (
-      <div className="font-bold">{row.getValue('employment')}</div>
+      <div className="capitalize">{row.original.candidate.name}</div>
     ),
   },
   {
+    id: 'job',
+    accessorFn: ({ job }) => `${job.name}`,
+    header: ({ column }) => (
+      <HeaderWithSort
+        title="Job"
+        isSorted={column.getIsSorted()}
+        onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
+      />
+    ),
+    cell: ({ row }) => <div>{row.original.job.name}</div>,
+  },
+  {
+    accessorKey: 'stage',
+    header: ({ column }) => (
+      <HeaderWithSort
+        title="Stage"
+        isSorted={column.getIsSorted()}
+        onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
+      />
+    ),
+    cell: ({ row }) => <div className="font-bold">{row.getValue('stage')}</div>,
+  },
+  {
     accessorKey: 'createdAt',
-    header: ({ column }) => {
-      const isSorted = column.getIsSorted();
-
-      return (
-        <div className="flex items-center justify-end gap-1">
-          <span>Created At</span>
-          <Button
-            onClick={() => column.toggleSorting(isSorted === 'asc')}
-            variant="ghost"
-            size="icon"
-          >
-            <SortIcon isSorted={isSorted} />
-          </Button>
-        </div>
-      );
-    },
+    header: ({ column }) => (
+      <HeaderWithSort
+        title="Created At"
+        isSorted={column.getIsSorted()}
+        onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
+      />
+    ),
     cell: ({ row }) => {
       const formatted = formatRelative(row.getValue('createdAt'));
 
@@ -110,13 +91,13 @@ export const columns: ColumnDef<Interview>[] = [
 ];
 
 export type InterviewListProps = {
-  data?: Interview[];
+  data?: InterviewWithPayload[];
 };
 
 export const InterviewTable = ({ data }: InterviewListProps) => {
   return (
     <div className="mx-auto w-[80%] min-w-max max-w-4xl">
-      <DataTable data={data} columns={columns} filterKey="name" />
+      <DataTable data={data} columns={columns} filterKey="candidate" />
     </div>
   );
 };

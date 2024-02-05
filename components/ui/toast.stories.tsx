@@ -31,7 +31,7 @@ export const Default: Story = {
               action: {
                 label: 'Undo',
                 onClick: () => {
-                  //  console.log('Undo');
+                  console.info('Undo');
                 },
               },
             })
