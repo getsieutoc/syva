@@ -1,9 +1,9 @@
 'use client';
 
 import { DataTable, HeaderWithSort } from '@/components/client';
-import { Checkbox } from '@/components/ui';
-import { formatRelative } from '@/lib/utils';
 import { CandidateWithPayload, ColumnDef } from '@/types';
+import { Checkbox } from '@/components/ui';
+import { formatTime } from '@/lib/utils';
 
 import { ActionMenu } from './ActionMenu';
 
@@ -65,7 +65,7 @@ export const columns: ColumnDef<CandidateWithPayload>[] = [
       />
     ),
     cell: ({ row }) => {
-      const formatted = formatRelative(row.getValue('createdAt'));
+      const formatted = formatTime(row.getValue('createdAt'));
 
       return <div className="text-right">{formatted}</div>;
     },

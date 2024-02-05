@@ -32,7 +32,7 @@ export function isTimezoneAwareTimestamp(timestamp: string) {
 
 export function formatTime(
   timestamp?: string | number | Date | null,
-  formatType = 'dd.MM.yyyy HH:mm'
+  formatType = 'dd.MM.yyyy'
 ) {
   if (!timestamp) {
     return '';

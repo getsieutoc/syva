@@ -3,8 +3,9 @@
 import { DataTable, HeaderWithSort } from '@/components/client';
 import { Checkbox } from '@/components/ui';
 import { JobWithPayload, ColumnDef } from '@/types';
-import { formatRelative } from '@/lib/utils';
+import { formatTime } from '@/lib/utils';
 import { ActionMenu } from './ActionMenu';
+import { addDays } from 'date-fns';
 
 export const columns: ColumnDef<JobWithPayload>[] = [
   {
@@ -71,13 +72,13 @@ export const columns: ColumnDef<JobWithPayload>[] = [
       />
     ),
     cell: ({ row }) => {
-      const formatted = formatRelative(row.getValue('createdAt'));
+      const formatted = formatTime(row.getValue('createdAt'));
 
       return <div className="text-right">{formatted}</div>;
     },
   },
   {
-    accessorKey: 'expiredAt',
+    accessorKey: 'expiredIn',
     header: ({ column }) => (
       <HeaderWithSort
         title="Expired At"
@@ -87,7 +88,11 @@ export const columns: ColumnDef<JobWithPayload>[] = [
       />
     ),
     cell: ({ row }) => {
-      const formatted = formatRelative(row.getValue('expiredAt'));
+      const expiredAt = addDays(
+        new Date(row.getValue('createdAt')),
+        row.getValue('expiredIn')
+      );
+      const formatted = formatTime(expiredAt);
 
       return <div className="text-right">{formatted}</div>;
     },
