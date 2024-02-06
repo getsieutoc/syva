@@ -33,10 +33,14 @@ export const SelectJobFormItem = ({ selected, onSelect }: SelectJobProps) => {
     search,
   });
 
+  console.log('### queryString: ', { queryString });
+
   const { data: foundJobs, isLoading } = useSWR<JobWithPayload[]>(
     `/api/search?${queryString}`,
     { keepPreviousData: true }
   );
+
+  console.log('### foundJobs: ', { foundJobs });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {

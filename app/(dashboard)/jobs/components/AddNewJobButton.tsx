@@ -27,6 +27,7 @@ import {
 import { Employment, SubmitHandler, Job } from '@/types';
 import { useDisclosure, useForm } from '@/hooks';
 import { createJob } from '@/services/jobs';
+import { addDays } from 'date-fns';
 import slugify from 'slugify';
 
 const defaultValues = {
@@ -68,6 +69,7 @@ export const AddNewJobButton = () => {
       data: {
         ...input,
         slug: slugify(input.name, { lower: true }),
+        expiredAt: addDays(new Date(), 30),
       },
     });
 

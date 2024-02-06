@@ -105,7 +105,7 @@ export const Sidebar = () => {
                   'w-full border-l-2 py-3 pl-6',
                   isActive ? 'font-bold' : 'font-normal',
                   isActive
-                    ? 'border-slate-500 bg-slate-100 dark:bg-slate-900/90'
+                    ? 'border-slate-500 bg-slate-200 dark:bg-slate-800/80'
                     : 'border-inherit'
                 )}
               >
