@@ -18,7 +18,6 @@ export const Sidebar = () => {
   const { id } = useParams<{ id: string }>();
 
   const { session } = useAuth();
-  console.log('### session: ', { session });
 
   const tabs = useMemo(() => {
     if (segments[0] === 'candidates' && id) {
