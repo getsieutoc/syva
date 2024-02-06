@@ -13,12 +13,15 @@ import { Chatbox } from '@/components/client';
 import { InterviewWithPayload, HttpMethod } from '@/types';
 import { useChat, useLoading, useLocalStorage, useState } from '@/hooks';
 import { fetcher } from '@/lib/fetcher';
+import { AddNewLinkDialog } from './AddLinkDialog';
 
 export type SingleCandidatePageProps = {
   interview: InterviewWithPayload;
 };
 
 export const InterviewDetails = ({ interview }: SingleCandidatePageProps) => {
+  console.log('### interview: ', { interview });
+
   const { isLoading, startLoading, stopLoading } = useLoading();
 
   const [audioUrl, setAudioUrl] = useLocalStorage(interview.candidate.id, '');
@@ -50,36 +53,37 @@ export const InterviewDetails = ({ interview }: SingleCandidatePageProps) => {
 
   return (
     <ResizablePanelGroup direction="horizontal">
-      <ResizablePanel defaultSize={70} className="flex flex-col gap-2 p-6">
-        <div className="flex items-center justify-center gap-2">
-          <Input
-            onChange={(e) => setAudioUrl(e.target.value)}
-            value={audioUrl}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          <Input
-            onChange={(e) => setStartFrom(parseInt(e.target.value, 10))}
-            value={audioStartFrom}
-            type="number"
-          />
-          <Input
-            onChange={(e) => setEndAt(parseInt(e.target.value, 10))}
-            value={audioEndAt}
-            type="number"
-          />
-        </div>
-        <div className="flex w-full justify-end gap-2">
-          <Button onClick={handleAnalyzeAudio} isLoading={isLoading}>
-            Analyze interview
-          </Button>
-        </div>
+      <ResizablePanel
+        defaultSize={70}
+        className="flex flex-col gap-2 overflow-hidden p-6"
+      >
+        <div className="min-w-[800px]">
+          <AddNewLinkDialog interviewId={interview.id} />
 
-        {response && (
-          <div className="flex-auto overflow-auto rounded-md border p-2 text-xs">
-            <p>{JSON.stringify(response)}</p>
+          <div className="flex items-center gap-2">
+            <Input
+              onChange={(e) => setStartFrom(parseInt(e.target.value, 10))}
+              value={audioStartFrom}
+              type="number"
+            />
+            <Input
+              onChange={(e) => setEndAt(parseInt(e.target.value, 10))}
+              value={audioEndAt}
+              type="number"
+            />
           </div>
-        )}
+          <div className="flex w-full justify-end gap-2">
+            <Button onClick={handleAnalyzeAudio} isLoading={isLoading}>
+              Analyze interview
+            </Button>
+          </div>
+
+          {response && (
+            <div className="flex-auto overflow-auto rounded-md border p-2 text-xs">
+              <p>{JSON.stringify(response)}</p>
+            </div>
+          )}
+        </div>
       </ResizablePanel>
 
       <ResizableHandle withHandle />

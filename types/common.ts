@@ -23,6 +23,7 @@ export type InterviewWithPayload = Prisma.InterviewGetPayload<{
   include: {
     candidate: true;
     job: true;
+    links: true;
   };
 }>;
 

@@ -1,14 +1,15 @@
 'use server';
 
+import { Interview, InterviewWithPayload, Link } from '@/types';
 import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { Interview, InterviewWithPayload } from '@/types';
 import deepmerge from 'deepmerge';
 
 const richInclude = {
   candidate: true,
   job: true,
+  links: true,
 };
 
 export async function createInterview(
@@ -81,6 +82,33 @@ export async function updateInterview(id: string, input: Partial<Interview>) {
   });
 
   revalidatePath('/interviews');
+
+  return response;
+}
+
+export async function addLinkToInterview({
+  url,
+  interviewId,
+}: Pick<Link, 'interviewId' | 'url'>) {
+  const { session } = await getSession();
+
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
+
+  const response = await prisma.interview.update({
+    where: { id: interviewId },
+    data: {
+      links: {
+        connectOrCreate: {
+          where: { url },
+          create: { url },
+        },
+      },
+    },
+  });
+
+  console.log('### response: ', { response });
 
   return response;
 }
