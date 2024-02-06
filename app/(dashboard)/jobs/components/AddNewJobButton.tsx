@@ -53,6 +53,8 @@ export const AddNewJobButton = () => {
   const form = useForm<Inputs>({ defaultValues });
 
   const handleOpenChange = (isOpen: boolean) => {
+    form.reset();
+
     if (isOpen) {
       onOpen();
     } else {

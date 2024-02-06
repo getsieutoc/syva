@@ -17,10 +17,10 @@ import { DeleteInterviewItem } from './DeleteInterviewItem';
 import { ViewInterviewItem } from './ViewInterviewItem';
 
 type ActionMenuProps = {
-  interview: InterviewWithPayload;
+  data: InterviewWithPayload;
 };
 
-export const ActionMenu = ({ interview }: ActionMenuProps) => {
+export const ActionMenu = ({ data: interview }: ActionMenuProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const router = useRouter();

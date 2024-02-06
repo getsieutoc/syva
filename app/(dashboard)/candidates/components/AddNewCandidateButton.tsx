@@ -94,6 +94,7 @@ export const AddNewCandidateButton = () => {
   const [selectedMethod, setSelectedMethod] = useState<string | null>(null);
 
   const {
+    reset,
     register,
     handleSubmit,
     formState: { isSubmitting, isDirty },
@@ -105,11 +106,13 @@ export const AddNewCandidateButton = () => {
   });
 
   const handleOpenChange = (isOpen: boolean) => {
-    if (isOpen === false) {
-      setSelectedMethod(null);
-      onClose();
-    } else {
+    reset();
+    setSelectedMethod(null);
+
+    if (isOpen) {
       onOpen();
+    } else {
+      onClose();
     }
   };
 

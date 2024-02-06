@@ -90,7 +90,7 @@ export const columns: ColumnDef<InterviewWithPayload>[] = [
   {
     id: 'actions',
     enableHiding: false,
-    cell: ({ row }) => <ActionMenu interview={row.original} />,
+    cell: ({ row }) => <ActionMenu data={row.original} />,
   },
 ];
 

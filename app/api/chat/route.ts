@@ -12,7 +12,6 @@ import { ChatOpenAI } from '@langchain/openai';
 import { getEmbeddings } from '@/lib/openai';
 import { getMemory } from '@/lib/memory';
 import { config } from '@/lib/pgvector';
-import { prisma } from '@/lib/prisma';
 
 const combineDocumentsFn = (docs: Document[]) => {
   const serializedDocs = docs.map((doc) => doc.pageContent);
@@ -59,13 +58,13 @@ const questionPrompt = PromptTemplate.fromTemplate(questionTemplate);
 const answerPrompt = PromptTemplate.fromTemplate(answerTemplate);
 
 type PromptRequest = {
-  audioUrl: string;
+  interviewId: string;
   messages: VercelChatMessage[];
 };
 
 export async function POST(req: NextRequest) {
   try {
-    const { audioUrl, messages }: PromptRequest = await req.json();
+    const { interviewId, messages }: PromptRequest = await req.json();
 
     if (!messages || messages.length === 0) {
       return NextResponse.json({ status: 204 });
@@ -73,17 +72,13 @@ export async function POST(req: NextRequest) {
 
     const { question, previousMessages } = getMemory(messages);
 
-    const link = await prisma.link.findFirst({
-      where: { url: audioUrl },
-    });
-
-    if (!link) {
-      throw new Error('Link not found in our systems');
+    if (!interviewId) {
+      throw new Error('Interview ID is required');
     }
 
     const vectorStore = await PGVectorStore.initialize(getEmbeddings(), {
       ...config,
-      tableName: link.id,
+      tableName: interviewId,
     });
 
     const llm = new ChatOpenAI({

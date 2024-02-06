@@ -41,6 +41,8 @@ export const AddNewInterviewButton = () => {
   const form = useForm<NewInterviewInputs>({ defaultValues });
 
   const handleOpenChange = (isOpen: boolean) => {
+    form.reset();
+
     if (isOpen) {
       onOpen();
     } else {

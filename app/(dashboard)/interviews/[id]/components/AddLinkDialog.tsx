@@ -36,6 +36,8 @@ export const AddNewLinkDialog = ({ interviewId }: AddNewLinkDialogProps) => {
   const form = useForm<NewLinkInputs>({ defaultValues });
 
   const handleOpenChange = (isOpen: boolean) => {
+    form.reset();
+
     if (isOpen) {
       onOpen();
     } else {
@@ -53,8 +55,6 @@ export const AddNewLinkDialog = ({ interviewId }: AddNewLinkDialogProps) => {
       interviewId,
     });
 
-    console.log('### result: ', { result });
-
     if (result) {
       handleOpenChange(false);
     }
@@ -63,7 +63,10 @@ export const AddNewLinkDialog = ({ interviewId }: AddNewLinkDialogProps) => {
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>
-        <Button onClick={onOpen} className="min-w-[200px]">
+        <Button
+          onClick={onOpen}
+          className="min-w-[200px] flex-none grow-0 self-end"
+        >
           Add New Link
         </Button>
       </DialogTrigger>

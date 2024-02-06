@@ -13,11 +13,8 @@ type AnalyzeRequest = {
 };
 
 export async function POST(req: NextRequest) {
-  const {
-    linkId,
-    audioStartFrom = 0,
-    audioEndAt = 5,
-  }: AnalyzeRequest = await req.json();
+  const { linkId, audioStartFrom, audioEndAt }: AnalyzeRequest =
+    await req.json();
 
   const link = await prisma.link.findUnique({
     where: { id: linkId },
@@ -29,8 +26,8 @@ export async function POST(req: NextRequest) {
 
   const loader = new AudioTranscriptSentencesLoader({
     audio: link.url,
-    audio_start_from: audioStartFrom * 1000,
-    audio_end_at: audioEndAt * 1000,
+    audio_start_from: audioStartFrom ? audioStartFrom * 1000 : undefined,
+    audio_end_at: audioEndAt ? audioEndAt * 1000 : undefined,
   });
 
   const embeddings = new OpenAIEmbeddings({
@@ -47,7 +44,7 @@ export async function POST(req: NextRequest) {
 
   const pgvectorStore = await PGVectorStore.initialize(embeddings, {
     ...config,
-    tableName: link.id,
+    tableName: link.interviewId,
   });
 
   const docs = await loader.load();
