@@ -1,4 +1,6 @@
 import { getSingleInterview } from '@/services/interviews';
+import { notFound } from 'next/navigation';
+
 import { InterviewDetails } from './components';
 
 export default async function SingleInterviewPage({
@@ -7,7 +9,10 @@ export default async function SingleInterviewPage({
   params: { id: string };
 }) {
   const currentInterview = await getSingleInterview(params.id);
-  console.log('### currentInterview: ', { currentInterview });
+
+  if (!currentInterview) {
+    notFound();
+  }
 
   return <InterviewDetails interview={currentInterview} />;
 }

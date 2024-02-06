@@ -101,6 +101,7 @@ model Job {
   publishedAt            DateTime?
   expiredAt              DateTime?
   name                   String
+  slug                   String     @unique
   description            String
   employment             Employment @default(FULLTIME)
   isRemote               Boolean    @default(true)

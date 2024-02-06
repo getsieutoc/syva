@@ -3,12 +3,12 @@
 import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
-import { Interview } from '@/types';
+import { Interview, InterviewWithPayload } from '@/types';
 import deepmerge from 'deepmerge';
 
 const richInclude = {
-  job: true,
   candidate: true,
+  job: true,
 };
 
 export async function createInterview(
@@ -51,7 +51,9 @@ export async function getInterviews(input: InterviewFindManyArgs = {}) {
   return response;
 }
 
-export async function getSingleInterview(id: string) {
+export async function getSingleInterview(
+  id: string
+): Promise<InterviewWithPayload | null> {
   const { session } = await getSession();
 
   if (!session) {

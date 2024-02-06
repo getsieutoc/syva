@@ -27,9 +27,11 @@ import {
 import { Employment, SubmitHandler, Job } from '@/types';
 import { useDisclosure, useForm } from '@/hooks';
 import { createJob } from '@/services/jobs';
+import slugify from 'slugify';
 
 const defaultValues = {
   name: '',
+  slug: '',
   description: '',
   employment: Employment.FULLTIME,
   address: '',
@@ -63,7 +65,10 @@ export const AddNewJobButton = () => {
     if (isDisabled) return;
 
     const result = await createJob({
-      data: input,
+      data: {
+        ...input,
+        slug: slugify(input.name, { lower: true }),
+      },
     });
 
     if (result) {

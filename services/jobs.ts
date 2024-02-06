@@ -1,10 +1,10 @@
 'use server';
 
+import { Job, JobWithPayload } from '@/types';
 import { revalidatePath } from 'next/cache';
 import { getSession } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import deepmerge from 'deepmerge';
-import { Job } from '@/types';
 
 const richInclude = {
   interviews: true,
@@ -44,6 +44,18 @@ export async function findJobs(input: JobFindManyArgs = {}) {
 
   const response = await prisma.job.findMany({
     ...args,
+    include: richInclude,
+  });
+
+  return response;
+}
+
+// TODO: Implement rate limit on this because this is public
+export async function getJobBySlug(
+  slug: string
+): Promise<JobWithPayload | null> {
+  const response = await prisma.job.findUnique({
+    where: { slug },
     include: richInclude,
   });
 
