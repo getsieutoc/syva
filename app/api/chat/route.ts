@@ -82,7 +82,7 @@ export async function POST(req: NextRequest) {
     });
 
     const llm = new ChatOpenAI({
-      modelName: 'gpt-3.5-turbo',
+      modelName: 'gpt-4-turbo-preview',
       temperature: 0.2,
       streaming: true,
     });
