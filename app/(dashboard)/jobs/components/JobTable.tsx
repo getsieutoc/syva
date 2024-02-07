@@ -40,12 +40,20 @@ export const columns: ColumnDef<JobWithPayload>[] = [
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
+    cell: ({ row }) => (
+      <div className="max-w-[300px] overflow-hidden truncate capitalize">
+        {row.getValue('name')}
+      </div>
+    ),
   },
   {
     accessorKey: 'description',
     header: () => <span>Description</span>,
-    cell: ({ row }) => <div>{row.getValue('description')}</div>,
+    cell: ({ row }) => (
+      <div className="max-w-[400px] overflow-hidden truncate">
+        {row.getValue('description')}
+      </div>
+    ),
   },
   {
     accessorKey: 'employment',
@@ -103,7 +111,7 @@ export type JobListProps = {
 
 export const JobTable = ({ data }: JobListProps) => {
   return (
-    <div className="w-full min-w-max max-w-full">
+    <div className="w-full min-w-fit max-w-full">
       <DataTable data={data} columns={columns} filterKey="name" />
     </div>
   );

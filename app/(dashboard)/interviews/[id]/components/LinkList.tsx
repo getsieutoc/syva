@@ -66,7 +66,7 @@ export type LinkListProps = {
 
 export const LinkList = ({ links }: LinkListProps) => {
   return (
-    <div className="w-full min-w-max max-w-full">
+    <div className="w-full min-w-fit max-w-full">
       <DataTable data={links} columns={columns} filterKey="url" />
     </div>
   );
