@@ -14,9 +14,7 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DropdownMenuItem,
 } from '@/components/ui';
-import { Eye } from '@/components/icons';
 import { useDisclosure, useRouter, useSearchParams } from '@/hooks';
 import { newURLWithSearchParams, formatTime } from '@/lib/utils';
 import { JobWithPayload } from '@/types';
@@ -46,15 +44,15 @@ export const ViewJobItem = ({ job }: ViewJobItemProps) => {
   return (
     <Dialog onOpenChange={handleOpenChange} open={isOpen}>
       <DialogTrigger asChild>
-        <DropdownMenuItem
-          className="DropdownMenuItem"
-          onSelect={(e) => {
+        <p
+          className="max-w-[300px] overflow-hidden truncate hover:cursor-pointer hover:underline"
+          onClick={(e) => {
             e.preventDefault();
-            onOpen();
+            handleOpenChange(true);
           }}
         >
-          <Eye className="h-4 w-4" /> View Job
-        </DropdownMenuItem>
+          {job.name}
+        </p>
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>

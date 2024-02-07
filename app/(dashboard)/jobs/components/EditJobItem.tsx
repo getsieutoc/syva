@@ -23,10 +23,11 @@ import {
   Switch,
   Textarea,
 } from '@/components/ui';
-import { useDisclosure, useForm } from '@/hooks';
-import { updateJob } from '@/services/jobs';
+import { useDisclosure, useForm, useRouter, useSearchParams } from '@/hooks';
 import { Employment, JobWithPayload, SubmitHandler } from '@/types';
+import { updateJob } from '@/services/jobs';
 import { Pencil } from '@/components/icons';
+import { newURLWithSearchParams } from '@/lib/utils';
 
 type ManualInputs = Partial<JobWithPayload>;
 
@@ -37,16 +38,25 @@ export const EditJobItem = ({
   job: JobWithPayload;
   onFinish?: (id: string) => void;
 }) => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const form = useForm<ManualInputs>({ defaultValues: job });
 
   const handleOpenChange = (isOpen: boolean) => {
+    const newSearchParams = new URLSearchParams(searchParams);
+
     if (isOpen) {
       onOpen();
+      newSearchParams.set('id', job.id);
+      newSearchParams.append('action', 'edit');
     } else {
       onClose();
+      newSearchParams.delete('id');
+      newSearchParams.delete('action');
     }
+    router.push(newURLWithSearchParams('/jobs', newSearchParams));
   };
 
   const onSubmit: SubmitHandler<ManualInputs> = async (input) => {

@@ -5,6 +5,7 @@ import { Checkbox } from '@/components/ui';
 import { JobWithPayload, ColumnDef } from '@/types';
 import { formatTime } from '@/lib/utils';
 import { ActionMenu } from './ActionMenu';
+import { ViewJobItem } from './ViewJobItem';
 
 export const columns: ColumnDef<JobWithPayload>[] = [
   {
@@ -41,9 +42,10 @@ export const columns: ColumnDef<JobWithPayload>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="max-w-[300px] overflow-hidden truncate capitalize">
-        {row.getValue('name')}
-      </div>
+      <ViewJobItem job={row.original} />
+      // <div className="max-w-[300px] overflow-hidden truncate capitalize">
+      //   {row.getValue('name')}
+      // </div>
     ),
   },
   {

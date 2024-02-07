@@ -1,4 +1,5 @@
 import { getInterviews } from '@/services/interviews';
+
 import { AddNewInterviewButton, InterviewTable } from './components';
 
 export default async function InterviewsPage() {

@@ -1,7 +1,12 @@
 import { withAuth } from 'next-auth/middleware';
 
 export const config = {
-  matcher: ['/api/:path*', '/candidates/:path*', '/jobs/:path*'],
+  matcher: [
+    '/api/:path*',
+    '/interviews/:path*',
+    '/candidates/:path*',
+    '/jobs/:path*',
+  ],
 };
 
 export default withAuth({

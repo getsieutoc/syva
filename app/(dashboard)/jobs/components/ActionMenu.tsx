@@ -13,7 +13,6 @@ import { JobWithPayload } from '@/types';
 
 import { EditJobItem } from './EditJobItem';
 import { DeleteJobItem } from './DeleteJobItem';
-import { ViewJobItem } from './ViewJobItem';
 
 type ActionMenuProps = {
   job: JobWithPayload;
@@ -45,8 +44,6 @@ export const ActionMenu = ({ job }: ActionMenuProps) => {
           <ClipboardCopy className="h-4 w-4" />
           Copy job ID
         </DropdownMenuItem>
-
-        <ViewJobItem job={job} />
 
         <EditJobItem job={job} onFinish={onClose} />
 

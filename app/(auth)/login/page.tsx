@@ -17,11 +17,11 @@ export default async function LoginPage({
   const { session } = await getSession();
 
   if (session) {
-    redirect(newURLWithSearchParams('/candidates', searchParams));
+    redirect(newURLWithSearchParams('/interviews', searchParams));
   }
 
   return (
-    <div className="mx-auto flex h-[80%] max-w-sm flex-col items-center justify-evenly">
+    <div className="mx-auto flex h-[60%] max-w-sm flex-col items-center justify-evenly">
       <div className="flex w-full flex-col items-center gap-2">
         <Logo size="xl" />
 
@@ -33,6 +33,7 @@ export default async function LoginPage({
       {hasGithubProvider && <LoginByGitHub org={process.env.GITHUB_ORG} />}
 
       <div className="flex w-full flex-col items-center gap-2">
+        <Separator />
         <p className="text-center text-xs">
           By continue using service, you agree to our Terms
         </p>

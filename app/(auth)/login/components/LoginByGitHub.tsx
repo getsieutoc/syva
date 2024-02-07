@@ -34,9 +34,10 @@ export const LoginByGitHub = ({ org }: LoginByGitHubProps) => {
   };
 
   return (
-    <div className="flex w-full justify-center gap-1 text-center">
+    <div className="flex w-full flex-col justify-center gap-1 text-center">
       <Button
         onClick={handleLogin}
+        isLoading={isLoading}
         disabled={isLoading}
         className="w-full"
         size="lg"
@@ -45,7 +46,7 @@ export const LoginByGitHub = ({ org }: LoginByGitHubProps) => {
       </Button>
 
       {org && (
-        <p className="text-sm">Only for members of @{org} at this time.</p>
+        <p className="text-xs">Only for members of @{org} at this time.</p>
       )}
     </div>
   );
