@@ -14,15 +14,13 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-  DropdownMenuItem,
 } from '@/components/ui';
-import { Eye } from '@/components/icons';
 import { useDisclosure, useRouter, useSearchParams } from '@/hooks';
 import { newURLWithSearchParams, formatTime } from '@/lib/utils';
-import { User } from '@/types';
+import { CandidateWithPayload } from '@/types';
 
 type ViewCandidateItemProps = {
-  candidate: User;
+  candidate: CandidateWithPayload;
 };
 export const ViewCandidateItem = ({ candidate }: ViewCandidateItemProps) => {
   const router = useRouter();
@@ -46,19 +44,19 @@ export const ViewCandidateItem = ({ candidate }: ViewCandidateItemProps) => {
   return (
     <Dialog onOpenChange={handleOpenChange} open={isOpen}>
       <DialogTrigger asChild>
-        <DropdownMenuItem
-          className="DropdownMenuItem"
-          onSelect={(e) => {
+        <p
+          className="w-fit max-w-[300px] overflow-hidden truncate hover:cursor-pointer hover:underline"
+          onClick={(e) => {
             e.preventDefault();
-            onOpen();
+            handleOpenChange(true);
           }}
         >
-          <Eye className="h-4 w-4" /> View Candidate
-        </DropdownMenuItem>
+          {candidate.name}
+        </p>
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Candidate Details</DialogTitle>
+          <DialogTitle>Candidate Quick Look</DialogTitle>
         </DialogHeader>
 
         <Card>

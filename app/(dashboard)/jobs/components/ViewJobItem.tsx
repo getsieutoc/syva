@@ -43,9 +43,9 @@ export const ViewJobItem = ({ job }: ViewJobItemProps) => {
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={isOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <p
-          className="max-w-[300px] overflow-hidden truncate hover:cursor-pointer hover:underline"
+          className="w-fit max-w-[300px] overflow-hidden truncate hover:cursor-pointer hover:underline"
           onClick={(e) => {
             e.preventDefault();
             handleOpenChange(true);
@@ -56,7 +56,7 @@ export const ViewJobItem = ({ job }: ViewJobItemProps) => {
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Job Details</DialogTitle>
+          <DialogTitle>Job Quick Look</DialogTitle>
         </DialogHeader>
 
         <Card>

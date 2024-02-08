@@ -54,7 +54,7 @@ export const ViewInterviewItem = ({ interview }: ViewInterviewItemProps) => {
             onOpen();
           }}
         >
-          <Eye className="h-4 w-4" /> Quick View
+          <Eye className="h-4 w-4" /> Quick Look
         </DropdownMenuItem>
       </DialogTrigger>
       <DialogContent className="DialogContent">

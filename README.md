@@ -2,4 +2,4 @@
 
 <p align="center">Made by ⚡Sieutoc</p>
 
-Know your candidates
+<p align="center">Know your candidates</p>

@@ -6,6 +6,7 @@ import { Checkbox } from '@/components/ui';
 import { formatTime } from '@/lib/utils';
 
 import { ActionMenu } from './ActionMenu';
+import { ViewCandidateItem } from './ViewCandidateItem';
 
 export const columns: ColumnDef<CandidateWithPayload>[] = [
   {
@@ -41,7 +42,7 @@ export const columns: ColumnDef<CandidateWithPayload>[] = [
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
       />
     ),
-    cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
+    cell: ({ row }) => <ViewCandidateItem candidate={row.original} />,
   },
   {
     accessorKey: 'email',

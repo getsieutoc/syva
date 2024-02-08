@@ -72,7 +72,7 @@ export const EditCandidateItem = ({
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Edit Candidate: {candidate.name}</DialogTitle>
+          <DialogTitle>Edit Candidate</DialogTitle>
         </DialogHeader>
 
         <form onSubmit={handleSubmit(onSubmit)}>

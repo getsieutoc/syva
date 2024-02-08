@@ -41,6 +41,7 @@ export const EditJobItem = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isOpen, onClose, onOpen } = useDisclosure();
+  console.log('### isOpen: ', { isOpen });
 
   const form = useForm<ManualInputs>({ defaultValues: job });
 
@@ -86,7 +87,7 @@ export const EditJobItem = ({
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Edit Job: {job.name}</DialogTitle>
+          <DialogTitle>Edit Job</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
