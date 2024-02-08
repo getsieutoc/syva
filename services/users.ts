@@ -52,6 +52,32 @@ export async function findCandidates(input: UserFindManyArgs = {}) {
   return response;
 }
 
+type FindOne = { id: string; email?: never } | { email: string; id?: never };
+
+export async function findOneCandidate({ id, email }: FindOne) {
+  const { session } = await getSession();
+
+  if (!session) {
+    throw new Error('Unauthorized');
+  }
+
+  if (id) {
+    return await prisma.user.findUnique({
+      where: { id },
+      include: richInclude,
+    });
+  }
+
+  if (email) {
+    return await prisma.user.findUnique({
+      where: { email },
+      include: richInclude,
+    });
+  }
+
+  throw new Error('Need either id or email');
+}
+
 export async function updateUser(id: string, data: Partial<User>) {
   const { session } = await getSession();
 

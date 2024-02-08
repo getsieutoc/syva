@@ -15,35 +15,28 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui';
-import { useDisclosure, useRouter, useSearchParams } from '@/hooks';
-import { newURLWithSearchParams, formatTime } from '@/lib/utils';
-import { CandidateWithPayload } from '@/types';
+import { Job } from '@/types';
+import { useDisclosure } from '@/hooks';
+import { formatTime } from '@/lib/utils';
 
-type ViewCandidateItemProps = {
-  candidate: CandidateWithPayload;
+export type QuickLookJobProps = {
+  job: Job;
 };
-export const ViewCandidateItem = ({ candidate }: ViewCandidateItemProps) => {
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
+export const QuickLookJob = ({ job }: QuickLookJobProps) => {
   const { isOpen, onClose, onOpen } = useDisclosure();
 
   const handleOpenChange = (isOpen: boolean) => {
-    const newSearchParams = new URLSearchParams(searchParams);
-
     if (isOpen) {
       onOpen();
-      newSearchParams.set('id', candidate.id);
     } else {
       onClose();
-      newSearchParams.delete('id');
     }
-    router.push(newURLWithSearchParams('/candidates', newSearchParams));
   };
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={isOpen}>
-      <DialogTrigger asChild>
+      <DialogTrigger>
         <p
           className="w-fit max-w-[300px] overflow-hidden truncate hover:cursor-pointer hover:underline"
           onClick={(e) => {
@@ -51,22 +44,22 @@ export const ViewCandidateItem = ({ candidate }: ViewCandidateItemProps) => {
             handleOpenChange(true);
           }}
         >
-          {candidate.name}
+          {job.name}
         </p>
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Candidate Quick Look</DialogTitle>
+          <DialogTitle>Job Quick Look</DialogTitle>
         </DialogHeader>
 
         <Card>
           <CardHeader>
-            <CardTitle>{candidate.name}</CardTitle>
-            <CardDescription>{candidate.email}</CardDescription>
+            <CardTitle>{job.name}</CardTitle>
+            <CardDescription>{job.description}</CardDescription>
           </CardHeader>
-          <CardContent>lorem ipsum</CardContent>
+          <CardContent>{job.experienceRequirements}</CardContent>
           <CardFooter className="text-sm text-muted-foreground">
-            Joined at {formatTime(candidate.createdAt)}
+            Posted at {formatTime(job.createdAt)}
           </CardFooter>
         </Card>
 

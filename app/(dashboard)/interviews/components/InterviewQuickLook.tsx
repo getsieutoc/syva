@@ -17,12 +17,13 @@ import {
 } from '@/components/ui';
 import { useDisclosure, useRouter, useSearchParams } from '@/hooks';
 import { newURLWithSearchParams, formatTime } from '@/lib/utils';
-import { JobWithPayload } from '@/types';
+import { InterviewWithPayload } from '@/types';
 
-type ViewJobItemProps = {
-  job: JobWithPayload;
+type ViewInterviewItemProps = {
+  interview: InterviewWithPayload;
 };
-export const ViewJobItem = ({ job }: ViewJobItemProps) => {
+
+export const InterviewQuickLook = ({ interview }: ViewInterviewItemProps) => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -33,17 +34,17 @@ export const ViewJobItem = ({ job }: ViewJobItemProps) => {
 
     if (isOpen) {
       onOpen();
-      newSearchParams.set('id', job.id);
+      newSearchParams.set('id', interview.id);
     } else {
       onClose();
       newSearchParams.delete('id');
     }
-    router.push(newURLWithSearchParams('/jobs', newSearchParams));
+    router.push(newURLWithSearchParams('/interviews', newSearchParams));
   };
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={isOpen}>
-      <DialogTrigger>
+      <DialogTrigger asChild>
         <p
           className="w-fit max-w-[300px] overflow-hidden truncate hover:cursor-pointer hover:underline"
           onClick={(e) => {
@@ -51,22 +52,24 @@ export const ViewJobItem = ({ job }: ViewJobItemProps) => {
             handleOpenChange(true);
           }}
         >
-          {job.name}
+          {interview.candidate.name}
         </p>
       </DialogTrigger>
       <DialogContent className="DialogContent">
         <DialogHeader>
-          <DialogTitle>Job Quick Look</DialogTitle>
+          <DialogTitle>Quick View Interview</DialogTitle>
         </DialogHeader>
 
         <Card>
           <CardHeader>
-            <CardTitle>{job.name}</CardTitle>
-            <CardDescription>{job.description}</CardDescription>
+            <CardTitle>{interview.candidate.name}</CardTitle>
+            <CardDescription>
+              {interview.job.name} / {interview.job.employment}
+            </CardDescription>
           </CardHeader>
-          <CardContent>{job.experienceRequirements}</CardContent>
+          <CardContent>{interview.job.description}</CardContent>
           <CardFooter className="text-sm text-muted-foreground">
-            Posted at {formatTime(job.createdAt)}
+            Posted at {formatTime(interview.createdAt)}
           </CardFooter>
         </Card>
 

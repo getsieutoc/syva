@@ -14,7 +14,6 @@ import { Ping } from '@/components/client';
 
 import { EditInterviewItem } from './EditInterviewItem';
 import { DeleteInterviewItem } from './DeleteInterviewItem';
-import { ViewInterviewItem } from './ViewInterviewItem';
 
 type ActionMenuProps = {
   data: InterviewWithPayload;
@@ -50,8 +49,6 @@ export const ActionMenu = ({ data: interview }: ActionMenuProps) => {
           <ClipboardCopy className="h-4 w-4" />
           Copy interview ID
         </DropdownMenuItem>
-
-        <ViewInterviewItem interview={interview} />
 
         <DropdownMenuItem
           onClick={() => router.push(`/interviews/${interview.id}`)}

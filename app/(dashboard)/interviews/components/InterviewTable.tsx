@@ -1,6 +1,11 @@
 'use client';
 
-import { DataTable, HeaderWithSort } from '@/components/client';
+import {
+  DataTable,
+  HeaderWithSort,
+  QuickLookCandidate,
+  QuickLookJob,
+} from '@/components/client';
 import { InterviewWithPayload, ColumnDef } from '@/types';
 import { Checkbox } from '@/components/ui';
 import { formatTime } from '@/lib/utils';
@@ -43,7 +48,7 @@ export const columns: ColumnDef<InterviewWithPayload>[] = [
       />
     ),
     cell: ({ row }) => (
-      <div className="capitalize">{row.original.candidate.name}</div>
+      <QuickLookCandidate candidate={row.original.candidate} />
     ),
   },
   {
@@ -56,7 +61,7 @@ export const columns: ColumnDef<InterviewWithPayload>[] = [
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
       />
     ),
-    cell: ({ row }) => <div>{row.original.job.name}</div>,
+    cell: ({ row }) => <QuickLookJob job={row.original.job} />,
   },
   {
     accessorKey: 'stage',

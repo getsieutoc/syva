@@ -1,12 +1,15 @@
 'use client';
 
-import { DataTable, HeaderWithSort } from '@/components/client';
+import {
+  DataTable,
+  HeaderWithSort,
+  QuickLookCandidate,
+} from '@/components/client';
 import { CandidateWithPayload, ColumnDef } from '@/types';
 import { Checkbox } from '@/components/ui';
 import { formatTime } from '@/lib/utils';
 
 import { ActionMenu } from './ActionMenu';
-import { ViewCandidateItem } from './ViewCandidateItem';
 
 export const columns: ColumnDef<CandidateWithPayload>[] = [
   {
@@ -42,7 +45,7 @@ export const columns: ColumnDef<CandidateWithPayload>[] = [
         onToggleSort={(isAsc) => column.toggleSorting(isAsc)}
       />
     ),
-    cell: ({ row }) => <ViewCandidateItem candidate={row.original} />,
+    cell: ({ row }) => <QuickLookCandidate candidate={row.original} />,
   },
   {
     accessorKey: 'email',

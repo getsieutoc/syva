@@ -1,4 +1,4 @@
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 export type UnknownData = Record<string, unknown>;
 
@@ -18,6 +18,8 @@ export type GitHubOrganization = {
   login: string;
   id: number;
 };
+
+export type Candidate = User;
 
 export type InterviewWithPayload = Prisma.InterviewGetPayload<{
   include: {

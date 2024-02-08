@@ -41,7 +41,6 @@ export const EditJobItem = ({
   const router = useRouter();
   const searchParams = useSearchParams();
   const { isOpen, onClose, onOpen } = useDisclosure();
-  console.log('### isOpen: ', { isOpen });
 
   const form = useForm<ManualInputs>({ defaultValues: job });
 
