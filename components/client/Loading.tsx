@@ -33,7 +33,7 @@ export type TableLoadingProps = {
   rows?: number;
   columns?: number;
 };
-export const TableLoading = ({ rows = 10, columns = 5 }: TableLoadingProps) => {
+export const TableLoading = ({ rows = 3, columns = 5 }: TableLoadingProps) => {
   return (
     <div className="w-full">
       <div className="flex items-center gap-4 py-4">
