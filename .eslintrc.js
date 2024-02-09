@@ -10,8 +10,8 @@ module.exports = {
   ],
   rules: {
     'import/no-cycle': 'error',
-    'react/display-name': 'off',
     'no-unused-vars': 'off',
+    'react/display-name': 'off',
     '@typescript-eslint/no-unused-vars': [
       'warn',
       {

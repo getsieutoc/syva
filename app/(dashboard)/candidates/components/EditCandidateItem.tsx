@@ -7,8 +7,13 @@ import {
   DialogTitle,
   DialogTrigger,
   DropdownMenuItem,
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
   Input,
-  Label,
 } from '@/components/ui';
 import { useDisclosure, useForm } from '@/hooks';
 import { updateUser } from '@/services/users';
@@ -31,11 +36,7 @@ export const EditCandidateItem = ({
     email: candidate.email,
   };
 
-  const {
-    register,
-    handleSubmit,
-    formState: { isSubmitting },
-  } = useForm<ManualInputs>({ defaultValues });
+  const form = useForm<ManualInputs>({ defaultValues });
 
   const handleOpenChange = (isOpen: boolean) => {
     if (isOpen) {
@@ -46,7 +47,7 @@ export const EditCandidateItem = ({
   };
 
   const onSubmit: SubmitHandler<ManualInputs> = async (data) => {
-    if (isSubmitting) return;
+    console.log('### onSubmit');
 
     const result = await updateUser(candidate.id, data);
 
@@ -56,6 +57,14 @@ export const EditCandidateItem = ({
 
     handleOpenChange(false);
   };
+
+  // useKeyPressEvent('Enter', (e) => {
+  //   if (isOpen && formRef && formRef.current) {
+  //     e.preventDefault();
+  //     console.log('### isOpen: ', { isOpen });
+  //     form.handleSubmit(onSubmit)
+  //   }
+  // });
 
   return (
     <Dialog onOpenChange={handleOpenChange} open={isOpen}>
@@ -75,49 +84,69 @@ export const EditCandidateItem = ({
           <DialogTitle>Edit Candidate</DialogTitle>
         </DialogHeader>
 
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="flex flex-col gap-4">
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="name">Name</Label>
-              <Input
-                id="name"
-                placeholder="Name"
-                {...register('name', { required: true })}
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="flex flex-col gap-4">
+              <FormField
+                control={form.control}
+                name="name"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Candidate Name</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Name"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Candidate Email</FormLabel>
+                    <FormControl>
+                      <Input
+                        placeholder="Email"
+                        {...field}
+                        value={field.value ?? ''}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
               />
             </div>
 
-            <div className="flex flex-col gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                id="email"
-                placeholder="email@example.com"
-                {...register('email', { required: true })}
-              />
-            </div>
-          </div>
+            <DialogFooter className="mt-6 w-full justify-between">
+              <Button
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleOpenChange(false);
+                }}
+                className="max-w-fit"
+                variant="ghost"
+              >
+                Cancel
+              </Button>
 
-          <DialogFooter className="mt-6 w-full justify-between">
-            <Button
-              onClick={(e) => {
-                e.preventDefault();
-                handleOpenChange(false);
-              }}
-              className="max-w-fit"
-              variant="ghost"
-            >
-              Cancel
-            </Button>
-
-            <Button
-              isLoading={isSubmitting}
-              disabled={isSubmitting}
-              className="max-w-fit"
-              type="submit"
-            >
-              Save
-            </Button>
-          </DialogFooter>
-        </form>
+              <Button
+                isLoading={form.formState.isSubmitting}
+                disabled={form.formState.isSubmitting}
+                className="max-w-fit"
+                type="submit"
+              >
+                Save
+              </Button>
+            </DialogFooter>
+          </form>
+        </Form>
       </DialogContent>
     </Dialog>
   );
