@@ -47,7 +47,7 @@
     "@radix-ui/react-tabs": "1.0.4",
     "@radix-ui/react-tooltip": "1.0.7",
     "@tanstack/react-table": "8.11.8",
-    "ai": "2.2.33",
+    "ai": "5.0.52",
     "assemblyai": "4.2.2",
     "class-variance-authority": "0.7.0",
     "clsx": "2.1.0",
