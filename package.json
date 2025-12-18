@@ -106,7 +106,7 @@
     "prettier-plugin-tailwindcss": "0.5.11",
     "prisma": "5.9.1",
     "rimraf": "5.0.5",
-    "storybook": "7.6.12",
+    "storybook": "7.6.21",
     "tailwindcss": "3.4.1",
     "tailwindcss-animate": "1.0.7",
     "tsconfig-paths-webpack-plugin": "4.1.0",
